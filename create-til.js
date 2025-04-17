@@ -30,3 +30,4 @@ const template = `## 📅 ${yyyy}-${mm}-${dd}
 if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
 fs.writeFileSync(filePath, template);
 console.log(`✅ TIL 파일 생성됨: ${filePath}`);
+console.log(`[${new Date().toLocaleString()}] TIL created`);
