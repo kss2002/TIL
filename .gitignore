@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# TIL 자동 생성 스크립트가 만든 임시 파일
+*.log
