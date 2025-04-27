@@ -59,4 +59,4 @@ export default function ShoppingList() {
 }
 ```
 
-![alt text](image.png)
+![alt text](../Practice/img/image.png)
