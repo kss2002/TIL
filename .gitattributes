@@ -1,19 +1,5 @@
 * text=auto
 
-# Markdown 파일은 LF로 고정
-*.md text eol=lf
-
-# TypeScript/JavaScript 파일도 LF 고정
-*.ts text eol=lf
-*.tsx text eol=lf
-*.js text eol=lf
-*.jsx text eol=lf
-
-# JSON, CSS, HTML 등도 LF 고정
-*.json text eol=lf
-*.css text eol=lf
-*.html text eol=lf
-
 # LF로 고정할 파일들
 *.js text eol=lf
 *.jsx text eol=lf
