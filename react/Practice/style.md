@@ -6,13 +6,13 @@
 
 이것은 HTML에서 class를 지정하는 것과 동일하게 작동한다.
 
-```
+```html
 <img className="avatar" />
 ```
 
 그 다음, 별도의 css 파일에 해당 css 규칙을 적용하면 된다.
 
-```
+```css
 /* In your CSS */
 .avatar {
   border-radius: 50%;

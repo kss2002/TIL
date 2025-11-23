@@ -12,7 +12,7 @@ jsx는 HTML보다 엄격하다. jsx에서는 태그를 무조건 닫아야 한�
 
 코드는 다음처럼 전체 return 안에 태그를 감싸야 한다.
 
-```
+```jsx
 function AboutPage() {
   return (
     {/* 주석 */}

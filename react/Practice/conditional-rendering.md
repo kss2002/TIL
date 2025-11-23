@@ -8,32 +8,22 @@ React에서 조건문을 작성하는 데에는 특별한 문법이 필요 없�
 
 예를 들어 if 문을 사용하여 조건부로 JSX를 포함할 수 있다.
 
-```
+```jsx
 let content;
 if (isLoggedIn) {
   content = <AdminPanel />;
 } else {
   content = <LoginForm />;
 }
-return (
-  <div>
-    {content}
-  </div>
-);
+return <div>{content}</div>;
 ```
 
 더욱 간결한 코드를 원한다면 조건부 삼항 연산자를 사용할 수 있다.
 
 이것은 if 문과 달리 JSX 내부에서 동작한다.
 
-```
-<div>
-  {isLoggedIn ? (
-    <AdminPanel />
-  ) : (
-    <LoginForm />
-  )}
-</div>
+```jsx
+<div>{isLoggedIn ? <AdminPanel /> : <LoginForm />}</div>
 ```
 
 특히 위 삼항 연산자는 많이 쓰이니 알아두면 좋을 것!

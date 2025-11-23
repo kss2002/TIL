@@ -4,7 +4,7 @@
 
 코드를 살펴보면..
 
-```
+```jsx
 import React, { useState } from 'react';
 
 function Counter() {
@@ -12,11 +12,11 @@ function Counter() {
 
   const onIncrease = () => {
     setNumber(number + 1);
-  }
+  };
 
   const onDecrease = () => {
     setNumber(number - 1);
-  }
+  };
 
   return (
     <div>
@@ -34,7 +34,7 @@ export default Counter;
 
 일단 사용을 위해서는 상단에 ..
 
-```
+```jsx
 import React, { useState } from 'react';
 ```
 

@@ -6,7 +6,7 @@
 
 예를 들어 여러 제품이 있다고 가정해보자.
 
-```
+```jsx
 const products = [
   { title: 'Cabbage', id: 1 },
   { title: 'Garlic', id: 2 },
@@ -18,23 +18,19 @@ const products = [
 
 - 예시 코드 >
 
-```
-const listItems = products.map(product =>
-  <li key={product.id}>
-    {product.title}
-  </li>
-);
+```jsx
+const listItems = products.map((product) => (
+  <li key={product.id}>{product.title}</li>
+));
 
-return (
-  <ul>{listItems}</ul>
-);
+return <ul>{listItems}</ul>;
 ```
 
 이 때 `<li>` 안에 key를 할당해야 한다. 이 key가 있어야 리액트가 잘 이해하니 꼭 넣어줘야 함.
 
 ### 전체적인 예시 코드 >
 
-```
+```jsx
 const products = [
   { title: 'Cabbage', isFruit: false, id: 1 },
   { title: 'Garlic', isFruit: false, id: 2 },
@@ -42,20 +38,18 @@ const products = [
 ];
 
 export default function ShoppingList() {
-  const listItems = products.map(product =>
+  const listItems = products.map((product) => (
     <li
       key={product.id}
       style={{
-        color: product.isFruit ? 'magenta' : 'darkgreen'
+        color: product.isFruit ? 'magenta' : 'darkgreen',
       }}
     >
       {product.title}
     </li>
-  );
+  ));
 
-  return (
-    <ul>{listItems}</ul>
-  );
+  return <ul>{listItems}</ul>;
 }
 ```
 

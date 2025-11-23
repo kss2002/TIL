@@ -10,17 +10,15 @@ React 앱은 컴포넌트로 구성된다. 정확히는 컴포넌트의 집합�
 
 React 컴포넌트는 마크업을 반환하는 자바스크립트 함수다.
 
-```
+```jsx
 function MyButton() {
-  return (
-    <button>I'm a button</button>
-  );
+  return <button>I'm a button</button>;
 }
 ```
 
 이제 MyButton을 선언했으므로 다른 컴포넌트 안에 중첩할 수 있다. (중요)
 
-```
+```jsx
 export default function MyApp() {
   return (
     <div>

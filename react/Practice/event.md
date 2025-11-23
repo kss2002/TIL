@@ -6,17 +6,13 @@
 
 예시 코드 >
 
-```
+```jsx
 function MyButton() {
   function handleClick() {
     alert('You clicked me!');
   }
 
-  return (
-    <button onClick={handleClick}>
-      Click me
-    </button>
-  );
+  return <button onClick={handleClick}>Click me</button>;
 }
 ```
 

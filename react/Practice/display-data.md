@@ -8,12 +8,8 @@
 
 아래의 예시는 user.name을 표시한다.
 
-```
-return (
-  <h1>
-    {user.name}
-  </h1>
-);
+```jsx
+return <h1>{user.name}</h1>;
 ```
 
 쉽게 말해서 어딘가 "객체"을 할당하고 그 안에 여러 변수를 만든다.
@@ -22,7 +18,7 @@ return (
 
 - 예시 코드 >
 
-```
+```jsx
 const user = {
   name: 'Hedy Lamarr',
   imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
@@ -39,7 +35,7 @@ export default function Profile() {
         alt={'Photo of ' + user.name}
         style={{
           width: user.imageSize,
-          height: user.imageSize
+          height: user.imageSize,
         }}
       />
     </>
