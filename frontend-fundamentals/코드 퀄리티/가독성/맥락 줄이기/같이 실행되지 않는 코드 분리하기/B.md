@@ -1,4 +1,4 @@
-```javascript
+```js
 function SubmitButton() {
   const isViewer = useRole() === 'viewer';
 
