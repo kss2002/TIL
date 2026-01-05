@@ -16,6 +16,8 @@ https://github.com/kss2002/TIL
 
 다음 코드 및 명령어를 이용해서 탬플릿을 자동으로 만들 수 있습니다.
 
-```js
-명령어 > node create-til.js
+[code temp](https://github.com/kss2002/TIL/blob/main/create-til.js)
+
+```bash
+node create-til.js
 ```
