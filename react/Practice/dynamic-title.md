@@ -41,3 +41,20 @@ export const Index = () => {
   );
 };
 ```
+
+### index.html
+
+기존 title 태그에 있는 이름은 초기 로딩의 타이틀 시점에 보이게 된다.
+그래서 기본적인 사이트의 이름을 설정해주자.
+
+```html
+<!DOCTYPE html>
+ ...
+    <title>뽀모도로 타이머</title>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+```
