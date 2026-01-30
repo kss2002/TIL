@@ -2,9 +2,13 @@
 
 ## 들어가며
 
-전통적인 PostgreSQL 서버를 관리하는 것은 힘듭니다. 데이터베이스 인스턴스를 항상 실행 중으로 유지해야 하고, 트래픽에 따른 수동 스케일링을 해야 하며, 백업과 보안을 신경 써야 합니다.
+전통적인 PostgreSQL 서버를 관리하는 것은 힘듭니다.
+데이터베이스 인스턴스를 항상 실행 중으로 유지해야 하고, 트래픽에 따른 수동 스케일링을 해야 하며, 백업과 보안을 신경 써야 합니다.
 
-Neon은 이 모든 문제를 완전히 해결합니다. 서버리스 PostgreSQL 플랫폼으로, 자동 스케일링, 즉각적인 분기(branching), 관리형 호스팅을 제공합니다. AWS Lambda와 유사하게 사용한 만큼만 비용을 지불하면서도 완전한 PostgreSQL 기능을 사용할 수 있습니다.
+Neon은 이 모든 문제를 완전히 해결합니다.
+서버리스 PostgreSQL 플랫폼으로, 자동 스케일링, 즉각적인 분기(branching), 관리형 호스팅을 제공합니다.
+
+AWS Lambda와 유사하게 사용한 만큼만 비용을 지불하면서도 완전한 PostgreSQL 기능을 사용할 수 있습니다.
 
 ## 전통적 PostgreSQL vs Neon
 
@@ -81,8 +85,8 @@ async function configureAutoscaling(projectId) {
     {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${process.env.NEON_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${process.env.NEON_API_KEY}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         // 최소 Compute Units
@@ -90,9 +94,9 @@ async function configureAutoscaling(projectId) {
         // 최대 Compute Units
         autoscaling_limit_max_cu: 4,
         // 자동 중단 시간 (미사용 시)
-        suspend_timeout_seconds: 300  // 5분 후 자동 중단
-      })
-    }
+        suspend_timeout_seconds: 300, // 5분 후 자동 중단
+      }),
+    },
   );
 
   return response.json();
@@ -101,7 +105,8 @@ async function configureAutoscaling(projectId) {
 
 ### 2. Branching (분기)
 
-Neon의 가장 혁신적인 기능입니다. 프로덕션 데이터베이스의 즉각적인 스냅샷을 생성할 수 있습니다.
+Neon의 가장 혁신적인 기능입니다.
+프로덕션 데이터베이스의 즉각적인 스냅샷을 생성할 수 있습니다.
 
 #### 분기의 원리
 
@@ -119,6 +124,7 @@ Neon의 가장 혁신적인 기능입니다. 프로덕션 데이터베이스의 
 ```
 
 **특징:**
+
 - 스냅샷이 즉각적입니다 (몇 밀리초)
 - 스토리지 효율적입니다 (Copy-on-Write)
 - 프로덕션에 영향을 주지 않습니다
@@ -156,15 +162,15 @@ class NeonBranchManager {
       {
         branch: {
           name: branchName,
-          parent_id: parentBranch
-        }
+          parent_id: parentBranch,
+        },
       },
       {
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      }
+          Authorization: `Bearer ${this.apiKey}`,
+          'Content-Type': 'application/json',
+        },
+      },
     );
 
     return response.data;
@@ -176,9 +182,9 @@ class NeonBranchManager {
       `${this.baseUrl}/projects/${projectId}/branches/${branchId}`,
       {
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`
-        }
-      }
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      },
     );
 
     return response.data;
@@ -190,9 +196,9 @@ class NeonBranchManager {
       `${this.baseUrl}/projects/${projectId}/branches`,
       {
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`
-        }
-      }
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      },
     );
 
     return response.data.branches;
@@ -204,9 +210,9 @@ class NeonBranchManager {
       `${this.baseUrl}/projects/${projectId}/branches/${branchId}`,
       {
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`
-        }
-      }
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      },
     );
 
     return response.data.branch;
@@ -221,7 +227,7 @@ const manager = new NeonBranchManager(process.env.NEON_API_KEY);
   const newBranch = await manager.createBranch(
     'my-project-id',
     'feature/user-auth',
-    'main'
+    'main',
   );
 
   console.log('분기 생성됨:', newBranch.name);
@@ -229,7 +235,10 @@ const manager = new NeonBranchManager(process.env.NEON_API_KEY);
 
   // 모든 분기 조회
   const branches = await manager.listBranches('my-project-id');
-  console.log('전체 분기:', branches.map(b => b.name));
+  console.log(
+    '전체 분기:',
+    branches.map((b) => b.name),
+  );
 })();
 ```
 
@@ -259,19 +268,16 @@ const { Pool } = require('pg');
 const pool = new Pool({
   // Neon의 pooled 엔드포인트 사용
   connectionString: process.env.DATABASE_URL_POOLED,
-  
+
   // 풀 설정
-  max: 20,              // 최대 클라이언트 수
-  idleTimeoutMillis: 30000,  // 유휴 타임아웃
+  max: 20, // 최대 클라이언트 수
+  idleTimeoutMillis: 30000, // 유휴 타임아웃
   connectionTimeoutMillis: 2000,
 });
 
 // 쿼리 실행
 async function getUser(id) {
-  const result = await pool.query(
-    'SELECT * FROM users WHERE id = $1',
-    [id]
-  );
+  const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
   return result.rows[0];
 }
 
@@ -296,10 +302,10 @@ async function restoreFromBackup(projectId, targetLsn) {
       branch: {
         name: 'restored-backup',
         parent_id: 'main',
-        lsn: targetLsn  // 특정 시점의 LSN
-      }
+        lsn: targetLsn, // 특정 시점의 LSN
+      },
     },
-    { headers: { 'Authorization': `Bearer ${apiKey}` } }
+    { headers: { Authorization: `Bearer ${apiKey}` } },
   );
 
   return response.data;
@@ -318,35 +324,35 @@ projects:
     # 프로덕션 환경
     production:
       branch: main
-      compute_size: large  # 4 CU
+      compute_size: large # 4 CU
       autoscale: true
       min_cu: 2
       max_cu: 8
-      backup_retention: 30  # 30일
+      backup_retention: 30 # 30일
       ssl: true
-      
+
     # 스테이징 환경
     staging:
       branch: staging
-      compute_size: small   # 1 CU
+      compute_size: small # 1 CU
       autoscale: true
       min_cu: 0.5
       max_cu: 2
-      backup_retention: 7   # 7일
+      backup_retention: 7 # 7일
       ssl: true
       parent: main
-      
+
     # 개발 환경
     development:
       branch: dev
-      compute_size: small   # 1 CU
+      compute_size: small # 1 CU
       autoscale: true
       min_cu: 0.5
       max_cu: 1
       backup_retention: 3
       ssl: false
       auto_suspend: true
-      auto_suspend_delay: 300  # 5분
+      auto_suspend_delay: 300 # 5분
       parent: main
 ```
 
@@ -354,10 +360,10 @@ projects:
 
 ```typescript
 // migration.ts - TypeORM 마이그레이션
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateUsersTable1234567890 implements MigrationInterface {
-  name = 'CreateUsersTable1234567890'
+  name = 'CreateUsersTable1234567890';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
@@ -405,7 +411,7 @@ interface DatabaseConfig {
 
 export async function getDatabase(config: DatabaseConfig) {
   const env = process.env.NODE_ENV || 'development';
-  
+
   // 환경별 연결 문자열 결정
   let connectionString: string;
 
@@ -434,10 +440,10 @@ export async function getDatabase(config: DatabaseConfig) {
 // 사용 예
 async function createUser(name: string, email: string) {
   const pool = await getDatabase({ environment: 'development' });
-  
+
   const result = await pool.query(
     'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
-    [name, email]
+    [name, email],
   );
 
   return result.rows[0];
@@ -471,20 +477,20 @@ NEON_API_KEY="your-api-key-here"
 migrations:
   # 버전 관리
   naming: YYYYMMDD_HH_mm_ss_description.sql
-  
+
   # 예시: 20250129_14_30_00_create_users_table.sql
-  
+
   # 마이그레이션 체크리스트
   pre_migration:
     - 현재 데이터베이스 백업 확인
     - 스테이징에서 먼저 실행
     - 예상 실행 시간 확인
-  
+
   post_migration:
     - 성공 여부 확인
     - 롤백 계획 수립
     - 성능 영향 분석
-  
+
   rollback:
     - 각 마이그레이션에 DOWN 스크립트 필수
     - 2개 버전까지 자동 롤백 가능
@@ -497,11 +503,11 @@ environments:
     - DBA 승인 필수
     - 자동 롤백 비활성화
     - 모니터링 강화
-  
+
   staging:
     - 자유로운 실행
     - 프로덕션 직전에 최종 검증
-  
+
   development:
     - 완전 자유
     - 언제든 롤백 가능
@@ -551,12 +557,13 @@ echo "Database created: $branch_name"
 
 ### 3. 팀 협업 규칙 문서화
 
-```markdown
+````markdown
 # Neon 데이터베이스 관리 가이드
 
 ## 개발자 가이드
 
 ### 로컬 설정
+
 ```bash
 git clone <repo>
 npm install
@@ -567,12 +574,15 @@ cp .env.example .env.development
 # 마이그레이션 실행
 npm run migrate:dev
 ```
+````
 
 ### 개발 분기 사용
+
 - 각 개발자는 자신의 dev 분기 사용
 - 프로덕션 환경에 절대 직접 쿼리하지 않기
 
 ### 마이그레이션 작성
+
 1. 변경 스크립트 작성 (UP)
 2. 롤백 스크립트 작성 (DOWN)
 3. 스테이징에서 테스트
@@ -580,6 +590,7 @@ npm run migrate:dev
 5. CI에서 자동 검증
 
 ### 주의사항
+
 - 프로덕션 데이터 복사 금지 (보안)
 - 대용량 스토리지 작업은 사전 공지
 - 스토리지 임계값 모니터링
@@ -587,19 +598,23 @@ npm run migrate:dev
 ## DBA 가이드
 
 ### 프로덕션 배포
+
 - 영업 시간 외에만 실행
 - 자동 롤백 비활성화 상태 확인
 - 실시간 모니터링
 
 ### 성능 최적화
+
 - 쿼리 실행 계획 분석
 - 인덱스 최적화
 - 연결 풀 모니터링
 
 ### 재해 복구
+
 - 일일 백업 확인
 - 월 1회 복구 훈련
 - 문서화 유지
+
 ```
 
 ## 비용 최적화
@@ -607,6 +622,7 @@ npm run migrate:dev
 ### 1. 비용 계산 예시
 
 ```
+
 프로젝트 규모: 중소 스타트업
 
 환경 구성:
@@ -615,13 +631,15 @@ npm run migrate:dev
 └─ Development (dev): 0.5 CU, $0.08/시간 (자동 중단 설정)
 
 월간 비용:
-- Production: 2 * $0.16 * 730 = $232/월
-- Staging: 1 * $0.16 * 730 = $116/월 (업무 시간만 실행)
-- Development: 0.5 * $0.16 * 100 = $8/월 (대부분 중단)
+
+- Production: 2 _ $0.16 _ 730 = $232/월
+- Staging: 1 _ $0.16 _ 730 = $116/월 (업무 시간만 실행)
+- Development: 0.5 _ $0.16 _ 100 = $8/월 (대부분 중단)
 - 스토리지 (100GB): $0 (무료)
 
 총계: ~$356/월
-```
+
+````
 
 ### 2. 비용 절감 방법
 
@@ -645,7 +663,7 @@ npm run migrate:dev
    - 리소스 효율화
 
 총 절감 가능: 45-65%
-```
+````
 
 ## 결론
 
@@ -657,6 +675,7 @@ Neon은 PostgreSQL의 미래입니다:
 ✅ **안정성**: 자동 백업, PITR, 재해 복구
 ✅ **관리 부담**: 완전 관리형으로 인프라 걱정 해결
 
-특히 스타트업과 성장 중인 팀에게 Neon은 게임 체인저입니다. 데이터베이스 인프라가 아닌 비즈니스 로직에 집중할 수 있게 해줍니다.
+특히 스타트업과 성장 중인 팀에게 Neon은 게임 체인저입니다.
+데이터베이스 인프라가 아닌 비즈니스 로직에 집중할 수 있게 해줍니다.
 
 **Neon으로 지금 바로 시작하세요!**

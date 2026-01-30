@@ -2,9 +2,11 @@
 
 ## 들어가며
 
-Husky를 사용 중인데 pre-commit 훅이 실행될 때마다 5-10초 기다린다면? Node.js 오버헤드 때문입니다. Lefthook은 Go로 작성되어 100배 더 빠릅니다.
+Husky를 사용 중인데 pre-commit 훅이 실행될 때마다 5-10초 기다린다면? Node.js 오버헤드 때문입니다.
+Lefthook은 Go로 작성되어 100배 더 빠릅니다.
 
-Go 바이너리로 빌드된 Lefthook은 npm 패키지 설치 없이도 작동하며, JavaScript뿐 아니라 Python, Ruby, Java 등 모든 프로젝트에서 사용할 수 있습니다. 특히 대규모 모노레포에서 Lefthook의 병렬 실행 기능은 개발 속도를 획기적으로 향상시킵니다.
+Go 바이너리로 빌드된 Lefthook은 npm 패키지 설치 없이도 작동하며, JavaScript뿐 아니라 Python, Ruby, Java 등 모든 프로젝트에서 사용할 수 있습니다.
+특히 대규모 모노레포에서 Lefthook의 병렬 실행 기능은 개발 속도를 획기적으로 향상시킵니다.
 
 ## Husky vs Lefthook
 
@@ -35,16 +37,16 @@ Lefthook (병렬 실행):
 
 ### 기능 비교
 
-| 기능 | Husky | Lefthook |
-|------|-------|----------|
-| Git 훅 관리 | ✅ | ✅ |
-| 병렬 실행 | ❌ | ✅ |
-| 조건부 실행 | ❌ | ✅ |
-| 다중 언어 지원 | npm만 | 모든 언어 |
-| 성능 | 중간 | 최고 |
-| 학습곡선 | 쉬움 | 중간 |
-| 설정 파일 | package.json, .js | lefthook.yml |
-| 크로스 플랫폼 | ✅ | ✅ |
+| 기능           | Husky             | Lefthook     |
+| -------------- | ----------------- | ------------ |
+| Git 훅 관리    | ✅                | ✅           |
+| 병렬 실행      | ❌                | ✅           |
+| 조건부 실행    | ❌                | ✅           |
+| 다중 언어 지원 | npm만             | 모든 언어    |
+| 성능           | 중간              | 최고         |
+| 학습곡선       | 쉬움              | 중간         |
+| 설정 파일      | package.json, .js | lefthook.yml |
+| 크로스 플랫폼  | ✅                | ✅           |
 
 **결론:** 성능이 중요하거나 다중 언어 프로젝트라면 Lefthook을 선택하세요.
 
@@ -106,24 +108,24 @@ global:
 # 명령어 정의 (모든 훅에서 재사용 가능)
 commands:
   lint:
-    glob: "*.js"
+    glob: '*.js'
     run: eslint {staged_files}
   format:
-    glob: "*.js"
+    glob: '*.js'
     run: prettier --write {staged_files}
   test:
-    glob: "*.test.js"
+    glob: '*.test.js'
     run: npm test -- {staged_files}
 
 # Pre-commit 훅 설정
 pre-commit:
-  parallel: true  # 병렬 실행
+  parallel: true # 병렬 실행
   commands:
     lint:
-      glob: "*.js"
+      glob: '*.js'
       run: eslint {staged_files}
     format:
-      glob: "*.js"
+      glob: '*.js'
       run: prettier --write {staged_files}
 
 # Pre-push 훅 설정
@@ -146,6 +148,7 @@ lefthook install
 ```
 
 이 명령은:
+
 1. 모든 훅을 `.git/hooks` 디렉토리에 설치합니다
 2. 기존 훅은 백업합니다
 3. lefthook.yml을 Git에 커밋하도록 지시합니다
@@ -165,102 +168,102 @@ global:
   min_version: 2.0.0
   # 환경 변수 설정
   env:
-    NODE_ENV: "development"
+    NODE_ENV: 'development'
   # 실행 시간 초과 (초 단위)
   timeout: 300
 
 # 모든 훅에서 사용할 수 있는 명령어 정의
 commands:
   eslint:
-    glob: "*.{js,jsx,ts,tsx}"
+    glob: '*.{js,jsx,ts,tsx}'
     run: eslint --fix {staged_files}
-    description: "ESLint을 실행하여 코드 품질 검사"
+    description: 'ESLint을 실행하여 코드 품질 검사'
 
   prettier:
-    glob: "*.{js,jsx,ts,tsx,json,css,scss,md}"
+    glob: '*.{js,jsx,ts,tsx,json,css,scss,md}'
     run: prettier --write {staged_files}
-    description: "Prettier로 코드 포매팅"
+    description: 'Prettier로 코드 포매팅'
 
   tsc:
-    glob: "*.{ts,tsx}"
+    glob: '*.{ts,tsx}'
     run: tsc --noEmit
-    description: "TypeScript 타입 검사"
+    description: 'TypeScript 타입 검사'
 
   test:
-    glob: "*.test.{js,jsx,ts,tsx}"
+    glob: '*.test.{js,jsx,ts,tsx}'
     run: npm test -- --bail {staged_files}
-    description: "테스트 실행"
+    description: '테스트 실행'
 
   jest:
-    glob: "**/__tests__/**/*.{js,jsx,ts,tsx}"
+    glob: '**/__tests__/**/*.{js,jsx,ts,tsx}'
     run: npx jest {staged_files} --coverage
-    description: "Jest 테스트 실행"
+    description: 'Jest 테스트 실행'
 
 # Pre-commit: 파일 수정 및 검증
 pre-commit:
   # 병렬 실행 활성화
   parallel: true
-  
+
   # 병렬 실행 시 최대 워커 수
   max_workers: 4
-  
+
   # 실행 순서 (병렬 실행이 아닌 경우)
   # 순차적으로 실행됨
   skip:
     - merge
     - rebase
-  
+
   # 커맨드 정의
   commands:
     # 1단계: 린트 + 포매팅
     lint-and-format:
-      glob: "*.{js,jsx,ts,tsx}"
+      glob: '*.{js,jsx,ts,tsx}'
       run: eslint --fix {staged_files} && prettier --write {staged_files}
-      stage_fix: true  # 수정된 파일을 자동으로 스테이징
-      description: "ESLint + Prettier 실행"
-    
+      stage_fix: true # 수정된 파일을 자동으로 스테이징
+      description: 'ESLint + Prettier 실행'
+
     # 2단계: TypeScript 타입 검사
     type-check:
-      glob: "*.{ts,tsx}"
+      glob: '*.{ts,tsx}'
       run: tsc --noEmit
-      description: "TypeScript 타입 검사"
-    
+      description: 'TypeScript 타입 검사'
+
     # 3단계: JSON 검증
     validate-json:
-      glob: "*.json"
+      glob: '*.json'
       run: node -c {staged_files}
-      description: "JSON 파일 검증"
+      description: 'JSON 파일 검증'
 
 # Pre-push: 원격에 푸시하기 전 검증
 pre-push:
-  parallel: false  # 순차 실행 (테스트가 순서를 보장해야 함)
-  
+  parallel: false # 순차 실행 (테스트가 순서를 보장해야 함)
+
   skip:
     - merge
     - rebase
-  
+
   commands:
     # 전체 테스트 스위트 실행
     test:
       run: npm test
-      description: "전체 테스트 스위트 실행"
-    
+      description: '전체 테스트 스위트 실행'
+
     # 타입 검사
     type-check:
       run: npm run type-check
-      description: "TypeScript 타입 검사"
-    
+      description: 'TypeScript 타입 검사'
+
     # 빌드 검증
     build:
       run: npm run build
-      description: "프로덕션 빌드 검증"
+      description: '프로덕션 빌드 검증'
 
 # Commit-msg: 커밋 메시지 검증
 commit-msg:
   commands:
     commitlint:
       run: npx commitlint --edit {1}
-      description: "Conventional Commits 검증"
+      description: 'Conventional Commits 검증'
 
 # Prepare-commit-msg: 커밋 메시지 템플릿
 prepare-commit-msg:
@@ -273,21 +276,21 @@ prepare-commit-msg:
         if [ -n "$ISSUE_ID" ]; then
           sed -i.bak -e "1s/^/$ISSUE_ID: /" $1
         fi
-      description: "브랜치 이름에서 Issue ID 자동 추가"
+      description: '브랜치 이름에서 Issue ID 자동 추가'
 
 # Post-commit: 커밋 후 작업
 post-commit:
   commands:
     update-hooks:
       run: lefthook install
-      description: "훅이 변경되었으면 갱신"
+      description: '훅이 변경되었으면 갱신'
 
 # Post-merge: 병합 후 작업
 post-merge:
   commands:
     install-deps:
       run: npm ci
-      description: "package-lock.json이 변경되었으면 의존성 재설치"
+      description: 'package-lock.json이 변경되었으면 의존성 재설치'
 ```
 
 ### 2. package.json 통합
@@ -334,8 +337,8 @@ pre-commit:
           echo "Cannot commit directly to main branch"
           exit 1
         fi
-      glob: "*"
-    
+      glob: '*'
+
     # 파일 크기가 1MB 이상일 때만 경고
     large-file-warning:
       run: |
@@ -345,8 +348,8 @@ pre-commit:
             echo "⚠️  Large file: $file ($(($size / 1048576))MB)"
           fi
         done
-      glob: "*"
-      fail: false  # 실패해도 계속 진행
+      glob: '*'
+      fail: false # 실패해도 계속 진행
 ```
 
 ### 2. 동적 글로브 패턴
@@ -358,32 +361,32 @@ pre-commit:
   commands:
     # Python 프로젝트
     python-lint:
-      glob: "*.py"
+      glob: '*.py'
       run: python -m pylint {staged_files}
-      description: "Python 린트"
-    
+      description: 'Python 린트'
+
     # Go 프로젝트
     go-fmt:
-      glob: "*.go"
+      glob: '*.go'
       run: gofmt -w {staged_files}
-      description: "Go 포매팅"
-    
+      description: 'Go 포매팅'
+
     # Ruby 프로젝트
     ruby-lint:
-      glob: "*.rb"
+      glob: '*.rb'
       run: rubocop -a {staged_files}
-      description: "Ruby 린트"
-    
+      description: 'Ruby 린트'
+
     # 모든 언어 공통
     secrets-scan:
-      glob: "*"
+      glob: '*'
       run: |
         if grep -r "api_key\|password\|secret" {staged_files} 2>/dev/null; then
           echo "❌ Secrets detected in staged files"
           exit 1
         fi
       fail: true
-      description: "민감한 정보 검사"
+      description: '민감한 정보 검사'
 ```
 
 ### 3. 병렬 실행 최적화
@@ -394,25 +397,25 @@ version: 2
 pre-commit:
   parallel: true
   max_workers: 4
-  
+
   commands:
     # 그룹 1: 린트 & 포매팅 (병렬 실행)
     lint:
-      glob: "*.{js,jsx,ts,tsx}"
+      glob: '*.{js,jsx,ts,tsx}'
       run: eslint --fix {staged_files}
-    
+
     format:
-      glob: "*.{js,jsx,ts,tsx}"
+      glob: '*.{js,jsx,ts,tsx}'
       run: prettier --write {staged_files}
-    
+
     # 그룹 2: 타입 검사 (독립적으로 병렬 실행)
     type-check:
-      glob: "*.{ts,tsx}"
+      glob: '*.{ts,tsx}'
       run: tsc --noEmit
-    
+
     # 그룹 3: JSON 검증 (독립적으로 병렬 실행)
     validate-json:
-      glob: "*.json"
+      glob: '*.json'
       run: jq empty {staged_files}
 ```
 
@@ -424,11 +427,11 @@ version: 2
 global:
   env:
     # Node 환경
-    NODE_ENV: "development"
+    NODE_ENV: 'development'
     # npm 로그 레벨
-    npm_config_loglevel: "warn"
+    npm_config_loglevel: 'warn'
     # 커스텀 변수
-    PROJECT_NAME: "my-project"
+    PROJECT_NAME: 'my-project'
 
 pre-commit:
   commands:
@@ -437,9 +440,9 @@ pre-commit:
       run: |
         #!/bin/bash
         set -e
-        
+
         echo "🔍 Custom validation started..."
-        
+
         # 1. 스테이징된 파일 확인
         for file in {staged_files}; do
           echo "Checking $file..."
@@ -449,11 +452,11 @@ pre-commit:
             echo "⚠️  Copyright notice missing in $file"
           fi
         done
-        
+
         echo "✅ Custom validation passed!"
         exit 0
-      glob: "*.{js,jsx,ts,tsx}"
-      description: "커스텀 검증"
+      glob: '*.{js,jsx,ts,tsx}'
+      description: '커스텀 검증'
 ```
 
 ## 실제 프로젝트 예시
@@ -479,30 +482,30 @@ global:
 # 각 패키지의 훅을 조건부로 실행
 commands:
   api-lint:
-    glob: "packages/api/**/*.{ts,tsx}"
+    glob: 'packages/api/**/*.{ts,tsx}'
     run: cd packages/api && npm run lint:fix
 
   web-lint:
-    glob: "packages/web/**/*.{tsx,ts}"
+    glob: 'packages/web/**/*.{tsx,ts}'
     run: cd packages/web && npm run lint:fix
 
   mobile-lint:
-    glob: "packages/mobile/**/*.{ts,tsx}"
+    glob: 'packages/mobile/**/*.{ts,tsx}'
     run: cd packages/mobile && npm run lint:fix
 
 pre-commit:
   parallel: true
   commands:
     api-lint:
-      glob: "packages/api/**/*.{ts,tsx}"
+      glob: 'packages/api/**/*.{ts,tsx}'
       run: cd packages/api && npm run lint:fix
 
     web-lint:
-      glob: "packages/web/**/*.{tsx,ts}"
+      glob: 'packages/web/**/*.{tsx,ts}'
       run: cd packages/web && npm run lint:fix
 
     mobile-lint:
-      glob: "packages/mobile/**/*.{ts,tsx}"
+      glob: 'packages/mobile/**/*.{ts,tsx}'
       run: cd packages/mobile && npm run lint:fix
 
 pre-push:
@@ -526,25 +529,25 @@ pre-commit:
   parallel: true
   commands:
     black:
-      glob: "*.py"
+      glob: '*.py'
       run: black {staged_files}
-      description: "Black으로 포매팅"
-    
+      description: 'Black으로 포매팅'
+
     pylint:
-      glob: "*.py"
+      glob: '*.py'
       run: pylint {staged_files}
-      description: "Pylint 코드 품질 검사"
-    
+      description: 'Pylint 코드 품질 검사'
+
     pytest:
-      glob: "tests/**/*.py"
+      glob: 'tests/**/*.py'
       run: pytest {staged_files} -v
-      description: "pytest 테스트"
+      description: 'pytest 테스트'
 
 pre-push:
   commands:
     coverage:
       run: pytest --cov=src tests/
-      description: "테스트 커버리지 검사"
+      description: '테스트 커버리지 검사'
 ```
 
 ## Husky에서 Lefthook으로 마이그레이션
@@ -569,6 +572,7 @@ lefthook install
 ### 3. 설정 파일 변환
 
 **Husky (package.json):**
+
 ```json
 {
   "lint-staged": {
@@ -579,17 +583,18 @@ lefthook install
 ```
 
 **Lefthook (lefthook.yml):**
+
 ```yaml
 version: 2
 
 pre-commit:
   commands:
     lint:
-      glob: "*.js"
+      glob: '*.js'
       run: eslint --fix {staged_files}
-    
+
     format:
-      glob: "*.{js,json}"
+      glob: '*.{js,json}'
       run: prettier --write {staged_files}
 ```
 
@@ -608,7 +613,7 @@ git commit -m "test: test file"
 
 ## 팀 협업 가이드
 
-```markdown
+````markdown
 # Lefthook 설정 가이드
 
 ## 초기 설정
@@ -617,15 +622,18 @@ git commit -m "test: test file"
 git clone <repo>
 npm install  # lefthook install이 자동 실행됨
 ```
+````
 
 ## Pre-commit 훅
 
 다음이 자동으로 실행됩니다:
+
 - ESLint + 자동 수정
 - Prettier + 자동 포매팅
 - TypeScript 타입 검사
 
 문제가 발생하면:
+
 1. 에러 메시지 읽기
 2. 파일 수정
 3. `git add` 재실행
@@ -634,6 +642,7 @@ npm install  # lefthook install이 자동 실행됨
 ## Pre-push 훅
 
 다음이 자동으로 실행됩니다:
+
 - 전체 테스트 스위트
 - 빌드 검증
 
@@ -656,22 +665,21 @@ A: `lefthook install`을 실행하세요.
 
 **Q: 특정 파일을 제외하고 싶음**
 A: lefthook.yml의 glob 패턴을 수정하세요.
-```
 
 ## Lefthook vs Husky 최종 비교
 
-| 관점 | Husky | Lefthook |
-|------|-------|----------|
-| **성능** | 느림 (Node.js 오버헤드) | 빠름 (Go 바이너리) |
-| **병렬 실행** | 없음 | 있음 |
-| **언어 지원** | npm만 | 모든 언어 |
-| **설정** | package.json + .js | lefthook.yml |
-| **학습곡선** | 쉬움 | 중간 |
-| **커뮤니티** | 큼 | 중간 |
-| **단순한 프로젝트** | ✅ 추천 | 과할 수 있음 |
-| **복잡한 프로젝트** | 적합 | ✅ 추천 |
-| **모노레포** | 괜찮음 | ✅ 최고 |
-| **다중 언어 프로젝트** | 부족함 | ✅ 완벽함 |
+| 관점                   | Husky                   | Lefthook           |
+| ---------------------- | ----------------------- | ------------------ |
+| **성능**               | 느림 (Node.js 오버헤드) | 빠름 (Go 바이너리) |
+| **병렬 실행**          | 없음                    | 있음               |
+| **언어 지원**          | npm만                   | 모든 언어          |
+| **설정**               | package.json + .js      | lefthook.yml       |
+| **학습곡선**           | 쉬움                    | 중간               |
+| **커뮤니티**           | 큼                      | 중간               |
+| **단순한 프로젝트**    | ✅ 추천                 | 과할 수 있음       |
+| **복잡한 프로젝트**    | 적합                    | ✅ 추천            |
+| **모노레포**           | 괜찮음                  | ✅ 최고            |
+| **다중 언어 프로젝트** | 부족함                  | ✅ 완벽함          |
 
 ## 결론
 

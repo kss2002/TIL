@@ -9,7 +9,8 @@
 - 모듈 시스템의 혼란 (CommonJS vs ES Modules)
 - TypeScript 설정의 복잡함
 
-Deno는 Node.js의 창시자 Ryan Dahl이 Node.js의 "10년의 후회"를 토대로 만든 새로운 JavaScript 런타임입니다. 처음부터 올바르게 설계되어, 더 안전하고 효율적입니다.
+Deno는 Node.js의 창시자 Ryan Dahl이 Node.js의 "10년의 후회"를 토대로 만든 새로운 JavaScript 런타임입니다.
+처음부터 올바르게 설계되어, 더 안전하고 효율적입니다.
 
 ## Node.js vs Deno 비교
 
@@ -35,18 +36,18 @@ Deno (2018년, 근본 재설계):
 
 ### 기능 비교
 
-| 기능 | Node.js | Deno |
-|------|---------|------|
-| **JavaScript** | ✅ | ✅ |
-| **TypeScript** | 별도 설정 필요 | ✅ 기본 지원 |
-| **보안 권한** | ❌ | ✅ 기본 제공 |
-| **패키지 관리** | npm | URL 기반 |
-| **포매터** | 별도 (Prettier) | ✅ deno fmt |
-| **린터** | 별도 (ESLint) | ✅ deno lint |
-| **테스트** | 별도 (Jest 등) | ✅ deno test |
-| **번들러** | 별도 (webpack 등) | ✅ deno bundle |
-| **node_modules** | 거대함 | 없음 |
-| **학습곡선** | 높음 | 낮음 |
+| 기능             | Node.js           | Deno           |
+| ---------------- | ----------------- | -------------- |
+| **JavaScript**   | ✅                | ✅             |
+| **TypeScript**   | 별도 설정 필요    | ✅ 기본 지원   |
+| **보안 권한**    | ❌                | ✅ 기본 제공   |
+| **패키지 관리**  | npm               | URL 기반       |
+| **포매터**       | 별도 (Prettier)   | ✅ deno fmt    |
+| **린터**         | 별도 (ESLint)     | ✅ deno lint   |
+| **테스트**       | 별도 (Jest 등)    | ✅ deno test   |
+| **번들러**       | 별도 (webpack 등) | ✅ deno bundle |
+| **node_modules** | 거대함            | 없음           |
+| **학습곡선**     | 높음              | 낮음           |
 
 ## Deno의 혁신적 기능
 
@@ -136,12 +137,13 @@ import dotenv from 'dotenv';
 import { z } from 'zod';
 
 // Deno
-import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
-import { assertEquals } from "https://deno.land/std@0.208.0/testing/asserts.ts";
-import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { serve } from 'https://deno.land/std@0.208.0/http/server.ts';
+import { assertEquals } from 'https://deno.land/std@0.208.0/testing/asserts.ts';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 ```
 
 **장점:**
+
 - node_modules 없음 (디스크 공간 절약)
 - 명시적 버전 관리
 - 직관적인 모듈 탐색
@@ -153,20 +155,20 @@ import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 {
   "name": "my-app",
   "version": "1.0.0",
-  
+
   // 임포트 맵 (import alias)
   "imports": {
     "std/": "https://deno.land/std@0.208.0/",
     "oak": "https://deno.land/x/oak@v12.0.0/mod.ts",
     "@/": "./src/"
   },
-  
+
   // 공개 API 정의
   "exports": {
     ".": "./src/mod.ts",
     "./server": "./src/server.ts"
   },
-  
+
   // 스크립트 (npm scripts와 유사)
   "tasks": {
     "dev": "deno run --allow-net --allow-read src/server.ts",
@@ -174,7 +176,7 @@ import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
     "fmt": "deno fmt",
     "lint": "deno lint"
   },
-  
+
   // 린트 설정
   "lint": {
     "rules": {
@@ -182,7 +184,7 @@ import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
       "exclude": ["camelcase"]
     }
   },
-  
+
   // 포매터 설정
   "fmt": {
     "semiColons": true,
@@ -221,8 +223,8 @@ deno check src/main.ts  # 타입 검증만
 
 ```typescript
 // src/server.ts
-import { Application, Router } from "@/oak";
-import { oakCors } from "@/oak_cors";
+import { Application, Router } from '@/oak';
+import { oakCors } from '@/oak_cors';
 
 const app = new Application();
 const router = new Router();
@@ -236,19 +238,19 @@ interface User {
 
 // 라우트
 router
-  .get("/", (ctx) => {
-    ctx.response.body = "Welcome to Deno server!";
+  .get('/', (ctx) => {
+    ctx.response.body = 'Welcome to Deno server!';
   })
-  .get("/users/:id", async (ctx) => {
+  .get('/users/:id', async (ctx) => {
     const id = ctx.params.id;
     const user: User = {
       id,
-      name: "John Doe",
-      email: "john@example.com"
+      name: 'John Doe',
+      email: 'john@example.com',
     };
     ctx.response.body = user;
   })
-  .post("/users", async (ctx) => {
+  .post('/users', async (ctx) => {
     const body = ctx.request.body();
     const user = await body.value;
     ctx.response.status = 201;
@@ -289,14 +291,14 @@ deno task dev
 
 ```typescript
 // src/database.ts
-import { Client } from "https://deno.land/x/postgres@v0.17.0/mod.ts";
+import { Client } from 'https://deno.land/x/postgres@v0.17.0/mod.ts';
 
 const client = new Client({
-  user: Deno.env.get("DB_USER") || "postgres",
-  password: Deno.env.get("DB_PASSWORD") || "postgres",
-  hostname: Deno.env.get("DB_HOST") || "localhost",
+  user: Deno.env.get('DB_USER') || 'postgres',
+  password: Deno.env.get('DB_PASSWORD') || 'postgres',
+  hostname: Deno.env.get('DB_HOST') || 'localhost',
   port: 5432,
-  database: Deno.env.get("DB_NAME") || "myapp",
+  database: Deno.env.get('DB_NAME') || 'myapp',
 });
 
 await client.connect();
@@ -310,16 +312,16 @@ export interface User {
 
 export async function getUser(id: string): Promise<User | null> {
   const result = await client.queryObject<User>(
-    "SELECT * FROM users WHERE id = $1",
-    [id]
+    'SELECT * FROM users WHERE id = $1',
+    [id],
   );
   return result.rows[0] || null;
 }
 
 export async function createUser(name: string, email: string): Promise<User> {
   const result = await client.queryObject<User>(
-    "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
-    [name, email]
+    'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+    [name, email],
   );
   return result.rows[0];
 }
@@ -345,7 +347,7 @@ export const down = `
 `;
 
 // src/migrate.ts
-import { Client } from "@/postgres";
+import { Client } from '@/postgres';
 
 interface Migration {
   name: string;
@@ -371,22 +373,21 @@ async function migrate() {
 
   // 실행할 마이그레이션
   const migrations: Migration[] = [
-    await import("./migrations/001_create_users.ts")
+    await import('./migrations/001_create_users.ts'),
   ];
 
   for (const migration of migrations) {
     const exists = await client.queryArray(
-      "SELECT 1 FROM migrations WHERE name = $1",
-      [migration.name]
+      'SELECT 1 FROM migrations WHERE name = $1',
+      [migration.name],
     );
 
     if (!exists.rows.length) {
       console.log(`Executing migration: ${migration.name}`);
       await client.queryArray(migration.up);
-      await client.queryArray(
-        "INSERT INTO migrations (name) VALUES ($1)",
-        [migration.name]
-      );
+      await client.queryArray('INSERT INTO migrations (name) VALUES ($1)', [
+        migration.name,
+      ]);
     }
   }
 
@@ -402,27 +403,27 @@ if (import.meta.main) {
 
 ```typescript
 // src/utils.test.ts
-import { assertEquals, assertThrows } from "std/testing/asserts.ts";
-import { add, divide } from "@/utils.ts";
+import { assertEquals, assertThrows } from 'std/testing/asserts.ts';
+import { add, divide } from '@/utils.ts';
 
-Deno.test("add function", () => {
+Deno.test('add function', () => {
   assertEquals(add(2, 3), 5);
   assertEquals(add(-1, 1), 0);
 });
 
-Deno.test("divide throws on zero", () => {
-  assertThrows(() => divide(10, 0), Error, "Cannot divide by zero");
+Deno.test('divide throws on zero', () => {
+  assertThrows(() => divide(10, 0), Error, 'Cannot divide by zero');
 });
 
 // src/api.test.ts
-import { assertEquals } from "std/testing/asserts.ts";
-import { getUser } from "@/api.ts";
+import { assertEquals } from 'std/testing/asserts.ts';
+import { getUser } from '@/api.ts';
 
-Deno.test("getUser API", async () => {
+Deno.test('getUser API', async () => {
   // Mock 설정
-  const mockUser = { id: "1", name: "John", email: "john@example.com" };
-  
-  const result = await getUser("1");
+  const mockUser = { id: '1', name: 'John', email: 'john@example.com' };
+
+  const result = await getUser('1');
   assertEquals(result, mockUser);
 });
 ```
@@ -449,14 +450,14 @@ export interface Config {
 }
 
 export function loadConfig(): Config {
-  const env = Deno.env.get("NODE_ENV") || "development";
+  const env = Deno.env.get('NODE_ENV') || 'development';
 
   return {
     env,
-    port: parseInt(Deno.env.get("PORT") || "3000"),
-    databaseUrl: Deno.env.get("DATABASE_URL") || "",
-    apiKey: Deno.env.get("API_KEY") || "",
-    logLevel: Deno.env.get("LOG_LEVEL") || "info"
+    port: parseInt(Deno.env.get('PORT') || '3000'),
+    databaseUrl: Deno.env.get('DATABASE_URL') || '',
+    apiKey: Deno.env.get('API_KEY') || '',
+    logLevel: Deno.env.get('LOG_LEVEL') || 'info',
   };
 }
 
@@ -528,9 +529,9 @@ module.exports = { app };
 
 ```typescript
 // Deno (ES Modules)
-import { Application } from "https://deno.land/x/oak@v12.0.0/mod.ts";
-import cors from "https://deno.land/x/cors@v1.2.2/mod.ts";
-import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { Application } from 'https://deno.land/x/oak@v12.0.0/mod.ts';
+import cors from 'https://deno.land/x/cors@v1.2.2/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 export { app };
 ```
@@ -549,7 +550,7 @@ deno run \
 
 ## 팀 협업 가이드
 
-```markdown
+````markdown
 # Deno 프로젝트 온보딩 가이드
 
 ## 설치
@@ -564,6 +565,7 @@ irm https://deno.land/x/install/install.ps1 | iex
 # Homebrew
 brew install deno
 ```
+````
 
 ## 프로젝트 시작
 
@@ -576,14 +578,17 @@ deno task dev
 ## 개발 규칙
 
 ### 1. TypeScript 사용
+
 - 항상 TypeScript로 작성
 - 타입 정의 필수
 
 ### 2. 권한 최소화
+
 - 필요한 권한만 요청
 - 문서에 권한 명시
 
 ### 3. 내장 도구 사용
+
 ```bash
 deno fmt           # 자동 포매팅
 deno lint          # 린트
@@ -592,6 +597,7 @@ deno check         # 타입 검사
 ```
 
 ### 4. 의존성 관리
+
 - deno.json에 import alias 정의
 - 모듈 버전 명시
 
@@ -608,7 +614,6 @@ A: npm 레지스트리를 Deno와 호환되도록 하는 서비스(npm:)를 사�
 
 **Q: 패키지가 없으면 어떻게 하나요?**
 A: Deno 생태계가 빠르게 성장 중입니다. 필요하면 직접 구현하거나 기여하세요.
-```
 
 ## Deno의 미래
 

@@ -9,7 +9,8 @@
 - "리팩토링하면 뭔가 깨질까봐..." - 의존성 파악이 어려움
 - "여러 팀원이 같은 기능을 만들고 있어" - 협업이 어려움
 
-FSD(Feature-Sliced Design)는 이 모든 문제를 구조적으로 해결하는 방법론입니다. 프로젝트를 **수평적 계층**(shared, entities, features 등)과 **수직적 슬라이스**(각 기능)로 구분하여, 확장성과 유지보수성이 뛰어난 아키텍처를 만듭니다.
+FSD(Feature-Sliced Design)는 이 모든 문제를 구조적으로 해결하는 방법론입니다.
+프로젝트를 **수평적 계층**(shared, entities, features 등)과 **수직적 슬라이스**(각 기능)로 구분하여, 확장성과 유지보수성이 뛰어난 아키텍처를 만듭니다.
 
 ## FSD의 핵심 개념
 
@@ -207,17 +208,18 @@ features/
 **각 폴더의 역할:**
 
 - **model/**: 상태 관리, 타입, 도메인 로직
+
   ```typescript
   // features/auth/model/authStore.ts
   import { create } from 'zustand';
-  
+
   interface AuthState {
     user: User | null;
     isLoading: boolean;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
   }
-  
+
   export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     isLoading: false,
@@ -235,14 +237,15 @@ features/
   ```
 
 - **ui/**: 이 기능의 UI 컴포넌트들
+
   ```typescript
   // features/auth/ui/LoginForm.tsx
   import { useAuthStore } from '../model/authStore';
   import { validateEmail } from '../lib/validators';
-  
+
   export function LoginForm() {
     const { login, isLoading } = useAuthStore();
-    
+
     return (
       <form onSubmit={/* ... */}>
         {/* 폼 내용 */}
@@ -252,18 +255,20 @@ features/
   ```
 
 - **api/**: API 호출 (외부 노출 안 함)
+
   ```typescript
   // features/auth/api/authApi.ts (내부용)
   export async function loginApi(email: string, password: string) {
     const response = await fetch('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
     return response.json();
   }
   ```
 
 - **lib/**: 유틸리티, 헬퍼 함수 (내부용)
+
   ```typescript
   // features/auth/lib/validators.ts (내부용)
   export function validateEmail(email: string): boolean {
@@ -272,6 +277,7 @@ features/
   ```
 
 - **index.ts**: Public API (이것만 외부에서 임포트 가능)
+
   ```typescript
   // features/auth/index.ts
   // 외부에서 접근할 수 있는 것들만 export
@@ -279,7 +285,7 @@ features/
   export { SignupForm } from './ui/SignupForm';
   export { useAuthStore } from './model/authStore';
   export type { User, AuthState } from './model/types';
-  
+
   // 다른 것들은 export하지 않음!
   // api/authApi.ts는 내부용
   // lib/validators.ts는 내부용
@@ -498,9 +504,9 @@ import { UserCard } from 'entities/user';
 import { Button } from 'shared/ui';
 
 // ❌ 잘못된 임포트
-import { validateEmail } from 'features/auth/lib/validators';  // NO!
-import { loginApi } from 'features/auth/api/authApi';         // NO!
-import { authStore } from 'features/auth/model/authStore';    // NO!
+import { validateEmail } from 'features/auth/lib/validators'; // NO!
+import { loginApi } from 'features/auth/api/authApi'; // NO!
+import { authStore } from 'features/auth/model/authStore'; // NO!
 ```
 
 ### 3. Slice 간 통신
@@ -534,13 +540,13 @@ import { useProductStore } from 'features/product-list/model'; // NO!
 export { LoginForm } from './ui/LoginForm';
 
 // features/auth/ui/LoginForm.tsx
-import { useProductStore } from 'features/product-list';  // ← 다른 feature
+import { useProductStore } from 'features/product-list'; // ← 다른 feature
 
 // features/product-list/index.ts
 export { useProductStore } from './model/productStore';
 
 // features/product-list 어딘가
-import { LoginForm } from 'features/auth';  // ← 다시 auth 참조!
+import { LoginForm } from 'features/auth'; // ← 다시 auth 참조!
 
 // ✅ 해결: Shared 사용 또는 구조 재검토
 // shared/hooks/useNotification.ts
@@ -596,17 +602,17 @@ export default [
     rules: {
       // 각 레이어는 자신의 인덱스만 export 가능
       'fsd/public-api-integrity': 'error',
-      
+
       // 위에서 아래로만 의존 가능
       'fsd/layers-interaction': 'error',
-      
+
       // 순환 의존성 금지
       'import/no-cycle': 'error',
-      
+
       // 절대 경로 필수
-      'import/no-relative-packages': 'error'
-    }
-  }
+      'import/no-relative-packages': 'error',
+    },
+  },
 ];
 ```
 
@@ -659,7 +665,7 @@ interface CartState {
   items: CartItem[];
   isLoading: boolean;
   total: number;
-  
+
   // Actions
   addItem: (productId: string, quantity: number) => Promise<void>;
   removeItem: (productId: string) => Promise<void>;
@@ -787,6 +793,7 @@ export type { CartItem, CartState } from './model/cartStore';
 ## 개발자 체크리스트
 
 ### 기능 추가 시
+
 - [ ] 어떤 레이어에 속하는지 명확히 했는가?
 - [ ] Public API (index.ts)를 정의했는가?
 - [ ] 다른 슬라이스와 의존성이 없는가?
@@ -794,6 +801,7 @@ export type { CartItem, CartState } from './model/cartStore';
 - [ ] 사내 ESLint 규칙을 모두 통과했는가?
 
 ### 코드 리뷰 체크리스트
+
 - [ ] Public API만 노출되었는가?
 - [ ] 의존성 방향이 올바른가?
 - [ ] 올바른 레이어에 있는가?
@@ -802,6 +810,7 @@ export type { CartItem, CartState } from './model/cartStore';
 ## 파일 이동 금지 규칙
 
 다음은 절대 이동하면 안 됩니다:
+
 - features 간 파일 이동
 - 상위 레이어로의 파일 이동
 
@@ -850,6 +859,7 @@ FSD는 **중소 규모 이상의 모던 프론트엔드 프로젝트**에 매우
 - 여러 팀이 협업해야 함
 
 FSD를 올바르게 적용하면:
+
 - 코드 리뷰 시간 50% 감소
 - 버그 발생률 30% 감소
 - 개발 속도 40% 향상

@@ -2,15 +2,18 @@
 
 ## 들어가며
 
-당신이 실수로 버그가 있는 코드를 커밋하거나, 스타일 가이드를 따르지 않은 코드를 메인 브랜치에 푸시했던 경험이 있나요? Husky는 이런 인간의 실수를 완전히 자동화된 방식으로 방지합니다.
+당신이 실수로 버그가 있는 코드를 커밋하거나, 스타일 가이드를 따르지 않은 코드를 메인 브랜치에 푸시했던 경험이 있나요?
+Husky는 이런 인간의 실수를 완전히 자동화된 방식으로 방지합니다.
 
-Husky는 Git 훅(hook)을 관리하는 도구입니다. 개발자가 코드를 커밋하거나 푸시하기 전에 자동으로 검증 작업을 수행하므로, 문제 있는 코드가 저장소에 들어가는 것을 원천적으로 차단합니다.
+Husky는 Git 훅(hook)을 관리하는 도구입니다.
+개발자가 코드를 커밋하거나 푸시하기 전에 자동으로 검증 작업을 수행하므로, 문제 있는 코드가 저장소에 들어가는 것을 원천적으로 차단합니다.
 
 ## Git 훅이란?
 
 ### 기본 개념
 
-Git 훅은 특정 Git 이벤트가 발생할 때 자동으로 실행되는 스크립트입니다. `.git/hooks` 디렉토리에 저장되며, Git이 특정 작업을 수행하려고 할 때 이 스크립트들을 실행합니다.
+Git 훅은 특정 Git 이벤트가 발생할 때 자동으로 실행되는 스크립트입니다.
+`.git/hooks` 디렉토리에 저장되며, Git이 특정 작업을 수행하려고 할 때 이 스크립트들을 실행합니다.
 
 ### 주요 Git 훅
 
@@ -112,16 +115,9 @@ npx lint-staged
 // package.json
 {
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,scss}": [
-      "prettier --write"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,css,scss}": ["prettier --write"],
+    "*.md": ["prettier --write"]
   }
 }
 ```
@@ -223,23 +219,23 @@ module.exports = {
       2,
       'always',
       [
-        'feat',     // 새로운 기능
-        'fix',      // 버그 수정
-        'docs',     // 문서 수정
-        'style',    // 코드 스타일 변경 (기능 변화 없음)
+        'feat', // 새로운 기능
+        'fix', // 버그 수정
+        'docs', // 문서 수정
+        'style', // 코드 스타일 변경 (기능 변화 없음)
         'refactor', // 코드 리팩토링
-        'perf',     // 성능 개선
-        'test',     // 테스트 추가
-        'chore',    // 빌드, 패키지 관리 등
-        'ci',       // CI/CD 설정 변경
-      ]
+        'perf', // 성능 개선
+        'test', // 테스트 추가
+        'chore', // 빌드, 패키지 관리 등
+        'ci', // CI/CD 설정 변경
+      ],
     ],
     'type-case': [2, 'always', 'lower-case'],
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
     'subject-case': [2, 'always', 'lower-case'],
     'scope-case': [2, 'always', 'lower-case'],
-  }
+  },
 };
 ```
 
@@ -282,13 +278,8 @@ $ git commit -m "added some stuff"
     "test:coverage": "vitest --coverage"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,scss,md}": [
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,css,scss,md}": ["prettier --write"]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
@@ -388,7 +379,7 @@ fi
 
 ### 협업 규칙 문서화
 
-```markdown
+````markdown
 # Git Hooks 및 Pre-commit 가이드
 
 ## 요구사항
@@ -396,19 +387,23 @@ fi
 모든 개발자는 다음을 준수해야 합니다:
 
 ### 1. 초기 설정
+
 ```bash
 git clone <repository>
 npm install  # 자동으로 husky install 실행됨
 ```
+````
 
 ### 2. Pre-commit 자동 검증
 
 커밋 직전에 다음이 자동으로 실행됩니다:
+
 - ESLint: 코드 스타일 검증 및 자동 수정
 - Prettier: 코드 포매팅 자동 수정
 - lint-staged: 커밋할 파일만 검증 (성능 향상)
 
 **만약 lint-staged가 실패하면:**
+
 1. 에러 메시지를 읽고 문제 파악
 2. 문제 수정
 3. `git add` 재실행
@@ -427,6 +422,7 @@ Conventional Commits 형식을 따릅니다:
 ```
 
 **Type (필수):**
+
 - `feat`: 새로운 기능
 - `fix`: 버그 수정
 - `docs`: 문서 수정
@@ -456,10 +452,12 @@ chore(deps): update dependencies
 ### 4. Pre-push 검증
 
 푸시 직전에 다음이 자동으로 실행됩니다:
+
 - 전체 테스트 스위트 (`npm run test`)
 - TypeScript 타입 검증 (`npm run type-check`)
 
 **테스트 실패 시:**
+
 ```bash
 # 로컬에서 테스트 실행하여 확인
 npm run test
@@ -508,7 +506,8 @@ A: 그 팀원은 `npm install` 후 `npx husky install`을 실행하지 않았습
 
 **Q: CI/CD에서도 같은 검증을 해야 하나요?**
 A: 네. CI/CD 파이프라인에서도 동일한 lint, test, type-check를 실행하여 이중 검증합니다.
-```
+
+````
 
 ## Husky와 다른 도구의 통합
 
@@ -531,7 +530,7 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }]
   }
 };
-```
+````
 
 ### Prettier와의 통합
 
@@ -563,16 +562,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run ESLint
         run: npm run lint
-      
+
       - name: Run tests
         run: npm run test
-      
+
       - name: Check types
         run: npm run type-check
 ```
@@ -584,14 +583,9 @@ jobs:
 ```json
 {
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,scss,md}": [
-      "prettier --write"
-    ],
-    "!*.min.js": []  // 최소화된 파일 제외
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,css,scss,md}": ["prettier --write"],
+    "!*.min.js": [] // 최소화된 파일 제외
   }
 }
 ```
@@ -601,10 +595,7 @@ jobs:
 ```json
 {
   "lint-staged": {
-    "*.js": [
-      "eslint --fix --cache",
-      "prettier --write"
-    ]
+    "*.js": ["eslint --fix --cache", "prettier --write"]
   }
 }
 ```
@@ -615,7 +606,7 @@ jobs:
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run lint:fix & 
+npm run lint:fix &
 npm run format &
 wait
 ```

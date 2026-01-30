@@ -4,7 +4,8 @@
 
 당신이 프론트엔드 개발 중에 백엔드 API가 완성되기를 기다린 적이 있나요? 또는 백엔드 개발자가 특정 에러 상황을 재현하기 어려워 했나요?
 
-MSW(Mock Service Worker)는 이 모든 문제를 해결합니다. Service Worker API를 사용하여 **네트워크 레벨에서** API 요청을 가로채고, 정의된 핸들러가 응답을 제공합니다. 이는 단순한 모킹을 넘어, 실제 네트워크 요청처럼 작동합니다.
+MSW(Mock Service Worker)는 이 모든 문제를 해결합니다.
+Service Worker API를 사용하여 **네트워크 레벨에서** API 요청을 가로채고, 정의된 핸들러가 응답을 제공합니다. 이는 단순한 모킹을 넘어, 실제 네트워크 요청처럼 작동합니다.
 
 ## MSW의 핵심 개념
 
@@ -32,7 +33,7 @@ MSW (네트워크 레벨 모킹):
 
 ### MSW가 해결하는 문제
 
-```typescript
+```txt
 // ❌ 문제 1: API 완성 대기
 // 백엔드가 아직 구현 중이면 프론트엔드는 대기
 // 월요일: API 문서 받음
@@ -80,46 +81,40 @@ export const handlers = [
   // GET /api/users/:id
   http.get('/api/users/:id', ({ params }) => {
     const { id } = params;
-    
+
     // 특정 사용자에 대한 mock 응답
     return HttpResponse.json({
       id,
       name: 'John Doe',
       email: 'john@example.com',
-      avatar: 'https://example.com/avatar.jpg'
+      avatar: 'https://example.com/avatar.jpg',
     });
   }),
 
   // POST /api/users
   http.post('/api/users', async ({ request }) => {
     const body = await request.json();
-    
+
     // 요청 본문을 기반으로 응답
     return HttpResponse.json(
       {
         id: '123',
         ...body,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       },
-      { status: 201 }  // 201 Created
+      { status: 201 }, // 201 Created
     );
   }),
 
   // DELETE /api/users/:id
   http.delete('/api/users/:id', ({ params }) => {
-    return HttpResponse.json(
-      { message: 'User deleted' },
-      { status: 204 }
-    );
+    return HttpResponse.json({ message: 'User deleted' }, { status: 204 });
   }),
 
   // 에러 응답
   http.get('/api/users/999', () => {
-    return HttpResponse.json(
-      { error: 'User not found' },
-      { status: 404 }
-    );
-  })
+    return HttpResponse.json({ error: 'User not found' }, { status: 404 });
+  }),
 ];
 ```
 
@@ -190,7 +185,7 @@ export const userHandlers = [
     return HttpResponse.json([
       { id: '1', name: 'Alice', email: 'alice@example.com' },
       { id: '2', name: 'Bob', email: 'bob@example.com' },
-      { id: '3', name: 'Charlie', email: 'charlie@example.com' }
+      { id: '3', name: 'Charlie', email: 'charlie@example.com' },
     ]);
   }),
 
@@ -198,17 +193,14 @@ export const userHandlers = [
   http.get('/api/users/:id', ({ params }) => {
     const users: Record<string, any> = {
       '1': { id: '1', name: 'Alice', email: 'alice@example.com' },
-      '2': { id: '2', name: 'Bob', email: 'bob@example.com' }
+      '2': { id: '2', name: 'Bob', email: 'bob@example.com' },
     };
 
     if (params.id in users) {
       return HttpResponse.json(users[params.id]);
     }
 
-    return HttpResponse.json(
-      { error: 'User not found' },
-      { status: 404 }
-    );
+    return HttpResponse.json({ error: 'User not found' }, { status: 404 });
   }),
 
   // 사용자 생성
@@ -219,7 +211,7 @@ export const userHandlers = [
     if (!body.email || !body.name) {
       return HttpResponse.json(
         { error: 'Missing required fields' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -227,11 +219,11 @@ export const userHandlers = [
       {
         id: Math.random().toString(),
         ...body,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       },
-      { status: 201 }
+      { status: 201 },
     );
-  })
+  }),
 ];
 
 // src/mocks/handlers/products.ts
@@ -246,13 +238,11 @@ export const productHandlers = [
     const products = [
       { id: '1', name: 'Product 1', category: 'electronics', price: 100 },
       { id: '2', name: 'Product 2', category: 'books', price: 20 },
-      { id: '3', name: 'Product 3', category: 'electronics', price: 200 }
+      { id: '3', name: 'Product 3', category: 'electronics', price: 200 },
     ];
 
     if (category) {
-      return HttpResponse.json(
-        products.filter(p => p.category === category)
-      );
+      return HttpResponse.json(products.filter((p) => p.category === category));
     }
 
     return HttpResponse.json(products);
@@ -266,24 +256,21 @@ export const productHandlers = [
     if (!query) {
       return HttpResponse.json(
         { error: 'Query parameter required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return HttpResponse.json([
-      { id: '1', name: `Product matching ${query}`, price: 100 }
+      { id: '1', name: `Product matching ${query}`, price: 100 },
     ]);
-  })
+  }),
 ];
 
 // src/mocks/handlers/index.ts
 import { userHandlers } from './users';
 import { productHandlers } from './products';
 
-export const handlers = [
-  ...userHandlers,
-  ...productHandlers
-];
+export const handlers = [...userHandlers, ...productHandlers];
 ```
 
 ### 2. 시나리오 관리
@@ -298,8 +285,8 @@ export const scenarios = {
   normalFlow: () => {
     server.use(
       http.get('/api/users/1', () =>
-        HttpResponse.json({ id: '1', name: 'John' })
-      )
+        HttpResponse.json({ id: '1', name: 'John' }),
+      ),
     );
   },
 
@@ -308,7 +295,7 @@ export const scenarios = {
     server.use(
       http.get('/api/users/1', () => {
         return HttpResponse.error();
-      })
+      }),
     );
   },
 
@@ -317,9 +304,9 @@ export const scenarios = {
     server.use(
       http.get('/api/users/1', async () => {
         // 요청이 타임아웃될 때까지 대기
-        await new Promise(r => setTimeout(r, 10000));
+        await new Promise((r) => setTimeout(r, 10000));
         return HttpResponse.json({ id: '1' });
-      })
+      }),
     );
   },
 
@@ -327,9 +314,9 @@ export const scenarios = {
   slowNetwork: () => {
     server.use(
       http.get('/api/users/1', async () => {
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 2000));
         return HttpResponse.json({ id: '1', name: 'John' });
-      })
+      }),
     );
   },
 
@@ -337,11 +324,8 @@ export const scenarios = {
   serverError: () => {
     server.use(
       http.get('/api/users/1', () =>
-        HttpResponse.json(
-          { error: 'Internal Server Error' },
-          { status: 500 }
-        )
-      )
+        HttpResponse.json({ error: 'Internal Server Error' }, { status: 500 }),
+      ),
     );
   },
 
@@ -349,11 +333,8 @@ export const scenarios = {
   unauthorized: () => {
     server.use(
       http.get('/api/users/1', () =>
-        HttpResponse.json(
-          { error: 'Unauthorized' },
-          { status: 401 }
-        )
-      )
+        HttpResponse.json({ error: 'Unauthorized' }, { status: 401 }),
+      ),
     );
   },
 
@@ -366,14 +347,14 @@ export const scenarios = {
             error: 'Validation failed',
             details: {
               email: 'Invalid email format',
-              name: 'Name is required'
-            }
+              name: 'Name is required',
+            },
           },
-          { status: 422 }
-        )
-      )
+          { status: 422 },
+        ),
+      ),
     );
-  }
+  },
 };
 
 // 테스트에서 사용
@@ -414,8 +395,8 @@ endpoints:
       id:
         type: string
         required: true
-        example: "123"
-    
+        example: '123'
+
     responses:
       200:
         description: 성공
@@ -426,17 +407,17 @@ endpoints:
           avatar?: string
           createdAt: ISO8601
         example:
-          id: "123"
-          name: "John Doe"
-          email: "john@example.com"
-          createdAt: "2025-01-29T10:00:00Z"
-      
+          id: '123'
+          name: 'John Doe'
+          email: 'john@example.com'
+          createdAt: '2025-01-29T10:00:00Z'
+
       404:
         description: 사용자 없음
         body:
           error: string
         example:
-          error: "User not found"
+          error: 'User not found'
 
   POST /api/users:
     description: 사용자 생성
@@ -444,7 +425,7 @@ endpoints:
       name: string (required)
       email: string (required)
       avatar?: string
-    
+
     responses:
       201:
         description: 생성 성공
@@ -453,7 +434,7 @@ endpoints:
           name: string
           email: string
           createdAt: ISO8601
-      
+
       400:
         description: 유효성 검증 오류
         body:
@@ -468,17 +449,14 @@ import { http, HttpResponse } from 'msw';
 export const handlers = [
   http.get('/api/users/:id', ({ params }) => {
     if (!params.id || params.id === '999') {
-      return HttpResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
+      return HttpResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     return HttpResponse.json({
       id: params.id,
       name: 'John Doe',
       email: 'john@example.com',
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     });
   }),
 
@@ -491,10 +469,10 @@ export const handlers = [
           error: 'Validation failed',
           details: {
             name: body.name ? undefined : 'Required',
-            email: body.email ? undefined : 'Required'
-          }
+            email: body.email ? undefined : 'Required',
+          },
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -502,11 +480,11 @@ export const handlers = [
       {
         id: Math.random().toString(),
         ...body,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       },
-      { status: 201 }
+      { status: 201 },
     );
-  })
+  }),
 ];
 ```
 
@@ -537,7 +515,7 @@ describe('User Component', () => {
 
   it('should handle user not found', async () => {
     scenarios.normalFlow();
-    
+
     const response = await fetch('/api/users/999');
     expect(response.status).toBe(404);
 
@@ -551,8 +529,8 @@ describe('User Component', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: 'Alice',
-        email: 'alice@example.com'
-      })
+        email: 'alice@example.com',
+      }),
     });
 
     expect(response.status).toBe(201);
@@ -562,14 +540,14 @@ describe('User Component', () => {
 
   it('should show validation error on invalid data', async () => {
     scenarios.validationError();
-    
+
     const response = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: 'Bob'
+        name: 'Bob',
         // email 누락
-      })
+      }),
     });
 
     expect(response.status).toBe(400);
@@ -579,20 +557,18 @@ describe('User Component', () => {
 
   it('should handle network error', async () => {
     scenarios.networkError();
-    
-    expect(
-      async () => await fetch('/api/users/1')
-    ).rejects.toThrow();
+
+    expect(async () => await fetch('/api/users/1')).rejects.toThrow();
   });
 
   it('should show loading during slow network', async () => {
     scenarios.slowNetwork();
-    
+
     const promise = fetch('/api/users/1');
-    
+
     // 즉시 로딩 상태 확인
     expect(document.querySelector('.loading')).toBeDefined();
-    
+
     // 응답 대기
     const response = await promise;
     expect(response.status).toBe(200);
@@ -664,7 +640,7 @@ import { server } from '../mocks/server';
 describe('UserProfile', () => {
   it('should display user info', async () => {
     scenarios.normalFlow();
-    
+
     render(<UserProfile userId="1" />);
 
     await waitFor(() => {
@@ -688,7 +664,7 @@ describe('UserProfile', () => {
 
   it('should show loading state', () => {
     scenarios.slowNetwork();
-    
+
     render(<UserProfile userId="1" />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
@@ -710,15 +686,18 @@ describe('UserProfile', () => {
 ## 개발 워크플로우
 
 ### Phase 1: API 설계 (공동)
+
 - API 문서 작성
 - MSW 핸들러 작성 (프론트엔드)
 - 프론트엔드 개발 진행
 
 ### Phase 2: 백엔드 개발
+
 - 실제 API 구현
 - 테스트
 
 ### Phase 3: 통합
+
 - MSW 핸들러 제거
 - 실제 API와 연결
 - 통합 테스트
@@ -726,6 +705,7 @@ describe('UserProfile', () => {
 ## 시나리오 정의
 
 모든 가능한 에러 케이스에 대한 시나리오 작성:
+
 - 정상 응답
 - 404 (리소스 없음)
 - 400 (유효성 검증 오류)
