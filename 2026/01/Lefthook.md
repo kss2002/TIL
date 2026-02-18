@@ -8,6 +8,10 @@ Lefthook은 Go로 작성되어 100배 더 빠릅니다.
 Go 바이너리로 빌드된 Lefthook은 npm 패키지 설치 없이도 작동하며, JavaScript뿐 아니라 Python, Ruby, Java 등 모든 프로젝트에서 사용할 수 있습니다.
 특히 대규모 모노레포에서 Lefthook의 병렬 실행 기능은 개발 속도를 획기적으로 향상시킵니다.
 
+## 공식 사이트
+
+https://github.com/evilmartians/lefthook
+
 ## Husky vs Lefthook
 
 ### 성능 비교

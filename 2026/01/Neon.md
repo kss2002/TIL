@@ -10,6 +10,10 @@ Neon은 이 모든 문제를 완전히 해결합니다.
 
 AWS Lambda와 유사하게 사용한 만큼만 비용을 지불하면서도 완전한 PostgreSQL 기능을 사용할 수 있습니다.
 
+## 공식 사이트
+
+https://github.com/neondatabase/neon
+
 ## 전통적 PostgreSQL vs Neon
 
 ### 아키텍처 비교

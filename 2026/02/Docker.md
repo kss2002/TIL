@@ -13,7 +13,12 @@
 → 환경이 다르면 코드가 다르게 작동합니다!
 ```
 
-Docker는 이 모든 문제를 근본적으로 해결합니다. **애플리케이션과 모든 의존성을 하나의 컨테이너로 패킹**하여, 어디서나 동일하게 실행되도록 합니다.
+Docker는 이 모든 문제를 근본적으로 해결합니다.
+**애플리케이션과 모든 의존성을 하나의 컨테이너로 패킹**하여, 어디서나 동일하게 실행되도록 합니다.
+
+## 공식 사이트
+
+https://www.docker.com
 
 ## Docker의 개념
 
@@ -179,9 +184,9 @@ version: '3.9'
 services:
   # 애플리케이션
   app:
-    build: .  # 현재 디렉토리의 Dockerfile 사용
+    build: . # 현재 디렉토리의 Dockerfile 사용
     ports:
-      - "3000:3000"  # 호스트:컨테이너
+      - '3000:3000' # 호스트:컨테이너
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://user:password@db:5432/myapp
@@ -189,7 +194,7 @@ services:
       - db
       - redis
     volumes:
-      - ./src:/app/src  # 실시간 코드 반영
+      - ./src:/app/src # 실시간 코드 반영
     restart: unless-stopped
 
   # PostgreSQL 데이터베이스
@@ -202,7 +207,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user"]
+      test: ['CMD-SHELL', 'pg_isready -U user']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -211,7 +216,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redis_data:/data
 
@@ -312,16 +317,16 @@ version: '3.9'
 
 services:
   app:
-    image: username/my-app:1.0  # 이미 빌드된 이미지 사용
+    image: username/my-app:1.0 # 이미 빌드된 이미지 사용
     restart: always
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}  # 환경 변수로 주입
+      - DATABASE_URL=${DATABASE_URL} # 환경 변수로 주입
     depends_on:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -336,7 +341,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -371,7 +376,7 @@ async function healthcheck() {
   try {
     // 데이터베이스 연결 확인
     await db.query('SELECT 1');
-    
+
     const req = http.get('http://localhost:3000/health', (res) => {
       if (res.statusCode === 200) {
         process.exit(0);
@@ -436,14 +441,14 @@ services:
     environment:
       # 컨테이너 이름으로 통신 가능
       DATABASE_URL: postgresql://user:pass@db:5432/myapp
-  
+
   db:
     image: postgres:15
 ```
 
 ```javascript
 // Node.js에서 접근
-const dbHost = 'db';  // 서비스 이름
+const dbHost = 'db'; // 서비스 이름
 const connectionString = `postgresql://user:pass@${dbHost}:5432/myapp`;
 ```
 
@@ -457,10 +462,10 @@ services:
     volumes:
       # 1. Named volume (관리형)
       - app_data:/app/data
-      
+
       # 2. Bind mount (호스트 경로)
       - ./src:/app/src
-      
+
       # 3. Anonymous volume
       - /app/temp
 
@@ -529,7 +534,7 @@ FROM node:18-alpine  # 항상 최신 태그 사용
 
 ## 팀 협업 가이드
 
-```markdown
+````markdown
 # Docker 개발 규칙
 
 ## 로컬 개발 환경 설정
@@ -539,6 +544,7 @@ docker-compose up -d
 # 또는
 docker-compose -f docker-compose.dev.yml up
 ```
+````
 
 ## 이미지 빌드 및 푸시
 
@@ -562,6 +568,7 @@ docker push username/my-app:${TAG}
 ## CI/CD 통합
 
 GitHub Actions 예시:
+
 ```yaml
 name: Build and Push
 
@@ -593,6 +600,7 @@ A: `host.docker.internal` (macOS/Windows) 또는 `172.17.0.1` (Linux) 사용
 
 **Q: 데이터가 컨테이너 재시작 후 사라져요**
 A: 볼륨을 정의하여 영구 저장소 사용하세요.
+
 ```
 
 ## Docker vs 가상 머신
@@ -619,3 +627,4 @@ Docker는:
 **특히 마이크로서비스, 클라우드 배포, DevOps에 필수적입니다.**
 
 **지금 바로 Docker를 시작하세요!**
+```

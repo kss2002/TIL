@@ -12,6 +12,10 @@
 FSD(Feature-Sliced Design)는 이 모든 문제를 구조적으로 해결하는 방법론입니다.
 프로젝트를 **수평적 계층**(shared, entities, features 등)과 **수직적 슬라이스**(각 기능)로 구분하여, 확장성과 유지보수성이 뛰어난 아키텍처를 만듭니다.
 
+## 공식 사이트
+
+https://github.com/feature-sliced/documentation
+
 ## FSD의 핵심 개념
 
 ### 기존 아키텍처의 문제점

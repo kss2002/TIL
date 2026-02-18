@@ -12,7 +12,12 @@ UPDATE users SET age = $1 WHERE id = $2;
 DELETE FROM users WHERE id = $1;
 ```
 
-Prisma는 이 모든 번거로움을 없앱니다. 타입 안전한 데이터베이스 접근, 자동 마이그레이션, 강력한 관계 설정 - 모든 것을 우아하게 처리합니다.
+Prisma는 이 모든 번거로움을 없앱니다.
+타입 안전한 데이터베이스 접근, 자동 마이그레이션, 강력한 관계 설정 - 모든 것을 우아하게 처리합니다.
+
+## 공식 사이트
+
+https://github.com/prisma/prisma
 
 ## ORM이란?
 
@@ -41,16 +46,17 @@ import { User } from './User';
 
 const userRepository = getRepository(User);
 const user = await userRepository.findOne({
-  where: { email: 'john@example.com' }
+  where: { email: 'john@example.com' },
 });
 
 // ✅ Prisma 방식
 const user = await prisma.user.findUnique({
-  where: { email: 'john@example.com' }
+  where: { email: 'john@example.com' },
 });
 ```
 
 **Prisma의 장점:**
+
 - SQL을 쓸 필요가 없습니다
 - 타입 안전합니다
 - 마이그레이션이 쉽습니다
@@ -73,6 +79,7 @@ npx prisma init
 ```
 
 생성되는 파일:
+
 ```
 .env                 # 데이터베이스 URL
 prisma/
@@ -128,23 +135,23 @@ model User {
   email     String    @unique
   name      String
   age       Int?      // nullable
-  
+
   // 문자열
   bio       String    @db.Text  // 긴 텍스트
-  
+
   // 숫자
   salary    Float
-  
+
   // 날짜
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  
+
   // 열거형
   role      Role      @default(USER)
-  
+
   // JSON
   metadata  Json
-  
+
   // 관계
   posts     Post[]
 }
@@ -200,16 +207,16 @@ model User {
 const user = await prisma.user.create({
   data: {
     email: 'john@example.com',
-    name: 'John Doe'
-  }
+    name: 'John Doe',
+  },
 });
 
 // 여러 개 생성
 const users = await prisma.user.createMany({
   data: [
     { email: 'alice@example.com', name: 'Alice' },
-    { email: 'bob@example.com', name: 'Bob' }
-  ]
+    { email: 'bob@example.com', name: 'Bob' },
+  ],
 });
 
 // 관계와 함께 생성
@@ -220,13 +227,13 @@ const user = await prisma.user.create({
     posts: {
       create: [
         { title: 'First Post', body: 'Content...' },
-        { title: 'Second Post', body: 'More content...' }
-      ]
-    }
+        { title: 'Second Post', body: 'More content...' },
+      ],
+    },
   },
   include: {
-    posts: true  // 관계 데이터도 함께 반환
-  }
+    posts: true, // 관계 데이터도 함께 반환
+  },
 });
 ```
 
@@ -235,29 +242,29 @@ const user = await prisma.user.create({
 ```typescript
 // 기본 조회
 const user = await prisma.user.findUnique({
-  where: { email: 'john@example.com' }
+  where: { email: 'john@example.com' },
 });
 
 // 또는
 const user = await prisma.user.findUnique({
-  where: { id: 1 }
+  where: { id: 1 },
 });
 
 // 존재하면 반환, 없으면 null
 const user = await prisma.user.findFirst({
-  where: { name: 'John' }
+  where: { name: 'John' },
 });
 
 // 여러 개 조회
 const users = await prisma.user.findMany({
   where: {
-    age: { gte: 18 }  // 18살 이상
+    age: { gte: 18 }, // 18살 이상
   },
   orderBy: {
-    createdAt: 'desc'
+    createdAt: 'desc',
   },
   skip: 0,
-  take: 10  // 페이지네이션
+  take: 10, // 페이지네이션
 });
 
 // 관계 데이터와 함께
@@ -266,14 +273,14 @@ const user = await prisma.user.findUnique({
   include: {
     posts: {
       where: { published: true },
-      orderBy: { createdAt: 'desc' }
-    }
-  }
+      orderBy: { createdAt: 'desc' },
+    },
+  },
 });
 
 // 개수 조회
 const count = await prisma.user.count({
-  where: { age: { gte: 18 } }
+  where: { age: { gte: 18 } },
 });
 ```
 
@@ -285,21 +292,21 @@ const user = await prisma.user.update({
   where: { id: 1 },
   data: {
     name: 'Jane Doe',
-    age: 30
-  }
+    age: 30,
+  },
 });
 
 // 조건부 수정 (많은 레코드)
 const result = await prisma.user.updateMany({
-  where: { age: { lt: 18 } },  // 18살 미만
-  data: { role: 'GUEST' }
+  where: { age: { lt: 18 } }, // 18살 미만
+  data: { role: 'GUEST' },
 });
 
 // 수정 또는 생성
 const user = await prisma.user.upsert({
   where: { email: 'john@example.com' },
   update: { name: 'John Doe' },
-  create: { email: 'john@example.com', name: 'John Doe' }
+  create: { email: 'john@example.com', name: 'John Doe' },
 });
 
 // 관계 수정
@@ -308,9 +315,9 @@ const user = await prisma.user.update({
   data: {
     posts: {
       create: { title: 'New Post', body: 'Content' },
-      deleteMany: { published: false }
-    }
-  }
+      deleteMany: { published: false },
+    },
+  },
 });
 ```
 
@@ -319,12 +326,12 @@ const user = await prisma.user.update({
 ```typescript
 // 기본 삭제
 const user = await prisma.user.delete({
-  where: { id: 1 }
+  where: { id: 1 },
 });
 
 // 여러 개 삭제
 const result = await prisma.user.deleteMany({
-  where: { age: { lt: 18 } }
+  where: { age: { lt: 18 } },
 });
 
 // 모두 삭제
@@ -375,6 +382,7 @@ npx prisma migrate reset
 ```
 
 생성되는 파일:
+
 ```
 prisma/migrations/
 ├── 20250129_add_age_and_role/
@@ -410,21 +418,21 @@ export class UserService {
   async getUser(id: number): Promise<User | null> {
     return prisma.user.findUnique({
       where: { id },
-      include: { posts: true }
+      include: { posts: true },
     });
   }
 
   // 사용자 목록 (페이지네이션)
   async listUsers(page: number = 1, limit: number = 10) {
     const skip = (page - 1) * limit;
-    
+
     const [users, total] = await Promise.all([
       prisma.user.findMany({
         skip,
         take: limit,
-        orderBy: { createdAt: 'desc' }
+        orderBy: { createdAt: 'desc' },
       }),
-      prisma.user.count()
+      prisma.user.count(),
     ]);
 
     return {
@@ -433,8 +441,8 @@ export class UserService {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     };
   }
 
@@ -443,14 +451,14 @@ export class UserService {
     return prisma.user.update({
       where: { id },
       data,
-      include: { posts: true }
+      include: { posts: true },
     });
   }
 
   // 사용자 삭제
   async deleteUser(id: number): Promise<User> {
     return prisma.user.delete({
-      where: { id }
+      where: { id },
     });
   }
 }
@@ -506,7 +514,7 @@ router.put('/users/:id', async (req, res) => {
   try {
     const user = await userService.updateUser(
       parseInt(req.params.id),
-      req.body
+      req.body,
     );
     res.json(user);
   } catch (error) {
@@ -531,11 +539,15 @@ export default router;
 
 ```typescript
 // 복잡한 다중 작업 (트랜잭션)
-async function transferMoney(fromUserId: number, toUserId: number, amount: number) {
+async function transferMoney(
+  fromUserId: number,
+  toUserId: number,
+  amount: number,
+) {
   const result = await prisma.$transaction(async (tx) => {
     // 1단계: 보내는 사용자 확인
     const fromUser = await tx.user.findUnique({
-      where: { id: fromUserId }
+      where: { id: fromUserId },
     });
 
     if (!fromUser || fromUser.balance < amount) {
@@ -544,7 +556,7 @@ async function transferMoney(fromUserId: number, toUserId: number, amount: numbe
 
     // 2단계: 받는 사용자 확인
     const toUser = await tx.user.findUnique({
-      where: { id: toUserId }
+      where: { id: toUserId },
     });
 
     if (!toUser) {
@@ -555,12 +567,12 @@ async function transferMoney(fromUserId: number, toUserId: number, amount: numbe
     const [updated1, updated2] = await Promise.all([
       tx.user.update({
         where: { id: fromUserId },
-        data: { balance: { decrement: amount } }
+        data: { balance: { decrement: amount } },
       }),
       tx.user.update({
         where: { id: toUserId },
-        data: { balance: { increment: amount } }
-      })
+        data: { balance: { increment: amount } },
+      }),
     ]);
 
     // 4단계: 거래 기록
@@ -568,8 +580,8 @@ async function transferMoney(fromUserId: number, toUserId: number, amount: numbe
       data: {
         fromUserId,
         toUserId,
-        amount
-      }
+        amount,
+      },
     });
 
     return { from: updated1, to: updated2 };
@@ -626,7 +638,7 @@ prisma.$use(async (params, next) => {
   if (params.model === 'Post' && params.action === 'findMany') {
     params.args.where = {
       ...params.args.where,
-      deletedAt: null
+      deletedAt: null,
     };
   }
   return next(params);
@@ -641,24 +653,24 @@ const users = await prisma.user.findMany({
   include: {
     posts: {
       include: {
-        comments: true
-      }
-    }
-  }
+        comments: true,
+      },
+    },
+  },
 });
 ```
 
 ## 다른 ORM과의 비교
 
-| 기능 | Prisma | TypeORM | Sequelize |
-|------|--------|---------|-----------|
-| **타입 안전성** | ✅ 최고 | ✅ 좋음 | ❌ 약함 |
-| **자동완성** | ✅ 완벽 | ❌ 부분 | ❌ 약함 |
-| **마이그레이션** | ✅ 우수 | ✅ 좋음 | ✅ 좋음 |
-| **배우기 쉬움** | ✅ 매우 쉬움 | ❌ 어려움 | ❌ 어려움 |
-| **성능** | ✅ 매우 좋음 | ✅ 좋음 | ⚠️ 중간 |
-| **커뮤니티** | ✅ 빠르게 증가 | ✅ 중간 | ✅ 크다 |
-| **GUI 도구** | ✅ Studio | ❌ | ❌ |
+| 기능             | Prisma         | TypeORM   | Sequelize |
+| ---------------- | -------------- | --------- | --------- |
+| **타입 안전성**  | ✅ 최고        | ✅ 좋음   | ❌ 약함   |
+| **자동완성**     | ✅ 완벽        | ❌ 부분   | ❌ 약함   |
+| **마이그레이션** | ✅ 우수        | ✅ 좋음   | ✅ 좋음   |
+| **배우기 쉬움**  | ✅ 매우 쉬움   | ❌ 어려움 | ❌ 어려움 |
+| **성능**         | ✅ 매우 좋음   | ✅ 좋음   | ⚠️ 중간   |
+| **커뮤니티**     | ✅ 빠르게 증가 | ✅ 중간   | ✅ 크다   |
+| **GUI 도구**     | ✅ Studio      | ❌        | ❌        |
 
 ## 팀 협업 가이드
 
@@ -668,6 +680,7 @@ const users = await prisma.user.findMany({
 ## 데이터베이스 변경
 
 ### 스키마 수정 과정
+
 1. prisma/schema.prisma 수정
 2. `npx prisma migrate dev --name <description>` 실행
 3. migration 파일 생성됨
@@ -677,24 +690,28 @@ const users = await prisma.user.findMany({
 
 ### 마이그레이션 파일 이름 규칙
 ```
+
 npx prisma migrate dev --name add_user_age
 npx prisma migrate dev --name create_post_table
 npx prisma migrate dev --name add_unique_email
+
 ```
 
 ## 서비스 레이어 구조
 
 모든 데이터베이스 접근은 서비스 레이어를 통해:
 ```
+
 API Route → Service → Prisma
-```
+
+````
 
 ## 타입 정의
 
 자동 생성되는 타입 사용:
 ```typescript
 import { User, Post } from '@prisma/client';
-```
+````
 
 ## 테스트
 
@@ -712,6 +729,7 @@ npx prisma migrate resolve --rolled-back <migration_name>
 # 개발 환경 초기화
 npx prisma migrate reset
 ```
+
 ```
 
 ## 결론
@@ -727,3 +745,4 @@ Prisma는:
 특히 **Node.js/TypeScript 프로젝트**에서는 Prisma가 정답입니다.
 
 **지금 바로 Prisma를 시작하세요!**
+```

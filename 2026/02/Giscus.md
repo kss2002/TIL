@@ -2,9 +2,16 @@
 
 ## 들어가며
 
-블로그에 댓글 시스템이 필요한데, Disqus 같은 외부 서비스는 너무 무겁고 추적이 많습니다. 또한 댓글 데이터 소유권도 보장되지 않습니다.
+블로그에 댓글 시스템이 필요한데, Disqus 같은 외부 서비스는 너무 무겁고 추적이 많습니다.
+또한 댓글 데이터 소유권도 보장되지 않습니다.
 
-Giscus는 완전히 다른 접근 방식입니다. **GitHub Discussions를 댓글 저장소로 사용**합니다. 즉, 모든 댓글이 당신의 GitHub 저장소에 저장되고, 당신이 완전히 통제할 수 있습니다.
+Giscus는 완전히 다른 접근 방식입니다.
+**GitHub Discussions를 댓글 저장소로 사용**합니다.
+즉, 모든 댓글이 당신의 GitHub 저장소에 저장되고, 당신이 완전히 통제할 수 있습니다.
+
+## 공식 사이트
+
+https://github.com/giscus/giscus
 
 ## Giscus의 개념
 
@@ -75,21 +82,22 @@ Theme: Light / Dark
 
 ```html
 <!-- 블로그 포스트 하단에 추가 -->
-<script src="https://giscus.app/client.js"
-        data-repo="your-username/your-repo"
-        data-repo-id="YOUR_REPO_ID"
-        data-category="Comments"
-        data-category-id="YOUR_CATEGORY_ID"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="ko"
-        crossorigin="anonymous"
-        async>
-</script>
+<script
+  src="https://giscus.app/client.js"
+  data-repo="your-username/your-repo"
+  data-repo-id="YOUR_REPO_ID"
+  data-category="Comments"
+  data-category-id="YOUR_CATEGORY_ID"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="light"
+  data-lang="ko"
+  crossorigin="anonymous"
+  async
+></script>
 ```
 
 ### React에서 사용
@@ -142,7 +150,7 @@ export function BlogPost() {
     <article>
       <h1>블로그 제목</h1>
       <p>블로그 내용...</p>
-      
+
       <GiscusComments
         config={{
           repo: 'your-username/your-repo',
@@ -203,35 +211,35 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 ```javascript
 // pathname: 페이지의 경로로 분류 (추천)
 // /blog/my-post → 하나의 Discussion
-mapping: 'pathname'
+mapping: 'pathname';
 
 // url: 전체 URL로 분류
 // https://example.com/blog/my-post → 하나의 Discussion
-mapping: 'url'
+mapping: 'url';
 
 // title: 페이지 제목으로 분류
 // <title>내 블로그 - 첫 번째 글</title> → 하나의 Discussion
-mapping: 'title'
+mapping: 'title';
 
 // og:title: Open Graph 제목으로 분류
 // <meta property="og:title" content="첫 번째 글" /> → 하나의 Discussion
-mapping: 'og:title'
+mapping: 'og:title';
 ```
 
 ### 테마 옵션
 
 ```javascript
 // light: 항상 밝은 테마
-theme: 'light'
+theme: 'light';
 
 // dark: 항상 어두운 테마
-theme: 'dark'
+theme: 'dark';
 
 // auto: 시스템 설정을 따름
-theme: 'auto'
+theme: 'auto';
 
 // 커스텀 테마 (CSS 변수 사용)
-theme: 'transparent_dark'
+theme: 'transparent_dark';
 ```
 
 ### Discussion Category
@@ -275,7 +283,7 @@ export const giscusConfig = {
   emitMetadata: '0',
   inputPosition: 'bottom' as const,
   theme: 'auto' as const,
-  lang: 'ko'
+  lang: 'ko',
 };
 ```
 
@@ -310,7 +318,7 @@ export function Comments() {
     // Giscus 스크립트 로드
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    
+
     Object.entries({
       ...giscusConfig,
       theme: isDark ? 'dark' : 'light'
@@ -347,20 +355,20 @@ export function useGiscusTheme() {
         : 'light';
 
       const giscusFrame = document.querySelector(
-        'iframe[title="Comments"]'
+        'iframe[title="Comments"]',
       ) as HTMLIFrameElement;
 
       if (giscusFrame) {
         giscusFrame.contentWindow?.postMessage(
           { giscus: { setConfig: { theme } } },
-          'https://giscus.app'
+          'https://giscus.app',
         );
       }
     });
 
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
+      attributeFilter: ['class'],
     });
 
     return () => observer.disconnect();
@@ -513,11 +521,13 @@ Settings
 ## 댓글 관리
 
 ### GitHub에서 관리
+
 - Discussions 탭에서 모든 댓글 확인
 - 스팸 댓글 삭제
 - 중요한 댓글 고정
 
 ### 이메일 알림
+
 - Watch 설정으로 새 댓글 알림 받기
 - 댓글에 답글 작성 가능
 
@@ -531,6 +541,7 @@ Settings
 ## 백업
 
 모든 댓글이 GitHub에 저장되므로:
+
 - 개별 GitHub 저장소 백업 가능
 - 데이터 소유권 100% 보장
 - 언제든지 다른 시스템으로 마이그레이션 가능
@@ -549,16 +560,16 @@ A: GitHub API를 사용하여 export 가능합니다.
 
 ## Disqus와의 비교 결론
 
-| 항목 | Disqus | Giscus |
-|------|--------|--------|
-| **가격** | 무료 (광고) | 무료 |
-| **데이터 소유** | Disqus | GitHub (당신) |
-| **추적** | 있음 | 없음 |
-| **성능** | 느림 | 빠름 |
-| **로그인** | 자체/SNS | GitHub |
-| **관리** | Disqus 대시보드 | GitHub |
-| **마이그레이션** | 어려움 | 쉬움 |
-| **커뮤니티** | 큼 | 중간 |
+| 항목             | Disqus          | Giscus        |
+| ---------------- | --------------- | ------------- |
+| **가격**         | 무료 (광고)     | 무료          |
+| **데이터 소유**  | Disqus          | GitHub (당신) |
+| **추적**         | 있음            | 없음          |
+| **성능**         | 느림            | 빠름          |
+| **로그인**       | 자체/SNS        | GitHub        |
+| **관리**         | Disqus 대시보드 | GitHub        |
+| **마이그레이션** | 어려움          | 쉬움          |
+| **커뮤니티**     | 큼              | 중간          |
 
 ## 결론
 

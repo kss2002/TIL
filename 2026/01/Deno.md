@@ -12,6 +12,10 @@
 Deno는 Node.js의 창시자 Ryan Dahl이 Node.js의 "10년의 후회"를 토대로 만든 새로운 JavaScript 런타임입니다.
 처음부터 올바르게 설계되어, 더 안전하고 효율적입니다.
 
+## 공식 사이트
+
+https://github.com/denoland/deno
+
 ## Node.js vs Deno 비교
 
 ### 핵심 차이점
