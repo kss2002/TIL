@@ -19,6 +19,10 @@ Button 컴포넌트를 수정했다면:
 
 Storybook은 이 모든 번거로움을 제거합니다. **각 컴포넌트를 독립적으로 개발하고 테스트**할 수 있는 환경을 제공합니다. 컴포넌트의 모든 상태(정상, 로딩, 에러 등)를 한눈에 볼 수 있고, 상호작용까지 테스트할 수 있습니다.
 
+### 공식사이트 가이드라인
+
+https://storybook.js.org/tutorials/intro-to-storybook/react/ko/get-started/
+
 ## Storybook의 개념
 
 ### Storybook이란?
