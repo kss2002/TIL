@@ -23,6 +23,10 @@ Storybook은 이 모든 번거로움을 제거합니다. **각 컴포넌트를 �
 
 https://storybook.js.org/tutorials/intro-to-storybook/react/ko/get-started/
 
+### 유튜브 영상
+
+https://www.youtube.com/playlist?list=PLwtj4R9Hld3GUdKDhl5YcXWRUNkrtIkX0
+
 ## Storybook의 개념
 
 ### Storybook이란?
