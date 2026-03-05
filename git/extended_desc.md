@@ -67,3 +67,8 @@ feat: test file 추가
 ```bash
 git commit -m "제목" -m "상세 설명"
 ```
+
+### 관련된 여러 글
+
+- https://myhappyman.tistory.com/300
+- https://blog.naver.com/dsz08082/223176427719
