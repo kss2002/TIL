@@ -2,7 +2,7 @@
 
 깃허브에서 커밋 메세지를 작성할 때에, 밑에 Extended description를 기입하는 부분이 있다. 이것을 vs code에서도 할 수 있다.
 
-<img src="/TIL/git/img/commit.png"></img>
+<img src="./public/img/commit.png" />
 
 1. 먼저, 밑의 명령어로 vs code에 commit_editmse가 열리게 만든다.
 
@@ -35,7 +35,7 @@ git commit
 
 4. COMMIT_EDITMSG
 
-<img src="/TIL/git/img/preview.webp"></img>
+<img src="./public/img/preview.webp"></img>
 
 참고: 지금 보이는 초록색 주석들(#로 시작)은 커밋에 포함되지 않는다.
 
