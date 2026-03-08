@@ -64,14 +64,13 @@
 
 #### 개요
 
-```
-공식 사이트: https://www.npmjs.com/
-GitHub: https://github.com/npm/cli
-문서: https://docs.npmjs.com/
-설치: Node.js 설치 시 함께 설치됨
-```
+- 공식 사이트: https://www.npmjs.com/
+- GitHub: https://github.com/npm/cli
+- 문서: https://docs.npmjs.com/
+- 설치: Node.js 설치 시 함께 설치됨
 
 **특징:**
+
 - JavaScript/Node.js 표준 패키지 매니저
 - 가장 큰 패키지 생태계 (수백만 개 패키지)
 - 모두가 사용하는 표준
@@ -129,21 +128,21 @@ npm publish                           # 패키지 게시
   "name": "my-app",
   "version": "1.0.0",
   "description": "My awesome app",
-  
+
   // 의존성
   "dependencies": {
-    "express": "^4.18.0",        // ^: 최신 마이너 버전까지
-    "lodash": "~4.17.0",         // ~: 최신 패치 버전까지
-    "react": "18.0.0"            // 정확한 버전
+    "express": "^4.18.0", // ^: 최신 마이너 버전까지
+    "lodash": "~4.17.0", // ~: 최신 패치 버전까지
+    "react": "18.0.0" // 정확한 버전
   },
-  
+
   // 개발 환경 의존성 (프로덕션에 포함 안 됨)
   "devDependencies": {
     "eslint": "^8.0.0",
     "prettier": "^3.0.0",
     "@types/node": "^18.0.0"
   },
-  
+
   // 스크립트 정의
   "scripts": {
     "start": "node src/index.js",
@@ -152,7 +151,7 @@ npm publish                           # 패키지 게시
     "test": "jest",
     "lint": "eslint ."
   },
-  
+
   // 기타 메타데이터
   "author": "John Doe",
   "license": "MIT",
@@ -186,15 +185,14 @@ latest          # 최신 버전
 
 #### 개요
 
-```
-공식 사이트: https://yarnpkg.com/
-GitHub: https://github.com/yarnpkg/berry
-문서: https://yarnpkg.com/getting-started
-설치: npm install -g yarn
-버전: Yarn 1.x (Classic), Yarn 3.x+ (Berry - 최신)
-```
+- 공식 사이트: https://yarnpkg.com/
+- GitHub: https://github.com/yarnpkg/berry
+- 문서: https://yarnpkg.com/getting-started
+- 설치: npm install -g yarn
+- 버전: Yarn 1.x (Classic), Yarn 3.x+ (Berry - 최신)
 
 **특징:**
+
 - Facebook(Meta)에서 만든 npm 대체 도구
 - npm보다 빠른 설치 속도
 - workspace 기능으로 모노레포 지원
@@ -263,15 +261,14 @@ Yarn (yarn.lock):
 
 #### 개요
 
-```
-공식 사이트: https://pnpm.io/
-GitHub: https://github.com/pnpm/pnpm
-문서: https://pnpm.io/motivation
-설치: npm install -g pnpm
-특징: 가장 빠르고 효율적
-```
+- 공식 사이트: https://pnpm.io/
+- GitHub: https://github.com/pnpm/pnpm
+- 문서: https://pnpm.io/motivation
+- 설치: npm install -g pnpm
+- 특징: 가장 빠르고 효율적
 
 **특징:**
+
 - 가장 빠른 패키지 매니저
 - 디스크 공간 70% 절약 (심볼릭 링크 사용)
 - npm과 호환되는 명령어
@@ -342,15 +339,14 @@ pnpm:  10초  ← 3배 빠름!
 
 #### 개요
 
-```
-공식 사이트: https://bun.sh/
-GitHub: https://github.com/oven-sh/bun
-문서: https://bun.sh/docs
-설치: curl -fsSL https://bun.sh/install | bash
-특징: 차세대 JavaScript 런타임의 패키지 매니저
-```
+- 공식 사이트: https://bun.sh/
+- GitHub: https://github.com/oven-sh/bun
+- 문서: https://bun.sh/docs
+- 설치: curl -fsSL https://bun.sh/install | bash
+- 특징: 차세대 JavaScript 런타임의 패키지 매니저
 
 **특징:**
+
 - Zig로 만들어진 초고속 런타임
 - npm 호환 명령어
 - npm 5배 빠른 설치 속도
@@ -400,15 +396,14 @@ bun test
 
 #### 개요
 
-```
-공식 사이트: https://pypi.org/
-GitHub: https://github.com/pypa/pip
-문서: https://pip.pypa.io/
-설치: Python과 함께 자동 설치
-대표 저장소: PyPI (Python Package Index)
-```
+- 공식 사이트: https://pypi.org/
+- GitHub: https://github.com/pypa/pip
+- 문서: https://pip.pypa.io/
+- 설치: Python과 함께 자동 설치
+- 대표 저장소: PyPI (Python Package Index)
 
 **특징:**
+
 - Python의 표준 패키지 매니저
 - PyPI에 수백만 개 패키지 존재
 - 가상 환경 지원 (venv)
@@ -473,15 +468,14 @@ flask~=2.0
 
 #### 개요
 
-```
-공식 사이트: https://gradle.org/
-GitHub: https://github.com/gradle/gradle
-문서: https://docs.gradle.org/
-설치: gradlew (gradle wrapper) 자동 설치
-저장소: Maven Central, Gradle Central
-```
+- 공식 사이트: https://gradle.org/
+- GitHub: https://github.com/gradle/gradle
+- 문서: https://docs.gradle.org/
+- 설치: gradlew (gradle wrapper) 자동 설치
+- 저장소: Maven Central, Gradle Central
 
 **특징:**
+
 - Java/Kotlin 표준 빌드 도구
 - Maven보다 빠르고 유연함
 - Kotlin DSL 지원
@@ -529,156 +523,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.0.0'
     implementation 'com.google.guava:guava:31.1-jre'
-    
+
     testImplementation 'junit:junit:4.13.2'
 }
 ```
 
-### 7. Maven (Java)
-
-#### 개요
-
-```
-공식 사이트: https://maven.apache.org/
-GitHub: https://github.com/apache/maven
-문서: https://maven.apache.org/guides/
-설치: mvn (maven binary) 설치 필요
-저장소: Maven Central Repository
-```
-
-**특징:**
-- Java 전통적인 패키지 매니저
-- pom.xml로 의존성 관리
-- 표준화된 빌드 라이프사이클
-- 거대한 Maven Central 저장소
-
-#### 기본 명령어
-
-```bash
-# Maven 버전 확인
-mvn --version
-
-# 빌드
-mvn clean install               # 정리 후 빌드
-mvn compile                    # 컴파일만
-
-# 의존성
-mvn dependency:tree            # 의존성 트리 확인
-mvn dependency:resolve         # 의존성 해결
-
-# 테스트
-mvn test
-
-# 배포
-mvn deploy                     # 원격 저장소에 배포
-mvn package                    # JAR/WAR 생성
-
-# 프로젝트 생성
-mvn archetype:generate -DgroupId=com.example -DartifactId=my-app
-```
-
-#### pom.xml 구조
-
-```xml
-<project>
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com.example</groupId>
-    <artifactId>my-app</artifactId>
-    <version>1.0.0</version>
-    
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-</project>
-```
-
-### 8. Composer (PHP)
-
-#### 개요
-
-```
-공식 사이트: https://getcomposer.org/
-GitHub: https://github.com/composer/composer
-문서: https://getcomposer.org/doc/
-설치: php composer-setup.php
-저장소: Packagist (packagist.org)
-```
-
-**특징:**
-- PHP 표준 패키지 매니저
-- Packagist에 50만+ 패키지
-- Laravel, Symfony 등에서 표준 사용
-- composer.json으로 의존성 관리
-
-#### 기본 명령어
-
-```bash
-# Composer 버전 확인
-composer --version
-
-# 패키지 설치
-composer install                   # composer.json 기반
-composer install --no-dev         # 개발 의존성 제외
-
-# 패키지 추가
-composer require symfony/console  # 최신 버전
-composer require "symfony/console:^6.0"
-
-# 개발 환경
-composer require --dev phpunit/phpunit
-
-# 제거
-composer remove symfony/console
-
-# 업데이트
-composer update                   # 모든 패키지 업데이트
-composer update symfony/console  # 특정 패키지만
-
-# 관리
-composer show                     # 설치된 패키지 목록
-composer show symfony/console    # 패키지 정보
-composer outdated               # 업데이트 가능 패키지
-
-# 자동 로드 생성
-composer dump-autoload          # autoload 파일 생성
-```
-
-#### composer.json
-
-```json
-{
-    "name": "my/project",
-    "description": "My awesome PHP project",
-    "require": {
-        "php": ">=8.0",
-        "laravel/laravel": "^10.0",
-        "monolog/monolog": "^2.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "laravel/sail": "^1.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/"
-        }
-    }
-}
-```
-
-### 9. Cargo (Rust)
+### 7. Cargo (Rust)
 
 #### 개요
 
@@ -691,6 +541,7 @@ GitHub: https://github.com/rust-lang/cargo
 ```
 
 **특징:**
+
 - Rust의 기본 패키지 매니저
 - 빌드 도구 통합
 - 매우 안전한 의존성 관리
@@ -749,17 +600,15 @@ criterion = "0.4"
 
 ## 패키지 매니저 비교표
 
-| 매니저 | 언어 | 속도 | 점유율 | 저장소 | 명령어 |
-|--------|------|------|--------|--------|--------|
-| **npm** | JavaScript | 중간 | 95% | npmjs.com | npm i |
-| **Yarn** | JavaScript | 빠름 | 10% | npmjs.com | yarn add |
-| **pnpm** | JavaScript | 가장 빠름 | 15% | npmjs.com | pnpm add |
-| **Bun** | JavaScript | 초고속 | <1% | npmjs.com | bun add |
-| **pip** | Python | 중간 | 100% | pypi.org | pip install |
-| **Gradle** | Java | 빠름 | 40% | gradle/maven | gradle add |
-| **Maven** | Java | 중간 | 60% | maven.org | mvn add |
-| **Composer** | PHP | 중간 | 95% | packagist.org | composer add |
-| **Cargo** | Rust | 빠름 | 100% | crates.io | cargo add |
+| 매니저     | 언어       | 속도      | 점유율 | 저장소       | 명령어      |
+| ---------- | ---------- | --------- | ------ | ------------ | ----------- |
+| **npm**    | JavaScript | 중간      | 95%    | npmjs.com    | npm i       |
+| **Yarn**   | JavaScript | 빠름      | 10%    | npmjs.com    | yarn add    |
+| **pnpm**   | JavaScript | 가장 빠름 | 15%    | npmjs.com    | pnpm add    |
+| **Bun**    | JavaScript | 초고속    | <1%    | npmjs.com    | bun add     |
+| **pip**    | Python     | 중간      | 100%   | pypi.org     | pip install |
+| **Gradle** | Java       | 빠름      | 40%    | gradle/maven | gradle add  |
+| **Cargo**  | Rust       | 빠름      | 100%   | crates.io    | cargo add   |
 
 ## 고급 주제
 
@@ -820,32 +669,33 @@ pnpm -r install
 pnpm --filter core add express
 ```
 
-## 팀 협업 가이드
+## 패키지 매니저 선택 가이드
 
-```markdown
-# 패키지 매니저 선택 가이드
+### 각 팀이 선택해야 할 매니저
 
-## 각 팀이 선택해야 할 매니저
-
-### JavaScript 프로젝트
+**JavaScript 프로젝트**
 
 **npm 선택:**
+
 - 작은 팀/프로젝트
 - 기본 설정만 필요
 - 모든 팀원이 npm에 익숙
 
 **Yarn 선택:**
+
 - workspace 기능 필요
 - Facebook 생태계 사용
 - 엄격한 버전 관리 필요
 
 **pnpm 선택 (권장):**
+
 - 대규모 모노레포
 - 디스크 공간 절약 필요
 - 설치 속도 중요
 - npm 호환성 필요
 
 **Bun 선택:**
+
 - TypeScript 네이티브 사용
 - 초고속 개발 원함
 - 런타임도 Bun 사용 가능
@@ -861,6 +711,7 @@ pnpm --filter core add express
    - 정확한 버전은 lock file에서 관리
 
 3. CI/CD에서
+
    ```bash
    npm ci              # npm
    yarn install --frozen-lockfile  # Yarn
@@ -918,69 +769,75 @@ Java:
 - Gradle (모던, 권장)
 - Maven (전통적)
 ```
-```
 
 ## 공식 사이트 총정리
 
 ### JavaScript/Node.js
 
-| 도구 | 공식 사이트 | 패키지 저장소 | 문서 |
-|------|-----------|------------|------|
-| npm | npmjs.com | npmjs.com | docs.npmjs.com |
-| Yarn | yarnpkg.com | npmjs.com | yarnpkg.com/docs |
-| pnpm | pnpm.io | npmjs.com | pnpm.io/docs |
-| Bun | bun.sh | npmjs.com | bun.sh/docs |
+| 도구 | 공식 사이트 | 패키지 저장소 | 문서             |
+| ---- | ----------- | ------------- | ---------------- |
+| npm  | npmjs.com   | npmjs.com     | docs.npmjs.com   |
+| Yarn | yarnpkg.com | npmjs.com     | yarnpkg.com/docs |
+| pnpm | pnpm.io     | npmjs.com     | pnpm.io/docs     |
+| Bun  | bun.sh      | npmjs.com     | bun.sh/docs      |
 
 ### Python
 
-| 도구 | 공식 사이트 | 패키지 저장소 | 문서 |
-|------|-----------|------------|------|
-| pip | pip.pypa.io | pypi.org | pip.pypa.io |
-| Poetry | python-poetry.org | pypi.org | python-poetry.org/docs |
-| pipenv | pipenv.pypa.io | pypi.org | pipenv.pypa.io |
+| 도구   | 공식 사이트       | 패키지 저장소 | 문서                   |
+| ------ | ----------------- | ------------- | ---------------------- |
+| pip    | pip.pypa.io       | pypi.org      | pip.pypa.io            |
+| Poetry | python-poetry.org | pypi.org      | python-poetry.org/docs |
+| pipenv | pipenv.pypa.io    | pypi.org      | pipenv.pypa.io         |
 
 ### Java
 
-| 도구 | 공식 사이트 | 패키지 저장소 | 문서 |
-|------|-----------|------------|------|
-| Maven | maven.apache.org | mvnrepository.com | maven.apache.org/guides |
-| Gradle | gradle.org | mvnrepository.com | gradle.org/docs |
+| 도구   | 공식 사이트      | 패키지 저장소     | 문서                    |
+| ------ | ---------------- | ----------------- | ----------------------- |
+| Maven  | maven.apache.org | mvnrepository.com | maven.apache.org/guides |
+| Gradle | gradle.org       | mvnrepository.com | gradle.org/docs         |
 
 ### 기타 언어
 
-| 언어 | 도구 | 공식 사이트 | 패키지 저장소 |
-|------|------|-----------|------------|
-| PHP | Composer | getcomposer.org | packagist.org |
-| Rust | Cargo | doc.rust-lang.org/cargo | crates.io |
-| Ruby | Bundler | bundler.io | rubygems.org |
-| Go | go mod | golang.org | pkg.go.dev |
+| 언어 | 도구     | 공식 사이트             | 패키지 저장소 |
+| ---- | -------- | ----------------------- | ------------- |
+| PHP  | Composer | getcomposer.org         | packagist.org |
+| Rust | Cargo    | doc.rust-lang.org/cargo | crates.io     |
+| Ruby | Bundler  | bundler.io              | rubygems.org  |
+| Go   | go mod   | golang.org              | pkg.go.dev    |
 
 ## 결론
 
 ### 각 언어별 추천
 
 ```
+
 JavaScript:
+
 - 새 프로젝트: pnpm
 - 기존 프로젝트: npm
 - 대규모 모노레포: pnpm workspace
 - 초고속 필요: Bun
 
 Python:
+
 - 기본: pip + venv
 - 모던: Poetry
 - 데이터 과학: Conda
 
 Java:
+
 - 새 프로젝트: Gradle
 - 기존 프로젝트: Maven
 - Spring Boot: Gradle
 
 PHP:
+
 - Laravel/Symfony: Composer
 
 Rust:
+
 - 모든 프로젝트: Cargo
+
 ```
 
 ### 핵심 원칙
