@@ -2,7 +2,7 @@
 
 ## 개요
 
-**원격 저장소(Remote Repository)**는 네트워크 상에 위치한 Git 저장소입니다.
+**원격 저장소(Remote Repository)** 는 네트워크 상에 위치한 Git 저장소입니다.
 GitHub, GitLab, Bitbucket 등의 서비스를 통해 호스팅됩니다.
 원격 저장소를 통해 다른 개발자와 협업할 수 있습니다.
 
