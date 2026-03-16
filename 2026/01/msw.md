@@ -750,3 +750,8 @@ MSW는 **현대 프론트엔드 개발의 필수 도구**입니다:
 - 네트워크 상황에 따른 UX 테스트
 
 지금 바로 MSW를 도입하고 개발 속도를 높여보세요!
+
+### 참고할만한 글/영상
+
+- https://velog.io/@khy226/msw%EB%A1%9C-%EB%AA%A8%EC%9D%98-%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0
+- https://www.youtube.com/watch?v=7zcKu4-YPkU
