@@ -6,25 +6,27 @@ React에서 폼을 직접 관리할 때 얼마나 번거로운가요?
 
 ```typescript
 // ❌ 수동 폼 관리 (너무 많은 코드)
-const [email, setEmail] = useState('')
-const [password, setPassword] = useState('')
-const [emailError, setEmailError] = useState('')
-const [passwordError, setPasswordError] = useState('')
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [emailError, setEmailError] = useState('');
+const [passwordError, setPasswordError] = useState('');
 
 const handleEmailChange = (e) => {
-  setEmail(e.target.value)
+  setEmail(e.target.value);
   // 검증...
-}
+};
 
 const handleSubmit = (e) => {
-  e.preventDefault()
+  e.preventDefault();
   // 유효성 검사...
-}
+};
 ```
 
 **React Hook Form**은 이 모든 번거로움을 제거합니다. 단 몇 줄로 완벽한 폼을 만들 수 있습니다.
 
----
+## 공식 사이트
+
+https://react-hook-form.com
 
 # 1. React Hook Form이란?
 
@@ -984,17 +986,19 @@ function LoginForm() {
 ## Q: watch vs getValues?
 
 **A:**
+
 ```typescript
 // watch - 리렌더링 포함 (UI 업데이트 필요할 때)
-const email = watch('email') // 값 변경 시 리렌더링
+const email = watch('email'); // 값 변경 시 리렌더링
 
 // getValues - 리렌더링 없음 (현재 값만 필요할 때)
-const email = getValues('email') // 리렌더링 없음
+const email = getValues('email'); // 리렌더링 없음
 ```
 
 ## Q: 서버 에러를 폼에 반영하려면?
 
 **A:**
+
 ```typescript
 import { useForm } from 'react-hook-form'
 
@@ -1026,6 +1030,7 @@ function Form() {
 ## Q: 전체 폼을 초기화하려면?
 
 **A:**
+
 ```typescript
 import { useForm } from 'react-hook-form'
 

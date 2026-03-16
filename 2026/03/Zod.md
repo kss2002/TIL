@@ -6,9 +6,9 @@ API 응답 데이터를 받을 때 타입을 어떻게 보장하나요?
 
 ```typescript
 // ❌ 위험한 코드
-const response = await fetch('/api/user')
-const user = await response.json()
-console.log(user.email) // user가 정말 객체인지? email 필드가 있는지?
+const response = await fetch('/api/user');
+const user = await response.json();
+console.log(user.email); // user가 정말 객체인지? email 필드가 있는지?
 
 // ❌ 런타임 에러 발생 가능
 // TypeError: Cannot read property 'email' of undefined
@@ -16,7 +16,9 @@ console.log(user.email) // user가 정말 객체인지? email 필드가 있는�
 
 **Zod**는 런타임에서 데이터의 형태를 검증하고, TypeScript 타입을 자동으로 생성합니다. 완벽한 타입 안전성을 보장합니다.
 
----
+## 공식 사이트
+
+https://zod.dev
 
 # 1. Zod란?
 
@@ -75,50 +77,50 @@ npm install zod
 ## 기본 타입들
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // String
-const stringSchema = z.string()
-stringSchema.parse('hello') // ✅ 성공
-stringSchema.parse(123) // ❌ 에러
+const stringSchema = z.string();
+stringSchema.parse('hello'); // ✅ 성공
+stringSchema.parse(123); // ❌ 에러
 
 // Number
-const numberSchema = z.number()
-numberSchema.parse(42) // ✅ 성공
-numberSchema.parse('42') // ❌ 에러
+const numberSchema = z.number();
+numberSchema.parse(42); // ✅ 성공
+numberSchema.parse('42'); // ❌ 에러
 
 // Boolean
-const boolSchema = z.boolean()
-boolSchema.parse(true) // ✅ 성공
-boolSchema.parse('true') // ❌ 에러
+const boolSchema = z.boolean();
+boolSchema.parse(true); // ✅ 성공
+boolSchema.parse('true'); // ❌ 에러
 
 // Array
-const arraySchema = z.array(z.string())
-arraySchema.parse(['a', 'b', 'c']) // ✅ 성공
-arraySchema.parse(['a', 2, 'c']) // ❌ 에러
+const arraySchema = z.array(z.string());
+arraySchema.parse(['a', 'b', 'c']); // ✅ 성공
+arraySchema.parse(['a', 2, 'c']); // ❌ 에러
 
 // Enum
-const roleSchema = z.enum(['admin', 'user', 'guest'])
-roleSchema.parse('admin') // ✅ 성공
-roleSchema.parse('superuser') // ❌ 에러
+const roleSchema = z.enum(['admin', 'user', 'guest']);
+roleSchema.parse('admin'); // ✅ 성공
+roleSchema.parse('superuser'); // ❌ 에러
 
 // Optional
-const optionalSchema = z.string().optional()
-optionalSchema.parse('hello') // ✅ 성공
-optionalSchema.parse(undefined) // ✅ 성공
-optionalSchema.parse(null) // ❌ 에러
+const optionalSchema = z.string().optional();
+optionalSchema.parse('hello'); // ✅ 성공
+optionalSchema.parse(undefined); // ✅ 성공
+optionalSchema.parse(null); // ❌ 에러
 
 // Nullable
-const nullableSchema = z.string().nullable()
-nullableSchema.parse('hello') // ✅ 성공
-nullableSchema.parse(null) // ✅ 성공
-nullableSchema.parse(undefined) // ❌ 에러
+const nullableSchema = z.string().nullable();
+nullableSchema.parse('hello'); // ✅ 성공
+nullableSchema.parse(null); // ✅ 성공
+nullableSchema.parse(undefined); // ❌ 에러
 
 // Union
-const unionSchema = z.union([z.string(), z.number()])
-unionSchema.parse('hello') // ✅ 성공
-unionSchema.parse(42) // ✅ 성공
-unionSchema.parse(true) // ❌ 에러
+const unionSchema = z.union([z.string(), z.number()]);
+unionSchema.parse('hello'); // ✅ 성공
+unionSchema.parse(42); // ✅ 성공
+unionSchema.parse(true); // ❌ 에러
 ```
 
 ---
@@ -128,29 +130,29 @@ unionSchema.parse(true) // ❌ 에러
 ## 기본 객체
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // 간단한 사용자 스키마
 const userSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
-  age: z.number().int().positive()
-})
+  age: z.number().int().positive(),
+});
 
 // 데이터 검증
 const userData = {
   id: 1,
   name: 'John',
   email: 'john@example.com',
-  age: 25
-}
+  age: 25,
+};
 
-const result = userSchema.parse(userData)
-console.log(result) // ✅ 성공
+const result = userSchema.parse(userData);
+console.log(result); // ✅ 성공
 
 // TypeScript 타입 자동 생성
-type User = z.infer<typeof userSchema>
+type User = z.infer<typeof userSchema>;
 // type User = {
 //   id: number
 //   name: string
@@ -163,27 +165,27 @@ const user: User = {
   id: 1,
   name: 'John',
   email: 'john@example.com',
-  age: 25
-}
+  age: 25,
+};
 ```
 
 ## 중첩된 객체
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 const addressSchema = z.object({
   street: z.string(),
   city: z.string(),
-  zipCode: z.string()
-})
+  zipCode: z.string(),
+});
 
 const userSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
-  address: addressSchema // 중첩된 스키마
-})
+  address: addressSchema, // 중첩된 스키마
+});
 
 const userData = {
   id: 1,
@@ -192,15 +194,15 @@ const userData = {
   address: {
     street: '123 Main St',
     city: 'New York',
-    zipCode: '10001'
-  }
-}
+    zipCode: '10001',
+  },
+};
 
-const result = userSchema.parse(userData)
+const result = userSchema.parse(userData);
 // ✅ 성공
 
 // 타입도 자동 생성
-type User = z.infer<typeof userSchema>
+type User = z.infer<typeof userSchema>;
 // type User = {
 //   id: number
 //   name: string
@@ -220,82 +222,89 @@ type User = z.infer<typeof userSchema>
 ## String 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const emailSchema = z.string()
+const emailSchema = z
+  .string()
   .email('Invalid email format')
   .min(5, 'Email must be at least 5 characters')
   .max(255, 'Email must be less than 255 characters')
-  .toLowerCase()
+  .toLowerCase();
 
-emailSchema.parse('JOHN@EXAMPLE.COM')
+emailSchema.parse('JOHN@EXAMPLE.COM');
 // 결과: 'john@example.com'
 
 // URL 검증
-const urlSchema = z.string().url('Invalid URL')
-urlSchema.parse('https://example.com') // ✅ 성공
+const urlSchema = z.string().url('Invalid URL');
+urlSchema.parse('https://example.com'); // ✅ 성공
 
 // 정규표현식
-const usernameSchema = z.string()
-  .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores')
+const usernameSchema = z
+  .string()
+  .regex(
+    /^[a-zA-Z0-9_]+$/,
+    'Username can only contain letters, numbers, and underscores',
+  )
   .min(3)
-  .max(20)
+  .max(20);
 
 // 고정 길이
-const pinSchema = z.string().length(4, 'PIN must be exactly 4 characters')
+const pinSchema = z.string().length(4, 'PIN must be exactly 4 characters');
 ```
 
 ## Number 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const ageSchema = z.number()
+const ageSchema = z
+  .number()
   .int('Age must be an integer')
   .min(0, 'Age cannot be negative')
   .max(150, 'Age must be realistic')
-  .refine(age => age >= 18, 'Must be 18 or older')
+  .refine((age) => age >= 18, 'Must be 18 or older');
 
-ageSchema.parse(25) // ✅ 성공
-ageSchema.parse(15) // ❌ 에러
+ageSchema.parse(25); // ✅ 성공
+ageSchema.parse(15); // ❌ 에러
 
 // 범위
-const scoreSchema = z.number()
+const scoreSchema = z
+  .number()
   .min(0)
   .max(100)
-  .multipleOf(0.5, 'Score must be multiple of 0.5')
+  .multipleOf(0.5, 'Score must be multiple of 0.5');
 
-scoreSchema.parse(85.5) // ✅ 성공
-scoreSchema.parse(85.3) // ❌ 에러
+scoreSchema.parse(85.5); // ✅ 성공
+scoreSchema.parse(85.3); // ❌ 에러
 ```
 
 ## Array 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // 배열 요소 검증
-const tagsSchema = z.array(z.string()).nonempty('At least one tag is required')
+const tagsSchema = z.array(z.string()).nonempty('At least one tag is required');
 
-tagsSchema.parse(['javascript', 'typescript']) // ✅ 성공
-tagsSchema.parse([]) // ❌ 에러
+tagsSchema.parse(['javascript', 'typescript']); // ✅ 성공
+tagsSchema.parse([]); // ❌ 에러
 
 // 배열 길이 검증
-const itemsSchema = z.array(z.number())
+const itemsSchema = z
+  .array(z.number())
   .min(1, 'At least 1 item required')
-  .max(10, 'Maximum 10 items allowed')
+  .max(10, 'Maximum 10 items allowed');
 
-itemsSchema.parse([1, 2, 3]) // ✅ 성공
-itemsSchema.parse([]) // ❌ 에러
+itemsSchema.parse([1, 2, 3]); // ✅ 성공
+itemsSchema.parse([]); // ❌ 에러
 
 // 중복 제거
-const uniqueTagsSchema = z.array(z.string()).refine(
-  (tags) => new Set(tags).size === tags.length,
-  'Tags must be unique'
-)
+const uniqueTagsSchema = z
+  .array(z.string())
+  .refine((tags) => new Set(tags).size === tags.length, 'Tags must be unique');
 
-uniqueTagsSchema.parse(['js', 'ts']) // ✅ 성공
-uniqueTagsSchema.parse(['js', 'js']) // ❌ 에러
+uniqueTagsSchema.parse(['js', 'ts']); // ✅ 성공
+uniqueTagsSchema.parse(['js', 'js']); // ❌ 에러
 ```
 
 ---
@@ -305,67 +314,69 @@ uniqueTagsSchema.parse(['js', 'js']) // ❌ 에러
 ## refine 사용
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const passwordSchema = z.object({
-  password: z.string()
-    .min(8, 'Password must be at least 8 characters')
-    .refine(
-      (password) => /[A-Z]/.test(password),
-      'Password must contain uppercase letter'
-    )
-    .refine(
-      (password) => /[0-9]/.test(password),
-      'Password must contain number'
-    )
-    .refine(
-      (password) => /[!@#$%^&*]/.test(password),
-      'Password must contain special character'
-    ),
-  confirmPassword: z.string()
-}).refine(
-  (data) => data.password === data.confirmPassword,
-  {
+const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .refine(
+        (password) => /[A-Z]/.test(password),
+        'Password must contain uppercase letter',
+      )
+      .refine(
+        (password) => /[0-9]/.test(password),
+        'Password must contain number',
+      )
+      .refine(
+        (password) => /[!@#$%^&*]/.test(password),
+        'Password must contain special character',
+      ),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
-    path: ['confirmPassword'] // 에러 위치 지정
-  }
-)
+    path: ['confirmPassword'], // 에러 위치 지정
+  });
 
 const result = passwordSchema.parse({
   password: 'SecurePass123!',
-  confirmPassword: 'SecurePass123!'
-}) // ✅ 성공
+  confirmPassword: 'SecurePass123!',
+}); // ✅ 성공
 ```
 
 ## superRefine 사용 (더 세밀한 제어)
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const userSchema = z.object({
-  email: z.string().email(),
-  age: z.number()
-}).superRefine(async (data, ctx) => {
-  // 비동기 검증 가능
-  const userExists = await checkUserExists(data.email)
+const userSchema = z
+  .object({
+    email: z.string().email(),
+    age: z.number(),
+  })
+  .superRefine(async (data, ctx) => {
+    // 비동기 검증 가능
+    const userExists = await checkUserExists(data.email);
 
-  if (userExists) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ['email'],
-      message: 'User already exists'
-    })
-  }
+    if (userExists) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['email'],
+        message: 'User already exists',
+      });
+    }
 
-  // 복잡한 조건 검증
-  if (data.age < 18 && data.age > 13) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ['age'],
-      message: 'Must be 18 or 13 and under'
-    })
-  }
-})
+    // 복잡한 조건 검증
+    if (data.age < 18 && data.age > 13) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['age'],
+        message: 'Must be 18 or 13 and under',
+      });
+    }
+  });
 ```
 
 ---
@@ -375,42 +386,47 @@ const userSchema = z.object({
 ## 데이터 변환
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // 문자열을 숫자로 변환
-const numberSchema = z.string().transform((val) => parseInt(val, 10))
-const result = numberSchema.parse('42')
-console.log(result) // 42 (number)
+const numberSchema = z.string().transform((val) => parseInt(val, 10));
+const result = numberSchema.parse('42');
+console.log(result); // 42 (number)
 
 // 이메일 소문자 변환
-const emailSchema = z.string().email().transform((val) => val.toLowerCase())
-const result = emailSchema.parse('JOHN@EXAMPLE.COM')
-console.log(result) // 'john@example.com'
+const emailSchema = z
+  .string()
+  .email()
+  .transform((val) => val.toLowerCase());
+const result = emailSchema.parse('JOHN@EXAMPLE.COM');
+console.log(result); // 'john@example.com'
 
 // 복잡한 변환
-const userSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string().email()
-}).transform((data) => ({
-  fullName: `${data.firstName} ${data.lastName}`,
-  email: data.email.toLowerCase()
-}))
+const userSchema = z
+  .object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+  })
+  .transform((data) => ({
+    fullName: `${data.firstName} ${data.lastName}`,
+    email: data.email.toLowerCase(),
+  }));
 
 const result = userSchema.parse({
   firstName: 'John',
   lastName: 'Doe',
-  email: 'JOHN@EXAMPLE.COM'
-})
+  email: 'JOHN@EXAMPLE.COM',
+});
 
-console.log(result)
+console.log(result);
 // {
 //   fullName: 'John Doe',
 //   email: 'john@example.com'
 // }
 
 // 타입도 자동 업데이트
-type User = z.infer<typeof userSchema>
+type User = z.infer<typeof userSchema>;
 // type User = {
 //   fullName: string
 //   email: string
@@ -424,24 +440,24 @@ type User = z.infer<typeof userSchema>
 ## 기본 에러 처리
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 const userSchema = z.object({
   email: z.string().email(),
-  age: z.number().int().positive()
-})
+  age: z.number().int().positive(),
+});
 
 try {
   userSchema.parse({
     email: 'invalid-email',
-    age: 'not-a-number'
-  })
+    age: 'not-a-number',
+  });
 } catch (error) {
   if (error instanceof z.ZodError) {
-    console.log('Validation errors:')
+    console.log('Validation errors:');
     error.errors.forEach((err) => {
-      console.log(`${err.path.join('.')}: ${err.message}`)
-    })
+      console.log(`${err.path.join('.')}: ${err.message}`);
+    });
     // 출력:
     // email: Invalid email
     // age: Expected number, received string
@@ -452,20 +468,20 @@ try {
 ## 상세한 에러 정보
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 const userSchema = z.object({
   email: z.string().email('Invalid email format'),
-  age: z.number().min(18, 'Must be 18 or older')
-})
+  age: z.number().min(18, 'Must be 18 or older'),
+});
 
 const result = userSchema.safeParse({
   email: 'invalid',
-  age: 15
-})
+  age: 15,
+});
 
 if (!result.success) {
-  console.log(result.error.format())
+  console.log(result.error.format());
   // {
   //   email: { _errors: ['Invalid email format'] },
   //   age: { _errors: ['Must be 18 or older'] }
@@ -477,33 +493,33 @@ if (!result.success) {
       path: error.path, // ['email']
       code: error.code, // 'invalid_string'
       message: error.message, // 'Invalid email format'
-      received: error.received // 'invalid'
-    })
-  })
+      received: error.received, // 'invalid'
+    });
+  });
 }
 ```
 
 ## parse vs safeParse
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const schema = z.number()
+const schema = z.number();
 
 // parse - 에러 시 예외 발생
 try {
-  const result = schema.parse('not a number')
+  const result = schema.parse('not a number');
 } catch (error) {
-  console.error('Error:', error)
+  console.error('Error:', error);
 }
 
 // safeParse - 에러를 반환 (try-catch 불필요)
-const result = schema.safeParse('not a number')
+const result = schema.safeParse('not a number');
 
 if (result.success) {
-  console.log('Valid:', result.data)
+  console.log('Valid:', result.data);
 } else {
-  console.error('Invalid:', result.error.format())
+  console.error('Invalid:', result.error.format());
 }
 ```
 
@@ -514,7 +530,7 @@ if (result.success) {
 ## API 응답 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // API 응답 스키마
 const userResponseSchema = z.object({
@@ -522,34 +538,34 @@ const userResponseSchema = z.object({
   email: z.string().email(),
   name: z.string(),
   createdAt: z.string().datetime(),
-  isActive: z.boolean()
-})
+  isActive: z.boolean(),
+});
 
 // API 호출
 async function getUser(userId: string) {
-  const response = await fetch(`/api/users/${userId}`)
-  const data = await response.json()
+  const response = await fetch(`/api/users/${userId}`);
+  const data = await response.json();
 
   // 응답 검증
-  const user = userResponseSchema.parse(data)
+  const user = userResponseSchema.parse(data);
 
   // 이제 user의 타입이 완벽하게 보장됨
-  console.log(user.id) // ✅ number
-  console.log(user.email) // ✅ string
+  console.log(user.id); // ✅ number
+  console.log(user.email); // ✅ string
 }
 
 // 또는 안전하게
 async function getUserSafe(userId: string) {
-  const response = await fetch(`/api/users/${userId}`)
-  const data = await response.json()
+  const response = await fetch(`/api/users/${userId}`);
+  const data = await response.json();
 
-  const result = userResponseSchema.safeParse(data)
+  const result = userResponseSchema.safeParse(data);
 
   if (result.success) {
-    return result.data
+    return result.data;
   } else {
-    console.error('Invalid response:', result.error)
-    return null
+    console.error('Invalid response:', result.error);
+    return null;
   }
 }
 ```
@@ -557,74 +573,74 @@ async function getUserSafe(userId: string) {
 ## 폼 제출 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
-const signupSchema = z.object({
-  username: z.string()
-    .min(3, 'Username must be at least 3 characters')
-    .max(20, 'Username must be less than 20 characters')
-    .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
+const signupSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, 'Username must be at least 3 characters')
+      .max(20, 'Username must be less than 20 characters')
+      .regex(
+        /^[a-zA-Z0-9_]+$/,
+        'Username can only contain letters, numbers, and underscores',
+      ),
 
-  email: z.string()
-    .email('Invalid email format'),
+    email: z.string().email('Invalid email format'),
 
-  password: z.string()
-    .min(8, 'Password must be at least 8 characters')
-    .refine(
-      (pwd) => /[A-Z]/.test(pwd),
-      'Password must contain uppercase letter'
-    )
-    .refine(
-      (pwd) => /[0-9]/.test(pwd),
-      'Password must contain number'
-    ),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .refine(
+        (pwd) => /[A-Z]/.test(pwd),
+        'Password must contain uppercase letter',
+      )
+      .refine((pwd) => /[0-9]/.test(pwd), 'Password must contain number'),
 
-  confirmPassword: z.string(),
+    confirmPassword: z.string(),
 
-  age: z.number()
-    .int('Age must be integer')
-    .min(18, 'Must be 18 or older')
-    .max(120, 'Age must be realistic'),
+    age: z
+      .number()
+      .int('Age must be integer')
+      .min(18, 'Must be 18 or older')
+      .max(120, 'Age must be realistic'),
 
-  terms: z.boolean()
-    .refine((val) => val === true, 'You must agree to terms')
-}).refine(
-  (data) => data.password === data.confirmPassword,
-  {
+    terms: z.boolean().refine((val) => val === true, 'You must agree to terms'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
-    path: ['confirmPassword']
-  }
-)
+    path: ['confirmPassword'],
+  });
 
 // 폼 제출 처리
 async function handleSignup(formData: unknown) {
-  const result = signupSchema.safeParse(formData)
+  const result = signupSchema.safeParse(formData);
 
   if (!result.success) {
     // 검증 실패 - 에러 반환
     return {
       success: false,
-      errors: result.error.format()
-    }
+      errors: result.error.format(),
+    };
   }
 
   // 검증 성공 - 서버에 전송
   const response = await fetch('/api/signup', {
     method: 'POST',
-    body: JSON.stringify(result.data)
-  })
+    body: JSON.stringify(result.data),
+  });
 
   return {
     success: true,
-    data: await response.json()
-  }
+    data: await response.json(),
+  };
 }
 ```
 
 ## 데이터베이스 검증
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 const userSchema = z.object({
   id: z.number().int().positive(),
@@ -634,27 +650,27 @@ const userSchema = z.object({
   tags: z.array(z.string()).default([]),
   role: z.enum(['admin', 'user', 'guest']).default('user'),
   createdAt: z.date().default(() => new Date()),
-  updatedAt: z.date()
-})
+  updatedAt: z.date(),
+});
 
 // 데이터베이스에서 조회한 데이터 검증
 async function getUserFromDB(id: number) {
-  const row = await db.query('SELECT * FROM users WHERE id = ?', [id])
+  const row = await db.query('SELECT * FROM users WHERE id = ?', [id]);
 
   // 데이터 검증
-  const user = userSchema.parse(row)
+  const user = userSchema.parse(row);
 
-  return user
+  return user;
 }
 
 // 일괄 검증
 async function getAllUsers() {
-  const rows = await db.query('SELECT * FROM users')
+  const rows = await db.query('SELECT * FROM users');
 
   // 배열 검증
-  const users = z.array(userSchema).parse(rows)
+  const users = z.array(userSchema).parse(rows);
 
-  return users
+  return users;
 }
 ```
 
@@ -722,40 +738,40 @@ function LoginForm() {
 ## Discriminated Union
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // 결제 방법에 따른 다른 필드
 const paymentSchema = z.discriminatedUnion('method', [
   z.object({
     method: z.literal('card'),
     cardNumber: z.string().length(16),
-    cvv: z.string().length(3)
+    cvv: z.string().length(3),
   }),
   z.object({
     method: z.literal('bank'),
     accountNumber: z.string(),
-    bankCode: z.string()
+    bankCode: z.string(),
   }),
   z.object({
     method: z.literal('paypal'),
-    email: z.string().email()
-  })
-])
+    email: z.string().email(),
+  }),
+]);
 
 const result1 = paymentSchema.parse({
   method: 'card',
   cardNumber: '1234567890123456',
-  cvv: '123'
-}) // ✅ 성공
+  cvv: '123',
+}); // ✅ 성공
 
 const result2 = paymentSchema.parse({
   method: 'paypal',
-  email: 'john@example.com'
-}) // ✅ 성공
+  email: 'john@example.com',
+}); // ✅ 성공
 
 // 타입도 자동 분별
-type Payment = z.infer<typeof paymentSchema>
-// type Payment = 
+type Payment = z.infer<typeof paymentSchema>;
+// type Payment =
 //   | { method: 'card'; cardNumber: string; cvv: string }
 //   | { method: 'bank'; accountNumber: string; bankCode: string }
 //   | { method: 'paypal'; email: string }
@@ -764,7 +780,7 @@ type Payment = z.infer<typeof paymentSchema>
 ## Generics
 
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 // 재사용 가능한 페이지네이션 스키마
 function createPaginationSchema<T extends z.ZodTypeAny>(itemSchema: T) {
@@ -772,19 +788,19 @@ function createPaginationSchema<T extends z.ZodTypeAny>(itemSchema: T) {
     items: z.array(itemSchema),
     total: z.number(),
     page: z.number().int().positive(),
-    pageSize: z.number().int().positive()
-  })
+    pageSize: z.number().int().positive(),
+  });
 }
 
 const userSchema = z.object({
   id: z.number(),
   name: z.string(),
-  email: z.string().email()
-})
+  email: z.string().email(),
+});
 
-const usersPageSchema = createPaginationSchema(userSchema)
+const usersPageSchema = createPaginationSchema(userSchema);
 
-type UsersPage = z.infer<typeof usersPageSchema>
+type UsersPage = z.infer<typeof usersPageSchema>;
 // type UsersPage = {
 //   items: Array<{ id: number; name: string; email: string }>
 //   total: number
@@ -801,32 +817,32 @@ type UsersPage = z.infer<typeof usersPageSchema>
 
 ```typescript
 // schemas/user.ts
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const userBaseSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  age: z.number().int().min(0)
-})
+  age: z.number().int().min(0),
+});
 
-export const createUserSchema = userBaseSchema.strict()
+export const createUserSchema = userBaseSchema.strict();
 
-export const updateUserSchema = userBaseSchema.partial()
+export const updateUserSchema = userBaseSchema.partial();
 
 export const userResponseSchema = userBaseSchema.extend({
   id: z.number(),
   createdAt: z.date(),
-  updatedAt: z.date()
-})
+  updatedAt: z.date(),
+});
 
-export type User = z.infer<typeof userResponseSchema>
-export type CreateUserInput = z.infer<typeof createUserSchema>
-export type UpdateUserInput = z.infer<typeof updateUserSchema>
+export type User = z.infer<typeof userResponseSchema>;
+export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 // schemas/index.ts
-export * from './user'
-export * from './product'
-export * from './order'
+export * from './user';
+export * from './product';
+export * from './order';
 ```
 
 ---
@@ -840,25 +856,25 @@ export * from './order'
 ```typescript
 // ❌ 나쁜 방법 (중복)
 interface User {
-  name: string
-  email: string
-  age: number
+  name: string;
+  email: string;
+  age: number;
 }
 
 const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  age: z.number()
-})
+  age: z.number(),
+});
 
 // ✅ 좋은 방법 (한 번만)
 const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  age: z.number()
-})
+  age: z.number(),
+});
 
-type User = z.infer<typeof userSchema>
+type User = z.infer<typeof userSchema>;
 ```
 
 ## Q: 백엔드와 프론트엔드에서 같은 스키마를 사용할 수 있나?
@@ -877,18 +893,19 @@ packages/
 ## Q: null과 undefined의 차이?
 
 **A:**
+
 ```typescript
-const schema1 = z.string().optional() // undefined 허용
-schema1.parse(undefined) // ✅ 성공
-schema1.parse(null) // ❌ 에러
+const schema1 = z.string().optional(); // undefined 허용
+schema1.parse(undefined); // ✅ 성공
+schema1.parse(null); // ❌ 에러
 
-const schema2 = z.string().nullable() // null 허용
-schema2.parse(null) // ✅ 성공
-schema2.parse(undefined) // ❌ 에러
+const schema2 = z.string().nullable(); // null 허용
+schema2.parse(null); // ✅ 성공
+schema2.parse(undefined); // ❌ 에러
 
-const schema3 = z.string().nullish() // null과 undefined 모두 허용
-schema3.parse(null) // ✅ 성공
-schema3.parse(undefined) // ✅ 성공
+const schema3 = z.string().nullish(); // null과 undefined 모두 허용
+schema3.parse(null); // ✅ 성공
+schema3.parse(undefined); // ✅ 성공
 ```
 
 ---
