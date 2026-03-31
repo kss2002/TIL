@@ -2,8 +2,8 @@
 
 # Supabase
 
-| [site](https://supabase.com) | [docs](https://supabase.com/docs) | [ui](https://supabase.com/ui) | [integrations](https://supabase.com/partners/integrations) |
-| ---------------------------- | --------------------------------- | ----------------------------- | ---------------------------------------------------------- |
+| [github](https://github.com/supabase/supabase) | [site](https://supabase.com) | [docs](https://supabase.com/docs) | [ui](https://supabase.com/ui) | [integrations](https://supabase.com/partners/integrations) |
+| ---------------------------- | --------------------------------- | ----------------------------- | ---------------------------------------------------------- | ---------------------------- |
 
 이 문서는 Supabase에 대한 간략한 소개와 사용 방법을 설명합니다.
 공식 문서 [docs](https://supabase.com/docs)를 기반으로 마크다운 형식으로 작성 및 번역 되었습니다.
