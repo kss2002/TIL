@@ -33,8 +33,6 @@ if(user.name==='John'){console.log("Hello");}
 
 https://prettier.io
 
----
-
 # 1. Prettier란?
 
 ## 핵심 개념

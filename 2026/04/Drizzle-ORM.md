@@ -6,21 +6,23 @@
 
 ```typescript
 // ❌ 순수 SQL (타입 안전성 없음)
-const result = await db.query('SELECT * FROM users WHERE id = $1', [1])
+const result = await db.query('SELECT * FROM users WHERE id = $1', [1]);
 // result의 타입? 어떤 필드가 있는지?
 
 // ❌ ORM (너무 무거움)
-const user = await User.findById(1)
+const user = await User.findById(1);
 // 많은 메모리, 느린 성능
 
 // ❌ Query Builder (타입이 복잡함)
-const user = await db.select().from(users).where(eq(users.id, 1))
+const user = await db.select().from(users).where(eq(users.id, 1));
 // 자동완성이 안 좋음
 ```
 
 **Drizzle ORM**은 이 모든 문제를 해결합니다. TypeScript 우선 설계로 완벽한 타입 안전성을 제공하면서도 경량입니다.
 
----
+## 공식 사이트
+
+https://orm.drizzle.team
 
 # 1. Drizzle ORM이란?
 
@@ -89,46 +91,46 @@ npm install -D @types/pg @types/node
 
 ```typescript
 // src/db.ts
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Pool } from 'pg'
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 
 const pool = new Pool({
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT || '5432'),
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-})
+  database: process.env.DB_NAME,
+});
 
-export const db = drizzle(pool)
+export const db = drizzle(pool);
 ```
 
 ## MySQL 연결
 
 ```typescript
 // src/db.ts
-import { drizzle } from 'drizzle-orm/mysql2'
-import mysql from 'mysql2/promise'
+import { drizzle } from 'drizzle-orm/mysql2';
+import mysql from 'mysql2/promise';
 
 const poolConnection = await mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-})
+  database: process.env.DB_NAME,
+});
 
-export const db = drizzle(poolConnection)
+export const db = drizzle(poolConnection);
 ```
 
 ## SQLite 연결
 
 ```typescript
 // src/db.ts
-import { drizzle } from 'drizzle-orm/better-sqlite3'
-import Database from 'better-sqlite3'
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import Database from 'better-sqlite3';
 
-const sqlite = new Database(process.env.DATABASE_URL || 'sqlite.db')
-export const db = drizzle(sqlite)
+const sqlite = new Database(process.env.DATABASE_URL || 'sqlite.db');
+export const db = drizzle(sqlite);
 ```
 
 ---
@@ -139,8 +141,14 @@ export const db = drizzle(sqlite)
 
 ```typescript
 // src/schema.ts
-import { integer, text, boolean, timestamp, pgTable } from 'drizzle-orm/pg-core'
-import { sql } from 'drizzle-orm'
+import {
+  integer,
+  text,
+  boolean,
+  timestamp,
+  pgTable,
+} from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -150,26 +158,32 @@ export const users = pgTable('users', {
   age: integer(),
   isActive: boolean().default(true),
   createdAt: timestamp().defaultNow(),
-  updatedAt: timestamp().defaultNow()
-})
+  updatedAt: timestamp().defaultNow(),
+});
 
 export const posts = pgTable('posts', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: text().notNull(),
   content: text(),
-  userId: integer().notNull().references(() => users.id, { onDelete: 'cascade' }),
+  userId: integer()
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   published: boolean().default(false),
   createdAt: timestamp().defaultNow(),
-  updatedAt: timestamp().defaultNow()
-})
+  updatedAt: timestamp().defaultNow(),
+});
 
 export const comments = pgTable('comments', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   text: text().notNull(),
-  postId: integer().notNull().references(() => posts.id, { onDelete: 'cascade' }),
-  userId: integer().notNull().references(() => users.id, { onDelete: 'cascade' }),
-  createdAt: timestamp().defaultNow()
-})
+  postId: integer()
+    .notNull()
+    .references(() => posts.id, { onDelete: 'cascade' }),
+  userId: integer()
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: timestamp().defaultNow(),
+});
 ```
 
 ## 타입 추론
@@ -193,36 +207,30 @@ const newUser: NewUser = { /* ... */ }
 ## SELECT (조회)
 
 ```typescript
-import { db } from './db'
-import { users } from './schema'
-import { eq } from 'drizzle-orm'
+import { db } from './db';
+import { users } from './schema';
+import { eq } from 'drizzle-orm';
 
 // 모든 사용자 조회
-const allUsers = await db.select().from(users)
+const allUsers = await db.select().from(users);
 
 // 특정 사용자 조회
-const user = await db
-  .select()
-  .from(users)
-  .where(eq(users.id, 1))
+const user = await db.select().from(users).where(eq(users.id, 1));
 
 // 특정 컬럼만 조회
 const userNames = await db
   .select({ id: users.id, name: users.name })
-  .from(users)
+  .from(users);
 
 // 첫 번째 사용자만
-const firstUser = await db
-  .select()
-  .from(users)
-  .limit(1)
+const firstUser = await db.select().from(users).limit(1);
 ```
 
 ## INSERT (삽입)
 
 ```typescript
-import { db } from './db'
-import { users } from './schema'
+import { db } from './db';
+import { users } from './schema';
 
 // 단일 삽입
 const result = await db
@@ -231,9 +239,9 @@ const result = await db
     name: 'John Doe',
     email: 'john@example.com',
     password: 'hashed_password',
-    age: 25
+    age: 25,
   })
-  .returning()
+  .returning();
 
 // 여러 개 삽입
 const results = await db
@@ -241,49 +249,45 @@ const results = await db
   .values([
     { name: 'John', email: 'john@example.com', password: 'hash1' },
     { name: 'Jane', email: 'jane@example.com', password: 'hash2' },
-    { name: 'Bob', email: 'bob@example.com', password: 'hash3' }
+    { name: 'Bob', email: 'bob@example.com', password: 'hash3' },
   ])
-  .returning()
+  .returning();
 ```
 
 ## UPDATE (수정)
 
 ```typescript
-import { db } from './db'
-import { users } from './schema'
-import { eq } from 'drizzle-orm'
+import { db } from './db';
+import { users } from './schema';
+import { eq } from 'drizzle-orm';
 
 // 특정 사용자 수정
 const result = await db
   .update(users)
   .set({ name: 'Jane Doe', age: 26 })
   .where(eq(users.id, 1))
-  .returning()
+  .returning();
 
 // 여러 사용자 수정
 const results = await db
   .update(users)
   .set({ isActive: false })
   .where(eq(users.isActive, true))
-  .returning()
+  .returning();
 ```
 
 ## DELETE (삭제)
 
 ```typescript
-import { db } from './db'
-import { users } from './schema'
-import { eq } from 'drizzle-orm'
+import { db } from './db';
+import { users } from './schema';
+import { eq } from 'drizzle-orm';
 
 // 특정 사용자 삭제
-await db
-  .delete(users)
-  .where(eq(users.id, 1))
+await db.delete(users).where(eq(users.id, 1));
 
 // 조건에 맞는 모든 사용자 삭제
-await db
-  .delete(users)
-  .where(eq(users.isActive, false))
+await db.delete(users).where(eq(users.isActive, false));
 ```
 
 ---
@@ -293,46 +297,57 @@ await db
 ## WHERE 조건
 
 ```typescript
-import { eq, ne, gt, gte, lt, lte, like, inArray, between, and, or } from 'drizzle-orm'
+import {
+  eq,
+  ne,
+  gt,
+  gte,
+  lt,
+  lte,
+  like,
+  inArray,
+  between,
+  and,
+  or,
+} from 'drizzle-orm';
 
 // 동등 비교
-await db.select().from(users).where(eq(users.id, 1))
+await db.select().from(users).where(eq(users.id, 1));
 
 // 같지 않음
-await db.select().from(users).where(ne(users.status, 'inactive'))
+await db.select().from(users).where(ne(users.status, 'inactive'));
 
 // 크기 비교
-await db.select().from(users).where(gt(users.age, 18))    // >
-await db.select().from(users).where(gte(users.age, 18))   // >=
-await db.select().from(users).where(lt(users.age, 65))    // <
-await db.select().from(users).where(lte(users.age, 65))   // <=
+await db.select().from(users).where(gt(users.age, 18)); // >
+await db.select().from(users).where(gte(users.age, 18)); // >=
+await db.select().from(users).where(lt(users.age, 65)); // <
+await db.select().from(users).where(lte(users.age, 65)); // <=
 
 // 문자열 검색
-await db.select().from(users).where(like(users.name, '%John%'))
+await db.select().from(users).where(like(users.name, '%John%'));
 
 // 배열 포함
-await db.select().from(users).where(inArray(users.id, [1, 2, 3]))
+await db
+  .select()
+  .from(users)
+  .where(inArray(users.id, [1, 2, 3]));
 
 // 범위
-await db.select().from(users).where(between(users.age, 18, 65))
+await db
+  .select()
+  .from(users)
+  .where(between(users.age, 18, 65));
 
 // AND / OR
 await db
   .select()
   .from(users)
-  .where(and(
-    eq(users.isActive, true),
-    gte(users.age, 18),
-    lt(users.age, 65)
-  ))
+  .where(and(eq(users.isActive, true), gte(users.age, 18), lt(users.age, 65)));
 
 await db
   .select()
   .from(users)
-  .where(or(
-    eq(users.role, 'admin'),
-    eq(users.role, 'moderator')
-  ))
+  .where(or(eq(users.role, 'admin'), eq(users.role, 'moderator')));
 ```
 
 ---
@@ -340,33 +355,27 @@ await db
 # 7. 정렬과 제한
 
 ```typescript
-import { asc, desc } from 'drizzle-orm'
+import { asc, desc } from 'drizzle-orm';
 
 // 정렬
-const users = await db
-  .select()
-  .from(users)
-  .orderBy(asc(users.name))  // 오름차순
+const users = await db.select().from(users).orderBy(asc(users.name)); // 오름차순
 
-const users = await db
-  .select()
-  .from(users)
-  .orderBy(desc(users.createdAt))  // 내림차순
+const users = await db.select().from(users).orderBy(desc(users.createdAt)); // 내림차순
 
 // 여러 컬럼으로 정렬
 const users = await db
   .select()
   .from(users)
-  .orderBy(desc(users.age), asc(users.name))
+  .orderBy(desc(users.age), asc(users.name));
 
 // 제한과 오프셋 (페이지네이션)
-const page = 2
-const pageSize = 10
+const page = 2;
+const pageSize = 10;
 const users = await db
   .select()
   .from(users)
   .limit(pageSize)
-  .offset((page - 1) * pageSize)
+  .offset((page - 1) * pageSize);
 ```
 
 ---
@@ -376,13 +385,13 @@ const users = await db
 ## INNER JOIN
 
 ```typescript
-import { eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm';
 
 // 사용자와 포스트 조인
 const result = await db
   .select()
   .from(users)
-  .innerJoin(posts, eq(users.id, posts.userId))
+  .innerJoin(posts, eq(users.id, posts.userId));
 
 // 결과: [{ users: {...}, posts: {...} }, ...]
 ```
@@ -394,7 +403,7 @@ const result = await db
 const result = await db
   .select()
   .from(users)
-  .leftJoin(posts, eq(users.id, posts.userId))
+  .leftJoin(posts, eq(users.id, posts.userId));
 ```
 
 ## 다중 조인
@@ -404,7 +413,7 @@ const result = await db
   .select()
   .from(posts)
   .innerJoin(users, eq(posts.userId, users.id))
-  .leftJoin(comments, eq(posts.id, comments.postId))
+  .leftJoin(comments, eq(posts.id, comments.postId));
 ```
 
 ## 선택적 조인 데이터
@@ -425,39 +434,33 @@ const result = await db
 # 9. 집계 함수
 
 ```typescript
-import { count, sum, avg, min, max } from 'drizzle-orm'
+import { count, sum, avg, min, max } from 'drizzle-orm';
 
 // 사용자 수
-const result = await db
-  .select({ count: count() })
-  .from(users)
+const result = await db.select({ count: count() }).from(users);
 
 // 합계
-const total = await db
-  .select({ sum: sum(users.age) })
-  .from(users)
+const total = await db.select({ sum: sum(users.age) }).from(users);
 
 // 평균
-const average = await db
-  .select({ avg: avg(users.age) })
-  .from(users)
+const average = await db.select({ avg: avg(users.age) }).from(users);
 
 // 최소/최대
 const ages = await db
   .select({
     min: min(users.age),
-    max: max(users.age)
+    max: max(users.age),
   })
-  .from(users)
+  .from(users);
 
 // GROUP BY
 const result = await db
   .select({
     role: users.role,
-    count: count()
+    count: count(),
   })
   .from(users)
-  .groupBy(users.role)
+  .groupBy(users.role);
 ```
 
 ---
@@ -465,7 +468,7 @@ const result = await db
 # 10. 트랜잭션
 
 ```typescript
-import { db } from './db'
+import { db } from './db';
 
 // 트랜잭션 실행
 const result = await db.transaction(async (tx) => {
@@ -475,22 +478,22 @@ const result = await db.transaction(async (tx) => {
     .values({
       name: 'John',
       email: 'john@example.com',
-      password: 'hashed'
+      password: 'hashed',
     })
-    .returning()
+    .returning();
 
   // 2단계: 포스트 생성
   const newPost = await tx
     .insert(posts)
     .values({
       title: 'First Post',
-      userId: newUser[0].id
+      userId: newUser[0].id,
     })
-    .returning()
+    .returning();
 
   // 모든 작업이 성공하면 커밋, 실패하면 롤백
-  return { user: newUser[0], post: newPost[0] }
-})
+  return { user: newUser[0], post: newPost[0] };
+});
 ```
 
 ---
@@ -500,16 +503,16 @@ const result = await db.transaction(async (tx) => {
 ## drizzle.config.ts
 
 ```typescript
-import type { Config } from 'drizzle-kit'
+import type { Config } from 'drizzle-kit';
 
 export default {
   schema: './src/schema.ts',
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL
-  }
-} satisfies Config
+    connectionString: process.env.DATABASE_URL,
+  },
+} satisfies Config;
 ```
 
 ## 마이그레이션 생성
@@ -550,26 +553,26 @@ CREATE TABLE IF NOT EXISTS "posts" (
 
 ```typescript
 // src/db.ts
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Pool } from 'pg'
-import * as schema from './schema'
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+import * as schema from './schema';
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-export const db = drizzle(pool, { schema })
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+export const db = drizzle(pool, { schema });
 
 // src/api/users.ts
-import { Router } from 'express'
-import { db } from '../db'
-import { users } from '../schema'
-import { eq } from 'drizzle-orm'
+import { Router } from 'express';
+import { db } from '../db';
+import { users } from '../schema';
+import { eq } from 'drizzle-orm';
 
-const router = Router()
+const router = Router();
 
 // 모든 사용자 조회
 router.get('/users', async (req, res) => {
-  const allUsers = await db.select().from(users)
-  res.json(allUsers)
-})
+  const allUsers = await db.select().from(users);
+  res.json(allUsers);
+});
 
 // 특정 사용자 조회
 router.get('/users/:id', async (req, res) => {
@@ -577,20 +580,17 @@ router.get('/users/:id', async (req, res) => {
     .select()
     .from(users)
     .where(eq(users.id, parseInt(req.params.id)))
-    .limit(1)
+    .limit(1);
 
-  res.json(user[0] || null)
-})
+  res.json(user[0] || null);
+});
 
 // 사용자 생성
 router.post('/users', async (req, res) => {
-  const newUser = await db
-    .insert(users)
-    .values(req.body)
-    .returning()
+  const newUser = await db.insert(users).values(req.body).returning();
 
-  res.status(201).json(newUser[0])
-})
+  res.status(201).json(newUser[0]);
+});
 
 // 사용자 수정
 router.put('/users/:id', async (req, res) => {
@@ -598,21 +598,19 @@ router.put('/users/:id', async (req, res) => {
     .update(users)
     .set(req.body)
     .where(eq(users.id, parseInt(req.params.id)))
-    .returning()
+    .returning();
 
-  res.json(updated[0])
-})
+  res.json(updated[0]);
+});
 
 // 사용자 삭제
 router.delete('/users/:id', async (req, res) => {
-  await db
-    .delete(users)
-    .where(eq(users.id, parseInt(req.params.id)))
+  await db.delete(users).where(eq(users.id, parseInt(req.params.id)));
 
-  res.status(204).send()
-})
+  res.status(204).send();
+});
 
-export default router
+export default router;
 ```
 
 ---
@@ -622,30 +620,27 @@ export default router
 ## 서브쿼리
 
 ```typescript
-import { alias } from 'drizzle-orm/pg-core'
+import { alias } from 'drizzle-orm/pg-core';
 
 // 각 사용자의 포스트 수
 const result = await db
   .select({
     id: users.id,
     name: users.name,
-    postCount: count(posts.id)
+    postCount: count(posts.id),
   })
   .from(users)
   .leftJoin(posts, eq(users.id, posts.userId))
-  .groupBy(users.id)
+  .groupBy(users.id);
 ```
 
 ## 재귀 쿼리 (CTE)
 
 ```typescript
-import { sql } from 'drizzle-orm'
+import { sql } from 'drizzle-orm';
 
-const result = await db
-  .with(cte)
-  .select()
-  .from(cte)
-  // ...
+const result = await db.with(cte).select().from(cte);
+// ...
 ```
 
 ---
@@ -657,15 +652,15 @@ const result = await db
 const users = await db
   .select()
   .from(users)
-  .where(eq(users.invalidColumn, 'value'))
-  // TypeScript Error: Property 'invalidColumn' does not exist
+  .where(eq(users.invalidColumn, 'value'));
+// TypeScript Error: Property 'invalidColumn' does not exist
 
 // 올바른 사용
 const users = await db
   .select()
   .from(users)
-  .where(eq(users.email, 'john@example.com'))
-  // ✅ 성공
+  .where(eq(users.email, 'john@example.com'));
+// ✅ 성공
 ```
 
 ---

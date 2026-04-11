@@ -25,7 +25,9 @@
 
 **Nginx**는 이 모든 문제를 우아하게 해결합니다.
 
----
+## 공식 사이트
+
+https://nginx.org
 
 # 1. Nginx란?
 
@@ -146,7 +148,7 @@ worker_rlimit_nofile 65535;
 events {
   # 워커 프로세스가 동시 처리할 연결 수
   worker_connections 1024;
-  
+
   # 효율적인 연결 처리
   use epoll;
 }
@@ -176,8 +178,8 @@ http {
   gzip_vary on;
   gzip_proxied any;
   gzip_comp_level 6;
-  gzip_types text/plain text/css text/xml text/javascript 
-             application/json application/javascript application/xml+rss 
+  gzip_types text/plain text/css text/xml text/javascript
+             application/json application/javascript application/xml+rss
              application/atom+xml image/svg+xml;
 
   # 가상 호스트 포함
@@ -229,7 +231,7 @@ server {
   listen 80;
   server_name example.com www.example.com;
   root /var/www/example.com;
-  
+
   location / {
     try_files $uri $uri/ =404;
   }
@@ -240,7 +242,7 @@ server {
   listen 80;
   server_name blog.com www.blog.com;
   root /var/www/blog.com;
-  
+
   location / {
     try_files $uri $uri/ =404;
   }
@@ -494,7 +496,7 @@ server {
 
 ```nginx
 # 캐시 정의
-proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=api_cache:10m 
+proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=api_cache:10m
                  max_size=1g inactive=60m use_temp_path=off;
 
 server {
@@ -626,7 +628,7 @@ http {
   gzip_vary on;
   gzip_min_length 1000;
   gzip_comp_level 6;
-  gzip_types text/plain text/css text/xml text/javascript 
+  gzip_types text/plain text/css text/xml text/javascript
              application/json application/javascript application/xml+rss;
 
   # 파일 전송 최적화

@@ -38,7 +38,9 @@ server.listen(3000)
 
 **Express**는 이 모든 번거로움을 제거합니다. 간단하고 우아한 API로 강력한 웹 서버를 만들 수 있습니다.
 
----
+## 공식 사이트
+
+https://expressjs.com/ko
 
 # 1. Express란?
 
@@ -88,20 +90,20 @@ npm install -D @types/express @types/node
 
 ```javascript
 // app.js
-const express = require('express')
+const express = require('express');
 
-const app = express()
-const PORT = 3000
+const app = express();
+const PORT = 3000;
 
 // 라우트 정의
 app.get('/', (req, res) => {
-  res.send('Hello, Express!')
-})
+  res.send('Hello, Express!');
+});
 
 // 서버 실행
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
-})
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 ```
 
 ## package.json 스크립트
@@ -129,35 +131,35 @@ npm run dev    # 개발 모드 (파일 변경 시 자동 재시작)
 ## HTTP 메서드별 라우팅
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // GET 요청
 app.get('/', (req, res) => {
-  res.send('GET 요청')
-})
+  res.send('GET 요청');
+});
 
 // POST 요청
 app.post('/', (req, res) => {
-  res.send('POST 요청')
-})
+  res.send('POST 요청');
+});
 
 // PUT 요청
 app.put('/users/:id', (req, res) => {
-  res.send(`PUT 요청 - ID: ${req.params.id}`)
-})
+  res.send(`PUT 요청 - ID: ${req.params.id}`);
+});
 
 // DELETE 요청
 app.delete('/users/:id', (req, res) => {
-  res.send(`DELETE 요청 - ID: ${req.params.id}`)
-})
+  res.send(`DELETE 요청 - ID: ${req.params.id}`);
+});
 
 // 모든 메서드
 app.all('/data', (req, res) => {
-  res.send('모든 메서드 처리')
-})
+  res.send('모든 메서드 처리');
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ## URL 파라미터
@@ -165,20 +167,20 @@ app.listen(3000)
 ```javascript
 // 동적 라우트
 app.get('/users/:id', (req, res) => {
-  const userId = req.params.id
-  res.send(`사용자 ID: ${userId}`)
-})
+  const userId = req.params.id;
+  res.send(`사용자 ID: ${userId}`);
+});
 
 // 여러 파라미터
 app.get('/posts/:postId/comments/:commentId', (req, res) => {
-  const { postId, commentId } = req.params
-  res.send(`포스트 ${postId}의 댓글 ${commentId}`)
-})
+  const { postId, commentId } = req.params;
+  res.send(`포스트 ${postId}의 댓글 ${commentId}`);
+});
 
 // 정규식 패턴
 app.get(/^\/users\/(\d+)$/, (req, res) => {
-  res.send(`사용자 ID: ${req.params[0]}`)
-})
+  res.send(`사용자 ID: ${req.params[0]}`);
+});
 ```
 
 ## 쿼리 파라미터
@@ -186,15 +188,15 @@ app.get(/^\/users\/(\d+)$/, (req, res) => {
 ```javascript
 app.get('/search', (req, res) => {
   // /search?q=javascript&page=1
-  const { q, page } = req.query
-  res.send(`검색어: ${q}, 페이지: ${page}`)
-})
+  const { q, page } = req.query;
+  res.send(`검색어: ${q}, 페이지: ${page}`);
+});
 
 // 전체 쿼리 객체
 app.get('/filter', (req, res) => {
-  console.log(req.query)  // { q: 'javascript', page: '1', ... }
-  res.send(req.query)
-})
+  console.log(req.query); // { q: 'javascript', page: '1', ... }
+  res.send(req.query);
+});
 ```
 
 ---
@@ -206,34 +208,34 @@ app.get('/filter', (req, res) => {
 ```javascript
 // 미들웨어는 req → middleware → res의 흐름
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} ${req.method} ${req.url}`)
-  next()  // 다음 미들웨어로 진행
-})
+  console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
+  next(); // 다음 미들웨어로 진행
+});
 ```
 
 ## 순서대로 실행
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // 미들웨어 1
 app.use((req, res, next) => {
-  console.log('미들웨어 1')
-  next()
-})
+  console.log('미들웨어 1');
+  next();
+});
 
 // 미들웨어 2
 app.use((req, res, next) => {
-  console.log('미들웨어 2')
-  next()
-})
+  console.log('미들웨어 2');
+  next();
+});
 
 // 라우트 핸들러
 app.get('/', (req, res) => {
-  console.log('라우트 핸들러')
-  res.send('응답')
-})
+  console.log('라우트 핸들러');
+  res.send('응답');
+});
 
 // 요청이 오면 출력 순서:
 // 미들웨어 1
@@ -244,35 +246,35 @@ app.get('/', (req, res) => {
 ## 일반적인 미들웨어
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // JSON 파싱
-app.use(express.json())
+app.use(express.json());
 
 // URL 인코딩된 데이터 파싱
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
 // 정적 파일 서빙
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 // 커스텀 미들웨어
 app.use((req, res, next) => {
-  req.timestamp = new Date()
-  next()
-})
+  req.timestamp = new Date();
+  next();
+});
 
 // 특정 경로에만 미들웨어 적용
 app.use('/admin', (req, res, next) => {
   if (!isAuthenticated(req)) {
-    return res.status(401).send('Unauthorized')
+    return res.status(401).send('Unauthorized');
   }
-  next()
-})
+  next();
+});
 
 app.get('/admin/users', (req, res) => {
-  res.send('Admin users page')
-})
+  res.send('Admin users page');
+});
 ```
 
 ## 에러 핸들링 미들웨어
@@ -280,18 +282,18 @@ app.get('/admin/users', (req, res) => {
 ```javascript
 // 에러 핸들러는 4개의 매개변수를 받아야 함
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  
-  const status = err.status || 500
-  const message = err.message || 'Internal Server Error'
-  
+  console.error(err.stack);
+
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+
   res.status(status).json({
     error: {
       status,
-      message
-    }
-  })
-})
+      message,
+    },
+  });
+});
 ```
 
 ---
@@ -303,32 +305,32 @@ app.use((err, req, res, next) => {
 ```javascript
 app.post('/api/users', (req, res) => {
   // 요청 본문
-  console.log(req.body)  // { name: 'John', email: 'john@example.com' }
+  console.log(req.body); // { name: 'John', email: 'john@example.com' }
 
   // URL 파라미터
-  console.log(req.params)
+  console.log(req.params);
 
   // 쿼리 파라미터
-  console.log(req.query)
+  console.log(req.query);
 
   // 헤더
-  console.log(req.headers)
-  console.log(req.get('Authorization'))
+  console.log(req.headers);
+  console.log(req.get('Authorization'));
 
   // 메서드
-  console.log(req.method)  // 'POST'
+  console.log(req.method); // 'POST'
 
   // 경로
-  console.log(req.path)    // '/api/users'
-  console.log(req.url)     // '/api/users?sort=name'
+  console.log(req.path); // '/api/users'
+  console.log(req.url); // '/api/users?sort=name'
 
   // IP 주소
-  console.log(req.ip)
-  console.log(req.ips)
+  console.log(req.ip);
+  console.log(req.ips);
 
   // 쿠키
-  console.log(req.cookies)
-})
+  console.log(req.cookies);
+});
 ```
 
 ## 응답 (Response) 객체
@@ -336,37 +338,37 @@ app.post('/api/users', (req, res) => {
 ```javascript
 app.get('/', (req, res) => {
   // 문자열 또는 객체 전송
-  res.send('Hello')
-  res.send({ name: 'John' })
+  res.send('Hello');
+  res.send({ name: 'John' });
 
   // JSON 전송
-  res.json({ status: 'ok' })
+  res.json({ status: 'ok' });
 
   // HTML 전송
-  res.type('text/html').send('<h1>Hello</h1>')
+  res.type('text/html').send('<h1>Hello</h1>');
 
   // 파일 전송
-  res.download('file.pdf')
-  res.sendFile(__dirname + '/file.pdf')
+  res.download('file.pdf');
+  res.sendFile(__dirname + '/file.pdf');
 
   // 상태 코드와 함께
-  res.status(201).json({ id: 1, name: 'John' })
-  res.status(404).send('Not Found')
+  res.status(201).json({ id: 1, name: 'John' });
+  res.status(404).send('Not Found');
 
   // 헤더 설정
-  res.set('Content-Type', 'application/json')
-  res.set({ 'X-Custom': 'value' })
+  res.set('Content-Type', 'application/json');
+  res.set({ 'X-Custom': 'value' });
 
   // 쿠키 설정
-  res.cookie('userId', '123', { maxAge: 900000 })
+  res.cookie('userId', '123', { maxAge: 900000 });
 
   // 리다이렉트
-  res.redirect('/users')
-  res.redirect(301, 'https://example.com')
+  res.redirect('/users');
+  res.redirect(301, 'https://example.com');
 
   // 렌더링 (템플릿 엔진 사용)
-  res.render('index', { title: 'Home' })
-})
+  res.render('index', { title: 'Home' });
+});
 ```
 
 ---
@@ -376,88 +378,88 @@ app.get('/', (req, res) => {
 ## REST API 만들기
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // 미들웨어
-app.use(express.json())
+app.use(express.json());
 
 // 임시 데이터
 let users = [
   { id: 1, name: 'John', email: 'john@example.com' },
-  { id: 2, name: 'Jane', email: 'jane@example.com' }
-]
+  { id: 2, name: 'Jane', email: 'jane@example.com' },
+];
 
 // 모든 사용자 조회
 app.get('/api/users', (req, res) => {
-  res.json(users)
-})
+  res.json(users);
+});
 
 // 특정 사용자 조회
 app.get('/api/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id))
-  
+  const user = users.find((u) => u.id === parseInt(req.params.id));
+
   if (!user) {
-    return res.status(404).json({ error: 'User not found' })
+    return res.status(404).json({ error: 'User not found' });
   }
-  
-  res.json(user)
-})
+
+  res.json(user);
+});
 
 // 사용자 추가
 app.post('/api/users', (req, res) => {
   // 입력값 검증
   if (!req.body.name || !req.body.email) {
-    return res.status(400).json({ error: 'Name and email are required' })
+    return res.status(400).json({ error: 'Name and email are required' });
   }
 
   // 새 사용자 생성
   const newUser = {
-    id: Math.max(...users.map(u => u.id)) + 1,
+    id: Math.max(...users.map((u) => u.id)) + 1,
     name: req.body.name,
-    email: req.body.email
-  }
+    email: req.body.email,
+  };
 
-  users.push(newUser)
-  res.status(201).json(newUser)
-})
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
 
 // 사용자 수정
 app.put('/api/users/:id', (req, res) => {
-  const user = users.find(u => u.id === parseInt(req.params.id))
-  
+  const user = users.find((u) => u.id === parseInt(req.params.id));
+
   if (!user) {
-    return res.status(404).json({ error: 'User not found' })
+    return res.status(404).json({ error: 'User not found' });
   }
 
   // 수정
-  if (req.body.name) user.name = req.body.name
-  if (req.body.email) user.email = req.body.email
+  if (req.body.name) user.name = req.body.name;
+  if (req.body.email) user.email = req.body.email;
 
-  res.json(user)
-})
+  res.json(user);
+});
 
 // 사용자 삭제
 app.delete('/api/users/:id', (req, res) => {
-  const index = users.findIndex(u => u.id === parseInt(req.params.id))
-  
+  const index = users.findIndex((u) => u.id === parseInt(req.params.id));
+
   if (index === -1) {
-    return res.status(404).json({ error: 'User not found' })
+    return res.status(404).json({ error: 'User not found' });
   }
 
-  const deletedUser = users.splice(index, 1)
-  res.json(deletedUser[0])
-})
+  const deletedUser = users.splice(index, 1);
+  res.json(deletedUser[0]);
+});
 
 // 에러 핸들러
 app.use((err, req, res, next) => {
-  console.error(err)
-  res.status(500).json({ error: 'Internal Server Error' })
-})
+  console.error(err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
 app.listen(3000, () => {
-  console.log('Server running on port 3000')
-})
+  console.log('Server running on port 3000');
+});
 ```
 
 ## 라우터 분리
@@ -507,18 +509,18 @@ npm install ejs
 ```
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // EJS 설정
-app.set('view engine', 'ejs')
-app.set('views', './views')
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Home', name: 'John' })
-})
+  res.render('index', { title: 'Home', name: 'John' });
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ## EJS 템플릿 (views/index.ejs)
@@ -526,25 +528,25 @@ app.listen(3000)
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= title %></title>
-</head>
-<body>
-  <h1><%= title %></h1>
-  <p>Hello, <%= name %>!</p>
-  
-  <!-- 조건문 -->
-  <% if (name === 'John') { %>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Hello, <%= name %>!</p>
+
+    <!-- 조건문 -->
+    <% if (name === 'John') { %>
     <p>You are John</p>
-  <% } %>
-  
-  <!-- 반복문 -->
-  <ul>
-    <% users.forEach(user => { %>
+    <% } %>
+
+    <!-- 반복문 -->
+    <ul>
+      <% users.forEach(user => { %>
       <li><%= user.name %></li>
-    <% }) %>
-  </ul>
-</body>
+      <% }) %>
+    </ul>
+  </body>
 </html>
 ```
 
@@ -559,50 +561,50 @@ npm install jsonwebtoken
 ```
 
 ```javascript
-const express = require('express')
-const jwt = require('jsonwebtoken')
+const express = require('express');
+const jwt = require('jsonwebtoken');
 
-const app = express()
-const SECRET = 'your-secret-key'
+const app = express();
+const SECRET = 'your-secret-key';
 
-app.use(express.json())
+app.use(express.json());
 
 // 로그인 (토큰 발급)
 app.post('/login', (req, res) => {
   const user = {
     id: 1,
     name: 'John',
-    email: 'john@example.com'
-  }
+    email: 'john@example.com',
+  };
 
-  const token = jwt.sign(user, SECRET, { expiresIn: '1h' })
+  const token = jwt.sign(user, SECRET, { expiresIn: '1h' });
 
-  res.json({ token })
-})
+  res.json({ token });
+});
 
 // 인증 미들웨어
 function verifyToken(req, res, next) {
-  const token = req.headers['authorization']?.split(' ')[1]
+  const token = req.headers['authorization']?.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ error: 'Token not provided' })
+    return res.status(401).json({ error: 'Token not provided' });
   }
 
   try {
-    const decoded = jwt.verify(token, SECRET)
-    req.user = decoded
-    next()
+    const decoded = jwt.verify(token, SECRET);
+    req.user = decoded;
+    next();
   } catch (err) {
-    res.status(401).json({ error: 'Invalid token' })
+    res.status(401).json({ error: 'Invalid token' });
   }
 }
 
 // 보호된 라우트
 app.get('/api/profile', verifyToken, (req, res) => {
-  res.json(req.user)
-})
+  res.json(req.user);
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ---
@@ -610,23 +612,23 @@ app.listen(3000)
 # 9. 정적 파일 서빙
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // 정적 파일 디렉토리
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 // 특정 경로로 매핑
-app.use('/static', express.static('public'))
+app.use('/static', express.static('public'));
 
 // 여러 디렉토리
-app.use(express.static('public'))
-app.use(express.static('uploads'))
+app.use(express.static('public'));
+app.use(express.static('uploads'));
 
 // 가상 경로 프리픽스
-app.use('/files', express.static('uploads'))
+app.use('/files', express.static('uploads'));
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ```
@@ -655,31 +657,33 @@ npm install cors
 ```
 
 ```javascript
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
 
-const app = express()
+const app = express();
 
 // 모든 CORS 요청 허용
-app.use(cors())
+app.use(cors());
 
 // 특정 도메인만 허용
-app.use(cors({
-  origin: 'https://example.com',
-  methods: ['GET', 'POST'],
-  credentials: true
-}))
+app.use(
+  cors({
+    origin: 'https://example.com',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }),
+);
 
 // 특정 라우트에만 적용
 app.get('/api/public', cors(), (req, res) => {
-  res.json({ data: 'public' })
-})
+  res.json({ data: 'public' });
+});
 
 app.get('/api/private', (req, res) => {
-  res.json({ data: 'private' })
-})
+  res.json({ data: 'private' });
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ---
@@ -689,48 +693,48 @@ app.listen(3000)
 ## 에러 핸들링 패턴
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // 커스텀 에러 클래스
 class AppError extends Error {
   constructor(message, statusCode) {
-    super(message)
-    this.statusCode = statusCode
+    super(message);
+    this.statusCode = statusCode;
   }
 }
 
 app.get('/api/users/:id', (req, res, next) => {
   try {
-    const user = findUser(req.params.id)
+    const user = findUser(req.params.id);
 
     if (!user) {
       // 에러를 다음 미들웨어로 전달
-      return next(new AppError('User not found', 404))
+      return next(new AppError('User not found', 404));
     }
 
-    res.json(user)
+    res.json(user);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 // 전역 에러 핸들러 (모든 라우트 뒤)
 app.use((err, req, res, next) => {
-  console.error(err)
+  console.error(err);
 
-  const status = err.statusCode || 500
-  const message = err.message || 'Internal Server Error'
+  const status = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
 
   res.status(status).json({
     error: {
       status,
-      message
-    }
-  })
-})
+      message,
+    },
+  });
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ---
@@ -752,19 +756,19 @@ SECRET_KEY=your-secret-key
 ```
 
 ```javascript
-require('dotenv').config()
+require('dotenv').config();
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-const PORT = process.env.PORT || 3000
-const NODE_ENV = process.env.NODE_ENV || 'development'
+const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
-console.log(`Server running in ${NODE_ENV} mode`)
+console.log(`Server running in ${NODE_ENV} mode`);
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
-})
+  console.log(`Server listening on port ${PORT}`);
+});
 ```
 
 ---
@@ -778,24 +782,24 @@ npm install morgan
 ```
 
 ```javascript
-const express = require('express')
-const morgan = require('morgan')
+const express = require('express');
+const morgan = require('morgan');
 
-const app = express()
+const app = express();
 
 // 기본 로깅
-app.use(morgan('combined'))
+app.use(morgan('combined'));
 
 // 커스텀 로깅
-morgan.token('user', (req) => req.user?.id || 'anonymous')
-app.use(morgan(':remote-addr - :user [:date[clf]] ":method :url" :status'))
+morgan.token('user', (req) => req.user?.id || 'anonymous');
+app.use(morgan(':remote-addr - :user [:date[clf]] ":method :url" :status'));
 
 // 파일에 로깅
-const fs = require('fs')
-const accessLogStream = fs.createWriteStream('access.log', { flags: 'a' })
-app.use(morgan('combined', { stream: accessLogStream }))
+const fs = require('fs');
+const accessLogStream = fs.createWriteStream('access.log', { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ---
@@ -809,47 +813,47 @@ npm install mongoose
 ```
 
 ```javascript
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require('express');
+const mongoose = require('mongoose');
 
-const app = express()
+const app = express();
 
 // 데이터베이스 연결
 mongoose.connect('mongodb://localhost/mydb', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+  useUnifiedTopology: true,
+});
 
 // 스키마 정의
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
-  createdAt: { type: Date, default: Date.now }
-})
+  createdAt: { type: Date, default: Date.now },
+});
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema);
 
 // 라우트
 app.get('/api/users', async (req, res) => {
   try {
-    const users = await User.find()
-    res.json(users)
+    const users = await User.find();
+    res.json(users);
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ error: err.message });
   }
-})
+});
 
 app.post('/api/users', async (req, res) => {
   try {
-    const user = new User(req.body)
-    await user.save()
-    res.status(201).json(user)
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json(user);
   } catch (err) {
-    res.status(400).json({ error: err.message })
+    res.status(400).json({ error: err.message });
   }
-})
+});
 
-app.listen(3000)
+app.listen(3000);
 ```
 
 ---
@@ -857,15 +861,15 @@ app.listen(3000)
 # 15. 실행 환경별 설정
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // 개발 환경
 if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`)
-    next()
-  })
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
 }
 
 // 프로덕션 환경
@@ -873,15 +877,15 @@ if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     // 로깅을 파일로
     // 에러 상세 정보 숨기기
-    next()
-  })
+    next();
+  });
 }
 
 // 공통 설정
-app.use(express.json())
-app.set('trust proxy', 1)
+app.use(express.json());
+app.set('trust proxy', 1);
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000);
 ```
 
 ---

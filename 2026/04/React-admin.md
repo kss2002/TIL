@@ -19,7 +19,9 @@
 
 **React-admin**은 이 모든 것을 포함한 완벽한 관리자 패널 라이브러리입니다. 몇 줄의 코드로 전문가 수준의 관리자 패널을 만들 수 있습니다.
 
----
+## 공식 사이트
+
+https://marmelab.com/react-admin
 
 # 1. React-admin이란?
 
@@ -78,11 +80,17 @@ npm install ra-data-graphql-simple
 ## 가장 간단한 관리자 패널
 
 ```javascript
-import React from 'react'
-import { Admin, Resource, ListGuesser, EditGuesser, CreateGuesser } from 'react-admin'
-import { DataProvider } from 'ra-data-simple-rest'
+import React from 'react';
+import {
+  Admin,
+  Resource,
+  ListGuesser,
+  EditGuesser,
+  CreateGuesser,
+} from 'react-admin';
+import { DataProvider } from 'ra-data-simple-rest';
 
-const dataProvider = new DataProvider('https://jsonplaceholder.typicode.com')
+const dataProvider = new DataProvider('https://jsonplaceholder.typicode.com');
 
 function App() {
   return (
@@ -111,10 +119,10 @@ function App() {
         create={CreateGuesser}
       />
     </Admin>
-  )
+  );
 }
 
-export default App
+export default App;
 ```
 
 이것만으로도 완전한 관리자 패널이 만들어집니다!
@@ -136,8 +144,8 @@ import {
   NumberField,
   EditButton,
   DeleteButton,
-  ShowButton
-} from 'react-admin'
+  ShowButton,
+} from 'react-admin';
 
 export const UserList = () => (
   <List>
@@ -152,13 +160,20 @@ export const UserList = () => (
       <DeleteButton />
     </Datagrid>
   </List>
-)
+);
 ```
 
 ## 필터링 추가
 
 ```javascript
-import { List, Datagrid, TextField, Filter, TextInput, BooleanInput } from 'react-admin'
+import {
+  List,
+  Datagrid,
+  TextField,
+  Filter,
+  TextInput,
+  BooleanInput,
+} from 'react-admin';
 
 const UserFilter = (props) => (
   <Filter {...props}>
@@ -167,7 +182,7 @@ const UserFilter = (props) => (
     <TextInput source="email" />
     <BooleanInput source="active" />
   </Filter>
-)
+);
 
 export const UserList = () => (
   <List filters={<UserFilter />}>
@@ -178,13 +193,13 @@ export const UserList = () => (
       <BooleanField source="active" />
     </Datagrid>
   </List>
-)
+);
 ```
 
 ## 페이지네이션과 정렬
 
 ```javascript
-import { List, Datagrid, TextField, Pagination } from 'react-admin'
+import { List, Datagrid, TextField, Pagination } from 'react-admin';
 
 export const UserList = () => (
   <List
@@ -197,7 +212,7 @@ export const UserList = () => (
       <TextField source="email" sortable />
     </Datagrid>
   </List>
-)
+);
 ```
 
 ---
@@ -217,8 +232,8 @@ import {
   DateInput,
   SelectInput,
   SaveButton,
-  DeleteButton
-} from 'react-admin'
+  DeleteButton,
+} from 'react-admin';
 
 export const UserEdit = () => (
   <Edit>
@@ -232,7 +247,7 @@ export const UserEdit = () => (
         source="role"
         choices={[
           { id: 'user', name: 'User' },
-          { id: 'admin', name: 'Admin' }
+          { id: 'admin', name: 'Admin' },
         ]}
       />
       <BooleanInput source="active" />
@@ -241,7 +256,7 @@ export const UserEdit = () => (
       <DeleteButton />
     </SimpleForm>
   </Edit>
-)
+);
 ```
 
 ## 유효성 검사
@@ -258,8 +273,8 @@ import {
   number,
   regex,
   minValue,
-  maxValue
-} from 'react-admin'
+  maxValue,
+} from 'react-admin';
 
 export const UserEdit = () => (
   <Edit>
@@ -269,10 +284,7 @@ export const UserEdit = () => (
         validate={[required(), minLength(3), maxLength(50)]}
       />
 
-      <TextInput
-        source="email"
-        validate={[required(), email()]}
-      />
+      <TextInput source="email" validate={[required(), email()]} />
 
       <TextInput
         source="phone"
@@ -291,21 +303,21 @@ export const UserEdit = () => (
           required(),
           (value) => {
             if (value && value.length < 3) {
-              return '최소 3자 이상'
+              return '최소 3자 이상';
             }
-            return undefined
-          }
+            return undefined;
+          },
         ]}
       />
     </SimpleForm>
   </Edit>
-)
+);
 ```
 
 ## 조건부 필드
 
 ```javascript
-import { Edit, SimpleForm, TextInput, BooleanInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, BooleanInput } from 'react-admin';
 
 export const UserEdit = () => (
   <Edit>
@@ -328,7 +340,7 @@ export const UserEdit = () => (
       </FormDataConsumer>
     </SimpleForm>
   </Edit>
-)
+);
 ```
 
 ---
@@ -344,17 +356,13 @@ import {
   PasswordInput,
   SelectInput,
   required,
-  email
-} from 'react-admin'
+  email,
+} from 'react-admin';
 
 export const UserCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput
-        source="name"
-        label="이름"
-        validate={required()}
-      />
+      <TextInput source="name" label="이름" validate={required()} />
 
       <EmailInput
         source="email"
@@ -362,24 +370,20 @@ export const UserCreate = () => (
         validate={[required(), email()]}
       />
 
-      <PasswordInput
-        source="password"
-        label="비밀번호"
-        validate={required()}
-      />
+      <PasswordInput source="password" label="비밀번호" validate={required()} />
 
       <SelectInput
         source="role"
         label="역할"
         choices={[
           { id: 'user', name: 'User' },
-          { id: 'admin', name: 'Admin' }
+          { id: 'admin', name: 'Admin' },
         ]}
         defaultValue="user"
       />
     </SimpleForm>
   </Create>
-)
+);
 ```
 
 ---
@@ -394,8 +398,8 @@ import {
   Datagrid,
   TextField,
   ReferenceField,
-  EditButton
-} from 'react-admin'
+  EditButton,
+} from 'react-admin';
 
 // 포스트 리스트 (사용자 참조)
 export const PostList = () => (
@@ -412,10 +416,16 @@ export const PostList = () => (
       <EditButton />
     </Datagrid>
   </List>
-)
+);
 
 // 포스트 에딧 (사용자 선택)
-import { Edit, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
+import {
+  Edit,
+  SimpleForm,
+  TextInput,
+  ReferenceInput,
+  SelectInput,
+} from 'react-admin';
 
 export const PostEdit = () => (
   <Edit>
@@ -429,7 +439,7 @@ export const PostEdit = () => (
       </ReferenceInput>
     </SimpleForm>
   </Edit>
-)
+);
 ```
 
 ## 다대일 관계 (ArrayInput)
@@ -440,8 +450,8 @@ import {
   SimpleForm,
   TextInput,
   ArrayInput,
-  SimpleFormIterator
-} from 'react-admin'
+  SimpleFormIterator,
+} from 'react-admin';
 
 export const UserEdit = () => (
   <Edit>
@@ -458,7 +468,7 @@ export const UserEdit = () => (
       </ArrayInput>
     </SimpleForm>
   </Edit>
-)
+);
 ```
 
 ---
@@ -468,18 +478,12 @@ export const UserEdit = () => (
 ## 권한 확인
 
 ```javascript
-import { usePermissions } from 'react-admin'
+import { usePermissions } from 'react-admin';
 
 function Dashboard() {
-  const { permissions } = usePermissions()
+  const { permissions } = usePermissions();
 
-  return (
-    <div>
-      {permissions === 'admin' && (
-        <div>Admin only content</div>
-      )}
-    </div>
-  )
+  return <div>{permissions === 'admin' && <div>Admin only content</div>}</div>;
 }
 ```
 
@@ -527,31 +531,31 @@ function App() {
 ## 대시보드
 
 ```javascript
-import { Card, CardHeader, CardContent } from '@mui/material'
-import { useDataProvider, useNotify } from 'react-admin'
-import { useEffect, useState } from 'react'
+import { Card, CardHeader, CardContent } from '@mui/material';
+import { useDataProvider, useNotify } from 'react-admin';
+import { useEffect, useState } from 'react';
 
 function Dashboard() {
-  const dataProvider = useDataProvider()
-  const notify = useNotify()
-  const [stats, setStats] = useState({})
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
+  const [stats, setStats] = useState({});
 
   useEffect(() => {
     // 통계 데이터 로드
     Promise.all([
       dataProvider.getList('users', { pagination: { page: 1, perPage: 1 } }),
       dataProvider.getList('posts', { pagination: { page: 1, perPage: 1 } }),
-      dataProvider.getList('comments', { pagination: { page: 1, perPage: 1 } })
+      dataProvider.getList('comments', { pagination: { page: 1, perPage: 1 } }),
     ])
       .then(([users, posts, comments]) => {
         setStats({
           users: users.total,
           posts: posts.total,
-          comments: comments.total
-        })
+          comments: comments.total,
+        });
       })
-      .catch(() => notify('통계 로드 실패', { type: 'error' }))
-  }, [dataProvider, notify])
+      .catch(() => notify('통계 로드 실패', { type: 'error' }));
+  }, [dataProvider, notify]);
 
   return (
     <div>
@@ -564,17 +568,17 @@ function Dashboard() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
 ```
 
 ## 커스텀 페이지
 
 ```javascript
-import { Admin, Resource, CustomRoutes } from 'react-admin'
-import { Route } from 'react-router-dom'
+import { Admin, Resource, CustomRoutes } from 'react-admin';
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -585,7 +589,7 @@ function App() {
         <Route path="/settings" element={<SettingsPage />} />
       </CustomRoutes>
     </Admin>
-  )
+  );
 }
 ```
 
@@ -686,35 +690,32 @@ const customDataProvider = {
 # 11. 테마 커스터마이징
 
 ```javascript
-import { Admin } from 'react-admin'
-import { createTheme } from '@mui/material/styles'
+import { Admin } from 'react-admin';
+import { createTheme } from '@mui/material/styles';
 
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2'
+      main: '#1976d2',
     },
     secondary: {
-      main: '#dc004e'
+      main: '#dc004e',
     },
     background: {
-      default: '#f5f5f5'
-    }
+      default: '#f5f5f5',
+    },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
-  }
-})
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+});
 
 function App() {
   return (
-    <Admin
-      dataProvider={dataProvider}
-      theme={customTheme}
-    >
+    <Admin dataProvider={dataProvider} theme={customTheme}>
       {/* 리소스들 */}
     </Admin>
-  )
+  );
 }
 ```
 
@@ -723,30 +724,24 @@ function App() {
 # 12. 다국어 지원 (i18n)
 
 ```javascript
-import { Admin } from 'react-admin'
-import polyglotI18nProvider from 'ra-i18n-polyglot'
-import englishMessages from 'ra-language-english'
-import koreanMessages from 'ra-language-korean'
+import { Admin } from 'react-admin';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import englishMessages from 'ra-language-english';
+import koreanMessages from 'ra-language-korean';
 
 const messages = {
   ko: koreanMessages,
-  en: englishMessages
-}
+  en: englishMessages,
+};
 
-const i18nProvider = polyglotI18nProvider(
-  (locale) => messages[locale],
-  'ko'
-)
+const i18nProvider = polyglotI18nProvider((locale) => messages[locale], 'ko');
 
 function App() {
   return (
-    <Admin
-      dataProvider={dataProvider}
-      i18nProvider={i18nProvider}
-    >
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
       {/* 리소스들 */}
     </Admin>
-  )
+  );
 }
 ```
 

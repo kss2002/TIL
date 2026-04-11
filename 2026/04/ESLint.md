@@ -28,8 +28,6 @@ async function getData() {
 
 https://eslint.org
 
----
-
 # 1. ESLint란?
 
 ## 핵심 개념
