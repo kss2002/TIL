@@ -154,5 +154,3 @@ npm run dev
 
 - [GitHub 전체 예제 코드](https://github.com/supabase/supabase/tree/master/examples/user-management/nextjs-user-management)
 - [Supabase SSR 공식 가이드](https://supabase.com/docs/guides/auth/server-side/nextjs)
-
-이 내용 중에서 특정 코드 구현부(예: `client.ts`나 `AccountForm`의 상세 코드)가 더 필요하시면 말씀해 주세요! 직접 작성해 드릴 수도 있습니다. 😊
