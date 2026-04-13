@@ -30,9 +30,9 @@ curl -X POST https://api.supabase.com/v1/projects \
   }'
 ```
 
-프로젝트가 생성되면 [Table Editor](https://www.google.com/search?q=/dashboard/project/_/editor)로 이동하여 새 테이블을 만들고 데이터를 입력합니다.
+프로젝트가 생성되면 [Table Editor](https://supabase.com/dashboard/project/_/editor)로 이동하여 새 테이블을 만들고 데이터를 입력합니다.
 
-또는, 프로젝트의 [SQL Editor](https://www.google.com/search?q=/dashboard/project/_/sql/new)에서 아래 스니펫을 실행하여 샘플 데이터가 포함된 `instruments` 테이블을 생성할 수 있습니다.
+또는, 프로젝트의 [SQL Editor](https://supabase.com/dashboard/project/_/sql/new)에서 아래 스니펫을 실행하여 샘플 데이터가 포함된 `instruments` 테이블을 생성할 수 있습니다.
 
 ```sql
 -- 테이블 생성
@@ -93,8 +93,8 @@ VITE_SUPABASE_URL=your-project-url
 VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
-- **Project URL 및 Key**: 프로젝트의 [Connect 다이얼로그](https://www.google.com/search?q=/dashboard/project/_)에서 확인 가능합니다.
-- **API Key 참고**: Supabase는 보안 향상을 위해 키 시스템을 전환 중입니다. 기존의 `anon` 키와 새로운 `sb_publishable_xxx` 형식의 **Publishable key** 모두 사용 가능합니다. 자세한 내용은 [API 키 문서](https://www.google.com/search?q=/docs/guides/api/api-keys)를 확인하세요.
+- **Project URL 및 Key**: 프로젝트의 [Connect 다이얼로그](https://supabase.com/dashboard/project/_?showConnect=true&connectTab=frameworks&framework=react)에서 확인 가능합니다.
+- **API Key 참고**: Supabase는 보안 향상을 위해 키 시스템을 전환 중입니다. 기존의 `anon` 키와 새로운 `sb_publishable_xxx` 형식의 **Publishable key** 모두 사용 가능합니다. 자세한 내용은 [API 키 문서](https://supabase.com/docs/guides/api/api-keys)를 확인하세요.
 
 ---
 
@@ -151,6 +151,6 @@ npm run dev
 
 ## 다음 단계
 
-- 앱에 [인증(Auth)](https://www.google.com/search?q=/docs/guides/auth) 설정하기
-- 데이터베이스에 [더 많은 데이터 삽입](https://www.google.com/search?q=/docs/guides/database/import-data)하기
-- [Storage](https://www.google.com/search?q=/docs/guides/storage)를 사용하여 정적 파일 업로드 및 활용하기
+- 앱에 [인증(Auth)](https://supabase.com/docs/guides/auth) 설정하기
+- 데이터베이스에 [더 많은 데이터 삽입](https://supabase.com/docs/guides/database/import-data)하기
+- [Storage](https://supabase.com/docs/guides/storage)를 사용하여 정적 파일 업로드 및 활용하기
