@@ -1,9 +1,9 @@
 https://supabase.com/docs/guides/getting-started
 
-- Framework quickstarts
+- Framework quickstarts : https://supabase.com/docs/guides/getting-started#framework-quickstarts
 
-- Web app demos
+- Web app demos : https://supabase.com/docs/guides/getting-started#web-app-demos
 
-- Mobile tutorials
+- Mobile tutorials : https://supabase.com/docs/guides/getting-started#mobile-tutorials
 
 - AI Tools
