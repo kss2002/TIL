@@ -1,0 +1,26 @@
+{
+  "name": "til",
+  "version": "1.0.0",
+  "description": "- 📢TIL이란?",
+  "main": "create-til.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kss2002/TIL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kss2002/TIL/issues"
+  },
+  "homepage": "https://github.com/kss2002/TIL#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "husky": "^9.1.7"
+  }
+}
