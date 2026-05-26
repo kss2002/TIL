@@ -1,5 +1,7 @@
 # HTTP 상태 코드 완벽 가이드 - 1XX부터 5XX까지 총정리
 
+[HTTP status code tech interview](https://gyoogle.dev/blog/web-knowledge/HTTP%20status%20code.html)
+
 ### 상태 코드 완벽 참조표
 
 ```
