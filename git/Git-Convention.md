@@ -143,6 +143,8 @@ module.exports = {
 
 ### Husky 연동
 
+사이트 링크: https://typicode.github.io/husky
+
 ```bash
 npx husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
 ```
