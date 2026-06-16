@@ -42,3 +42,7 @@ https://github.com/kss2002/TIL
 ```bash
 node create-til.js
 ```
+
+### husky
+
+이 프로젝트에 husky 라이브러리를 추가해두었습니다. (git hook)
