@@ -1,17 +1,9 @@
-# TIL: Turborepo
-
-> 작성일: 2026-06-23
-
----
-
 ## 개요
 
 **Turborepo**는 JavaScript/TypeScript 모노레포를 위한 고성능 빌드 시스템이다.  
 Jared Palmer가 개발했으며, 2021년 Vercel에 인수되었다. 현재는 Go에서 **Rust**로 완전히 포팅되어 더 빠른 성능과 안정성을 제공한다.
 
 > 출처: [Vercel Blog - Finishing Turborepo's migration from Go to Rust](https://vercel.com/blog/finishing-turborepos-migration-from-go-to-rust), [13labs - Turborepo vs Nx](https://www.13labs.au/compare/turborepo-vs-nx)
-
----
 
 ## 왜 필요한가? — 모노레포의 문제점
 
@@ -27,8 +19,6 @@ Jared Palmer가 개발했으며, 2021년 Vercel에 인수되었다. 현재는 Go
 Turborepo는 이 문제를 **캐싱 + 병렬 실행 + 태스크 오케스트레이션**으로 해결한다.
 
 > 출처: [Turborepo 공식 문서 - Introduction](https://turborepo.dev/docs)
-
----
 
 ## 핵심 개념
 
@@ -77,8 +67,6 @@ apps/web 빌드    ↕  apps/admin 빌드 (병렬)
 
 > 출처: [Turborepo 공식 문서 - Introduction](https://turborepo.dev/docs)
 
----
-
 ## 디렉토리 구조
 
 ```
@@ -95,8 +83,6 @@ my-monorepo/
 ```
 
 > 출처: [DEV Community - Complete Guide to Turborepo](https://dev.to/araldhafeeri/complete-guide-to-turborepo-from-zero-to-production-3ehb)
-
----
 
 ## turbo.json 설정 (v2.x 기준)
 
@@ -127,15 +113,13 @@ my-monorepo/
 
 ### `dependsOn` 문법
 
-| 표현식 | 의미 |
-|--------|------|
-| `"^build"` | 의존하는 **모든 패키지**의 `build`가 먼저 완료되어야 함 |
-| `"build"` | **같은 패키지** 내의 `build`가 먼저 완료되어야 함 |
-| `[]` (빈 배열) | 의존성 없음, 즉시 병렬 실행 가능 |
+| 표현식         | 의미                                                    |
+| -------------- | ------------------------------------------------------- |
+| `"^build"`     | 의존하는 **모든 패키지**의 `build`가 먼저 완료되어야 함 |
+| `"build"`      | **같은 패키지** 내의 `build`가 먼저 완료되어야 함       |
+| `[]` (빈 배열) | 의존성 없음, 즉시 병렬 실행 가능                        |
 
 > 출처: [jsonic.io - turbo.json Explained](https://jsonic.io/guides/turbo-json), [Vercel Academy - Update Turborepo Pipeline](https://vercel.com/academy/production-monorepos/update-turborepo-pipeline)
-
----
 
 ## 빠른 시작
 
@@ -155,41 +139,35 @@ turbo run build --affected
 
 > 출처: [Turborepo 공식 문서 - Introduction](https://turborepo.dev/docs), [Turborepo run 레퍼런스](https://turbo.build/repo/docs/reference/run)
 
----
-
 ## 경쟁 도구 비교
 
-| 도구 | 특징 | 적합한 경우 |
-|------|------|------------|
-| **Turborepo** | 설정 최소화, 캐싱 + 병렬 실행에 집중, Rust 기반 | JS/TS 모노레포 입문 |
-| **Nx** | 코드 생성, 의존성 그래프 시각화, 풍부한 플러그인 | 대규모 엔터프라이즈, Angular |
-| **Lerna** | 다중 npm 패키지 버전 관리/배포 특화 | 여러 패키지를 npm에 배포할 때 |
-| **Bazel** | 폴리글랏(다언어), 초대형 확장성 | FAANG급 엔터프라이즈 |
+| 도구          | 특징                                             | 적합한 경우                   |
+| ------------- | ------------------------------------------------ | ----------------------------- |
+| **Turborepo** | 설정 최소화, 캐싱 + 병렬 실행에 집중, Rust 기반  | JS/TS 모노레포 입문           |
+| **Nx**        | 코드 생성, 의존성 그래프 시각화, 풍부한 플러그인 | 대규모 엔터프라이즈, Angular  |
+| **Lerna**     | 다중 npm 패키지 버전 관리/배포 특화              | 여러 패키지를 npm에 배포할 때 |
+| **Bazel**     | 폴리글랏(다언어), 초대형 확장성                  | FAANG급 엔터프라이즈          |
 
 > 출처: [DEV Community - Monorepo Tools Comparison 2025](https://dev.to/_d7eb1c1703182e3ce1782/monorepo-tools-comparison-turborepo-vs-nx-vs-lerna-in-2025-15a6)
-
----
 
 ## 언제 쓰면 좋은가?
 
 ✅ **쓰기 좋은 경우**
+
 - 여러 앱이 공통 컴포넌트/타입/설정을 공유할 때
 - CI/CD 빌드 시간을 단축하고 싶을 때
 - Next.js + 공유 패키지 구조로 프로젝트를 확장할 때
 
 ❌ **굳이 안 써도 되는 경우**
+
 - 앱이 하나뿐인 단순한 프로젝트
 - 패키지 간 공유 코드가 거의 없는 경우
 
 > 출처: [thecodebeast.com - Should Your Startup Use TurboRepo in 2025?](https://thecodebeast.com/monorepo-madness-should-your-startup-embrace-turborepo-in-2025/)
 
----
-
 ## 한 줄 요약
 
-> **Turborepo = 모노레포에서 "변경된 것만 빌드"를 자동으로 해주는 Rust 기반 빌드 오케스트레이터**
-
----
+**Turborepo = 모노레포에서 "변경된 것만 빌드"를 자동으로 해주는 Rust 기반 빌드 오케스트레이터**
 
 ## 참고 링크
 
