@@ -10,6 +10,12 @@ https://www.anthropic.com
 
 https://claude.com/ko/product/overview
 
+### 루트 폴더
+
+클로드를 작동시킬 때에는 단일 트리 코드베이스에서만 실행시키는 것을 추천합니다. 
+- 이유: 대규모 코드베이스에서 프로젝트가 여러 개일 경우 컨텐스트가 혼입될 경우가 생길 수 있습니다. 이에 따라 클로드는 "개별 프로젝트 폴더"에서 여는 것을 추천합니다.
+- 출처: https://code.claude.com/docs/ko/large-codebases
+
 ---
 
 ### 제품별 정리
