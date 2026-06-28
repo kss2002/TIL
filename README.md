@@ -22,6 +22,7 @@ https://github.com/kss2002/TIL
 ### 주제별
 
 - [BaaS](./BaaS)
+- [cloud](./cloud)
 - [cs](./cs)
 - [emotion](./emotion)
 - [git](./git)
